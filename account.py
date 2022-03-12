@@ -1,10 +1,9 @@
 import csv
-import pandas as pd
 
 def sort_ib_file():
     data = []
     counter = 0
-    with open('multi_20220103_20220310.csv', 'r') as f:
+    with open('ib_statement.csv', 'r') as f:
         reader = csv.reader(f, delimiter=',')
         for row in reader:
             if row[0] == 'Trades' and row[1] == 'Data':

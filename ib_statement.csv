@@ -1,0 +1,599 @@
+﻿Statement,Header,Field Name,Field Value
+Statement,Data,BrokerName,Interactive Brokers Central Europe Zrt.
+Statement,Data,BrokerAddress,"Madach Imre ut 13-14, Floor 5, Budapest, 1075, Hungary"
+Statement,Data,Title,Activity Summary
+Statement,Data,Period,"January 3, 2022 - March 11, 2022"
+Statement,Data,WhenGenerated,"2022-03-12, 13:26:52 EST"
+Disclaimer,Header,Field Name,Field Value
+Disclaimer,Data,Disclaimer,"This Activity Summary is provided as a convenience to customers who have accounts with multiple Interactive Brokers companies in multiple jurisdictions. Positions and cash shown on this Activity Summary may be held at different Interactive Brokers companies in different countries, subject to different regulatory rules and protections. This Activity Summary does not serve as your formal customer statement. Customer statements for each IB company are available under Account Management when you log in to the IB website."
+Account Information,Header,Field Name,Field Value
+Account Information,Data,Name,Ivan V Cerovski
+Account Information,Data,Account Alias,Trade Account
+Account Information,Data,Account,U7546406 (Custom Consolidated)
+Account Information,Data,Accounts Included,"U4819117, U10821297, U7546406"
+Account Information,Data,Account Type,Individual
+Account Information,Data,Customer Type,Individual
+Account Information,Data,Account Capabilities,Margin
+Account Information,Data,Base Currency,USD
+Net Asset Value,Header,Asset Class,Prior Total,Current Long,Current Short,Current Total,Change
+Net Asset Value,Data,Cash ,130271.443311385,86158.164189353,0,86158.164189353,-44113.279122032
+Net Asset Value,Data,Stock,279739.94,656655.15,0,656655.15,376915.21
+Net Asset Value,Data,Options,7273.48,2595.96,0,2595.96,-4677.52
+Net Asset Value,Data,Bonds,1006.11,1025.55,0,1025.55,19.44
+Net Asset Value,Data,Interest Accruals,17.56,5.1,-11.82,-6.72,-24.28
+Net Asset Value,Data,    Broker Interest Accruals,-6.09,0,-11.82,-11.82,-5.73
+Net Asset Value,Data,    Bond Interest Accruals,23.65,5.1,0,5.1,-18.55
+Net Asset Value,Data,Dividend Accruals,148.5,521.33,0,521.33,372.83
+Net Asset Value,Data,Total,418457.033311385,746961.254189353,-11.82,746949.434189353,328492.400877968
+Net Asset Value,Header,Time Weighted Rate of Return
+Net Asset Value,Data,-1.492673039%
+Change in Combined NAV,Header,Field Name,Field Value
+Change in NAV,Data,Starting Value,418457.033311385
+Change in NAV,Data,Mark-to-Market,-13984.52503802
+Change in NAV,Data,Deposits & Withdrawals,60178.63
+Change in NAV,Data,Position Transfers,280500
+Change in NAV,Data,Dividends,1907.16
+Change in NAV,Data,Withholding Tax,131.67
+Change in NAV,Data,Change in Dividend Accruals,372.83
+Change in NAV,Data,Interest,-41.13
+Change in NAV,Data,Change in Interest Accruals,-24.28
+Change in NAV,Data,Other Fees,-13.5
+Change in NAV,Data,Commissions,-525.15412203
+Change in NAV,Data,Sales Tax,-9.3
+Change in NAV,Data,Ending Value,746949.434189353
+Mark-to-Market Performance Summary,Header,Asset Category,Symbol,Prior Quantity,Current Quantity,Prior Price,Current Price,Mark-to-Market P/L Position,Mark-to-Market P/L Transaction,Mark-to-Market P/L Commissions,Mark-to-Market P/L Other,Mark-to-Market P/L Total,Code
+Mark-to-Market Performance Summary,Data,Stocks,AMZN,10,0,"3,334.3400",--,4489.4,1251.57,-7.83244095,0,5733.13755905,
+Mark-to-Market Performance Summary,Data,Stocks,ARKK,0,0,--,--,-25,2891.245,-10.47690529,0,2855.76809471,
+Mark-to-Market Performance Summary,Data,Stocks,BABA,0,0,--,--,-11353,-173.27,-5.50810773,0,-11531.77810773,
+Mark-to-Market Performance Summary,Data,Stocks,BRK B,150,0,299.0000,--,4695.5,-67.08,-3.35851704,0,4625.06148296,
+Mark-to-Market Performance Summary,Data,Stocks,BXMT,0,1300,--,31.5500,910,-83.385,-6.5,0,820.115,
+Mark-to-Market Performance Summary,Data,Stocks,CWH,0,0,--,--,-4860,-2827.39,-12.3490248,0,-7699.7390248,
+Mark-to-Market Performance Summary,Data,Stocks,DOCU,0,0,--,--,-4072,-470.985,-2.12426425,0,-4545.10926425,
+Mark-to-Market Performance Summary,Data,Stocks,EARN,0,0,--,--,0,0,0,158.89,158.89,
+Mark-to-Market Performance Summary,Data,Stocks,EFC,0,2300,--,17.7700,865,-264.065,-12,11.07,600.005,
+Mark-to-Market Performance Summary,Data,Stocks,EMD,0,0,--,--,-6938,-625.645,-34.60772129,322.23,-7276.02272129,
+Mark-to-Market Performance Summary,Data,Stocks,ETHE,0,400,--,20.0200,-5436,-2582,-8.128184,0,-8026.128184,
+Mark-to-Market Performance Summary,Data,Stocks,FB,0,0,--,--,-6089.8,-1117.7,-4.22190375,0,-7211.72190375,
+Mark-to-Market Performance Summary,Data,Stocks,GBTC,0,350,--,25.5100,-3332.75,-1793.25,-6.8722475,0,-5132.8722475,
+Mark-to-Market Performance Summary,Data,Stocks,GOOGL,0,15,--,"2,597.4100",-2491.44,230,-3,0,-2264.44,
+Mark-to-Market Performance Summary,Data,Stocks,HSY,210,260,193.4700,204.6900,2872.2,-117.75,-1,0,2753.45,
+Mark-to-Market Performance Summary,Data,Stocks,MSFT,0,130,--,280.0700,-1986,-827.23,-5.29912538,66.96,-2751.56912538,
+Mark-to-Market Performance Summary,Data,Stocks,NLY,0,0,--,--,0,0,0,105.6,105.6,
+Mark-to-Market Performance Summary,Data,Stocks,SKYY,320,0,104.3100,--,-2194.4,-769.995,-3.24361751,0,-2967.63861751,
+Mark-to-Market Performance Summary,Data,Stocks,SQQQ,0,0,--,--,162,89,-2.0656525,0,248.9343475,
+Mark-to-Market Performance Summary,Data,Stocks,T,1500,1600,24.6000,23.1900,-1980,-239.5,-7.1528374,702,-1524.6528374,
+Mark-to-Market Performance Summary,Data,Stocks,TQQQ,0,0,--,--,10162,-1275.275,-59.22285927,0,8827.50214073,
+Mark-to-Market Performance Summary,Data,Stocks,TXN,0,200,--,170.3600,1469,73.195,-2,0,1540.195,
+Mark-to-Market Performance Summary,Data,Stocks,ULE,0,4000,--,12.1605,42,-14.4,-20,0,7.6,
+Mark-to-Market Performance Summary,Data,Stocks,USCI,0,400,--,57.0500,2796,-57.64,-2,0,2736.36,
+Mark-to-Market Performance Summary,Data,Stocks,VTIP,0,5500,--,52.1100,6105,0,0,0,6105,
+Mark-to-Market Performance Summary,Data,Stocks,VZ,909,0,51.9600,--,-854.46,1412.86,-4.9068992,523.58,1077.0731008,
+Mark-to-Market Performance Summary,Data,Stocks,WMT,300,0,144.6900,--,-3096,182.995,-1.74551937,148.5,-2766.25051937,
+Mark-to-Market Performance Summary,Data,Total,,,,,,-20140.75,-7175.695,-225.61582723,2038.83,-25503.23082723,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,AMD 18MAR22 160.0 C,0,8,--,0.0011,-3239.12,-80,-2.1708,0,-3321.2908,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,AMZN 18MAR22 2800.0 C,0,0,--,--,31480.96,52489.04,-8.8809128,0,83961.1190872,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,AMZN 18MAR22 2810.0 C,0,0,--,--,-30569.36,-51897.64,-8.4335051,0,-82475.4335051,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,BABA 18FEB22 165.0 C,20,0,0.6550,--,-1200,6,-11.0271916,0,-1205.0271916,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,BABA 18FEB22 170.0 C,-20,0,0.5050,--,920,-30,-10.983,0,879.017,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,CAT 20MAY22 175.0 P,0,0,--,--,135,795,-5.90277,0,924.09723,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,FDX 20MAY22 210.0 P,0,0,--,--,1662.5,192.5,-5.5231825,0,1849.4768175,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,GOLD 21JAN22 20.0 C,30,0,0.1850,--,465,5,-30.5911275,0,439.4088725,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,GOOGL 18FEB22 3010.0 C,0,0,--,--,0,-1049,-2.9642101,0,-1051.9642101,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,GOOGL 14APR22 2520.0 C,0,0,--,--,198248.96,72460.04,-5.5716516,0,270703.4283484,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,GOOGL 14APR22 2530.0 C,0,0,--,--,-196197.52,-71748.48,-4.1694168,0,-267950.1694168,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,MSFT 18MAR22 365.0 C,8,8,4.6000,0.0001,-3679.92,0,0,0,-3679.92,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,MSFT 14APR22 285.0 C,0,0,--,--,10619.25,11651.75,-16.7318873,0,22254.2681127,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,MSFT 14APR22 290.0 C,0,0,--,--,-9354.15,-10839.85,-16.599323,0,-20210.599323,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,SMH 18MAR22 285.0 C,0,0,--,--,7074.2,705.8,-24.9939285,0,7755.0060715,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,SMH 14APR22 235.0 P,0,0,--,--,1460.48,-99.48,-8.26832,0,1352.73168,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,SMH 14APR22 285.0 C,0,10,--,1.4750,-615,-1210,-6.9915,0,-1831.9915,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,SPY 18FEB22 490.0 C,10,0,2.7850,--,-2628.3,119.3,-13.2967736,0,-2522.2967736,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,SPY 18MAR22 465.0 C,0,0,--,--,9,-207,-3.6110414,0,-201.6110414,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,SPY 18MAR22 475.0 C,0,0,--,--,-420,-2596,-21.4356852,0,-3037.4356852,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,SPY 14APR22 455.0 C,0,10,--,1.1200,655,-935,-17.32435,0,-297.32435,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,T 21JAN22 26.0 C,30,0,0.0650,--,2483.4,261.6,-20.820894,0,2724.179106,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,TSM 20MAY22 110.0 P,0,0,--,--,300,1052,-11.2256272,0,1340.7743728,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,VIAC 21JAN22 32.5 C,22,0,0.4150,--,6242.72,-489.72,-15.2876966,0,5737.7123034,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,VIAC 18MAR22 35.0 C,0,0,--,--,-1600,440,-21.824372,0,-1181.824372,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,WMT 21JAN22 142.0 C,-3,0,3.8484,--,1154.52,-21,-1.62405,0,1131.89595,
+Mark-to-Market Performance Summary,Data,Equity and Index Options,WMT 18MAR22 140.0 C,0,0,--,--,880.59,49.41,-3.285078,0,926.714922,
+Mark-to-Market Performance Summary,Data,Total,,,,,,14288.21,-975.73,-299.5382948,0,13012.9417052,
+Mark-to-Market Performance Summary,Data,Forex,USD,130271.443311385,86158.164189353,1.0000,1.0000,0,0,0,0,0,
+Mark-to-Market Performance Summary,Data,Total,,,,,,-0.00003802,0,0,0,-0.00003802,
+Mark-to-Market Performance Summary,Data,Bonds,AFSI 6 1/8 08/15/23 9AE1,1000,1000,100.6110,102.5550,19.44,0,0,30.63,50.07,
+Mark-to-Market Performance Summary,Data,Total,,,,,,19.44,0,0,30.63,50.07,
+Mark-to-Market Performance Summary,Data,Total (All Assets),,,,,,-5833.10003802,-8151.425,-525.15412203,2069.46,-12440.21916005,
+Mark-to-Market Performance Summary,Data,Broker Interest Paid and Received,,,,,,,,,,-69.38,
+Mark-to-Market Performance Summary,Data,Other Fees,,,,,,,,,,-13.5,
+Total P/L for Statement Period,,,,,,,,,,,,-12523.09916005,
+Realized & Unrealized Performance Summary,Header,Asset Category,Symbol,Cost Adj.,Realized S/T Profit,Realized S/T Loss,Realized L/T Profit,Realized L/T Loss,Realized Total,Unrealized S/T Profit,Unrealized S/T Loss,Unrealized L/T Profit,Unrealized L/T Loss,Unrealized Total,Total,Code
+Realized & Unrealized Performance Summary,Data,Stocks,AMZN,0,5937.82453742,-69.86697837,0,0,5867.95755905,0,0,0,0,0,5867.95755905,
+Realized & Unrealized Performance Summary,Data,Stocks,ARKK,0,2855.768095,0,0,0,2855.768095,0,0,0,0,0,2855.768095,
+Realized & Unrealized Performance Summary,Data,Stocks,BABA,0,0,-11531.77810773,0,0,-11531.77810773,0,0,0,0,0,-11531.77810773,
+Realized & Unrealized Performance Summary,Data,Stocks,BRK B,0,3075.12525037,0,11216.23623258,0,14291.36148295,0,0,0,0,0,14291.36148295,
+Realized & Unrealized Performance Summary,Data,Stocks,BXMT,0,0,0,0,0,0,820.115,0,0,0,820.115,820.115,
+Realized & Unrealized Performance Summary,Data,Stocks,CWH,0,0,-7699.7390248,0,0,-7699.7390248,0,0,0,0,0,-7699.7390248,
+Realized & Unrealized Performance Summary,Data,Stocks,DOCU,0,0,-4545.10926425,0,0,-4545.10926425,0,0,0,0,0,-4545.10926425,
+Realized & Unrealized Performance Summary,Data,Stocks,EFC,0,0,0,0,0,0,588.935,0,0,0,588.935,588.935,
+Realized & Unrealized Performance Summary,Data,Stocks,EMD,0,0,-7598.25272129,0,0,-7598.25272129,0,0,0,0,0,-7598.25272129,
+Realized & Unrealized Performance Summary,Data,Stocks,ETHE,0,0,-6012.128184,0,0,-6012.128184,0,-2014,0,0,-2014,-8026.128184,
+Realized & Unrealized Performance Summary,Data,Stocks,FB,0,36.25938705,-7247.98129051,0,0,-7211.72190346,0,0,0,0,0,-7211.72190346,
+Realized & Unrealized Performance Summary,Data,Stocks,GBTC,0,0,-3465.1222475,0,0,-3465.1222475,0,-1667.75,0,0,-1667.75,-5132.8722475,
+Realized & Unrealized Performance Summary,Data,Stocks,GOOGL,0,0,0,0,0,0,32.76,-2297.2,0,0,-2264.44,-2264.44,
+Realized & Unrealized Performance Summary,Data,Stocks,HSY,0,0,0,0,0,0,8755.085,0,0,0,8755.085,8755.085,
+Realized & Unrealized Performance Summary,Data,Stocks,MSFT,0,28.50014645,-270.32927183,0,0,-241.82912538,0,-2576.7,0,0,-2576.7,-2818.52912538,
+Realized & Unrealized Performance Summary,Data,Stocks,SKYY,0,0,-1045.59862335,2381.81000584,0,1336.21138249,0,0,0,0,0,1336.21138249,
+Realized & Unrealized Performance Summary,Data,Stocks,SQQQ,0,248.9343475,0,0,0,248.9343475,0,0,0,0,0,248.9343475,
+Realized & Unrealized Performance Summary,Data,Stocks,T,0,69.82678169,-0.47961909,0,0,69.3471626,0,-1903,0,0,-1903,-1833.6528374,
+Realized & Unrealized Performance Summary,Data,Stocks,TQQQ,0,10571.72968628,-1744.227547,0,0,8827.50213928,0,0,0,0,0,8827.50213928,
+Realized & Unrealized Performance Summary,Data,Stocks,TXN,0,0,0,0,0,0,1540.195,0,0,0,1540.195,1540.195,
+Realized & Unrealized Performance Summary,Data,Stocks,ULE,0,0,0,0,0,0,41.6,-34,0,0,7.6,7.6,
+Realized & Unrealized Performance Summary,Data,Stocks,USCI,0,0,0,0,0,0,2736.36,0,0,0,2736.36,2736.36,
+Realized & Unrealized Performance Summary,Data,Stocks,VTIP,0,0,0,0,0,0,6136.22,0,0,0,6136.22,6136.22,
+Realized & Unrealized Performance Summary,Data,Stocks,VZ,0,0,-3149.1718992,0,0,-3149.1718992,0,0,0,0,0,-3149.1718992,
+Realized & Unrealized Performance Summary,Data,Stocks,WMT,0,0,-2101.17760537,0,0,-2101.17760537,0,0,0,0,0,-2101.17760537,
+Realized & Unrealized Performance Summary,Data,Total,,0,22823.96823176,-56480.96238429,13598.04623842,0,-20058.94791411,20651.27,-10492.65,0,0,10158.62,-9900.32791411,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,AMD 18MAR22 160.0 C,0,0,0,0,0,0,0,-3321.2908,0,0,-3321.2908,-3321.2908,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,AMZN 18MAR22 2800.0 C,0,83961.1190872,0,0,0,83961.1190872,0,0,0,0,0,83961.1190872,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,AMZN 18MAR22 2810.0 C,0,0,-82475.433504,0,0,-82475.433504,0,0,0,0,0,-82475.433504,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,BABA 18FEB22 165.0 C,0,0,-28561.1041916,0,0,-28561.1041916,0,0,0,0,0,-28561.1041916,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,BABA 18FEB22 170.0 C,0,24221.775748,0,0,0,24221.775748,0,0,0,0,0,24221.775748,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,CAT 20MAY22 175.0 P,0,924.09723,0,0,0,924.09723,0,0,0,0,0,924.09723,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,FDX 20MAY22 210.0 P,0,1849.4768175,0,0,0,1849.4768175,0,0,0,0,0,1849.4768175,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,GOLD 21JAN22 20.0 C,0,0,-3375.0726275,0,0,-3375.0726275,0,0,0,0,0,-3375.0726275,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,GOOGL 18FEB22 3010.0 C,0,0,-1051.9642101,0,0,-1051.9642101,0,0,0,0,0,-1051.9642101,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,GOOGL 14APR22 2520.0 C,0,270703.4283484,0,0,0,270703.4283484,0,0,0,0,0,270703.4283484,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,GOOGL 14APR22 2530.0 C,0,0,-267950.169417,0,0,-267950.169417,0,0,0,0,0,-267950.169417,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,MSFT 18MAR22 365.0 C,0,0,0,0,0,0,0,-3925.2908,0,0,-3925.2908,-3925.2908,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,MSFT 14APR22 285.0 C,0,22254.2681127,0,0,0,22254.2681127,0,0,0,0,0,22254.2681127,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,MSFT 14APR22 290.0 C,0,0,-20210.599324,0,0,-20210.599324,0,0,0,0,0,-20210.599324,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,SMH 18MAR22 285.0 C,0,7755.0060715,0,0,0,7755.0060715,0,0,0,0,0,7755.0060715,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,SMH 14APR22 235.0 P,0,1352.73168,0,0,0,1352.73168,0,0,0,0,0,1352.73168,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,SMH 14APR22 285.0 C,0,0,0,0,0,0,0,-1831.9915,0,0,-1831.9915,-1831.9915,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,SPY 18FEB22 490.0 C,0,0,-3970.4902736,0,0,-3970.4902736,0,0,0,0,0,-3970.4902736,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,SPY 18MAR22 465.0 C,0,0,-201.6110414,0,0,-201.6110414,0,0,0,0,0,-201.6110414,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,SPY 18MAR22 475.0 C,0,0,-3037.4356852,0,0,-3037.4356852,0,0,0,0,0,-3037.4356852,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,SPY 14APR22 455.0 C,0,1609.66715,0,0,0,1609.66715,0,-1906.9915,0,0,-1906.9915,-297.32435,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,T 21JAN22 26.0 C,0,378.468606,0,0,0,378.468606,0,0,0,0,0,378.468606,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,TSM 20MAY22 110.0 P,0,1340.7743728,0,0,0,1340.7743728,0,0,0,0,0,1340.7743728,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,VIAC 21JAN22 32.5 C,0,1630.9426034,0,0,0,1630.9426034,0,0,0,0,0,1630.9426034,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,VIAC 18MAR22 35.0 C,0,0,-1181.824372,0,0,-1181.824372,0,0,0,0,0,-1181.824372,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,WMT 21JAN22 142.0 C,0,783.251784,0,0,0,783.251784,0,0,0,0,0,783.251784,
+Realized & Unrealized Performance Summary,Data,Equity and Index Options,WMT 18MAR22 140.0 C,0,926.714922,0,0,0,926.714922,0,0,0,0,0,926.714922,
+Realized & Unrealized Performance Summary,Data,Total,,0,419691.7225335,-412015.7046464,0,0,7676.0178871,0,-10985.5646,0,0,-10985.5646,-3309.5467129,
+Realized & Unrealized Performance Summary,Data,Forex,EUR,0,0,0,0,0,0,0,-0.000001,0,0,-0.000001,-0.000001,
+Realized & Unrealized Performance Summary,Data,Total,,0,0,0,0,0,0,0,-0.000001,0,0,-0.000001,-0.000001,
+Realized & Unrealized Performance Summary,Data,Bonds,AFSI 6 1/8 08/15/23 9AE1,0,0,0,0,0,0,0,0,40.05,0,40.05,40.05,
+Realized & Unrealized Performance Summary,Data,Total,,0,0,0,0,0,0,0,0,40.05,0,40.05,40.05,
+Realized & Unrealized Performance Summary,Data,Total (All Assets),,0,442515.69076526,-468496.66703069,13598.04623842,0,-12382.93002701,20651.27,-21478.214601,40.05,0,-786.894601,-13169.82462801,
+Cash Report,Header,Currency Summary,Currency,Total,Securities,Futures,
+Cash Report,Data,Starting Cash,Base Currency Summary,130271.443311385,130271.443311385,0,
+Cash Report,Data,Commissions,Base Currency Summary,-525.15412203,-525.15412203,0,
+Cash Report,Data,Deposits,Base Currency Summary,138000,138000,0,
+Cash Report,Data,Withdrawals,Base Currency Summary,-80937.2,-80937.2,0,
+Cash Report,Data,Account Transfers,Base Currency Summary,3115.83,3115.83,0,
+Cash Report,Data,Dividends,Base Currency Summary,1907.16,1907.16,0,
+Cash Report,Data,Broker Interest Paid,Base Currency Summary,-71.76,-71.76,0,
+Cash Report,Data,Bond Interest Paid and Received,Base Currency Summary,30.63,30.63,0,
+Cash Report,Data,Trades (Sales),Base Currency Summary,2190327.85,2190327.85,0,
+Cash Report,Data,Trades (Purchase),Base Currency Summary,-2296069.505,-2296069.505,0,
+Cash Report,Data,Other Fees,Base Currency Summary,-13.5,-13.5,0,
+Cash Report,Data,Withholding Tax,Base Currency Summary,131.67,131.67,0,
+Cash Report,Data,Sales Tax,USD,-9.3,-9.3,0,
+Cash Report,Data,Cash FX Translation Gain/Loss,Base Currency Summary,-0.00003802,-0.00003802,0,
+Cash Report,Data,Ending Cash,Base Currency Summary,86158.164189353,86158.164189353,0,
+Cash Report,Data,Ending Settled Cash,Base Currency Summary,86158.164189353,86158.164189353,0,
+Open Positions,Header,DataDiscriminator,Asset Category,Currency,Symbol,Quantity,Mult,Cost Price,Cost Basis,Close Price,Value,Unrealized P/L,Code
+Open Positions,Data,Summary,Stocks,USD,BXMT,1300,1,30.919142308,40194.885,31.55,41015,820.115,
+Open Positions,Data,Summary,Stocks,USD,EFC,2300,1,17.513941304,40282.065,17.77,40871,588.935,
+Open Positions,Data,Summary,Stocks,USD,ETHE,400,1,25.055,10022,20.02,8008,-2014,
+Open Positions,Data,Summary,Stocks,USD,GBTC,350,1,30.275,10596.25,25.51,8928.5,-1667.75,
+Open Positions,Data,Summary,Stocks,USD,GOOGL,15,1,2748.372666667,41225.59,2597.41,38961.15,-2264.44,
+Open Positions,Data,Summary,Stocks,USD,HSY,260,1,171.016596154,44464.315,204.69,53219.4,8755.085,
+Open Positions,Data,Summary,Stocks,USD,MSFT,130,1,299.890769231,38985.8,280.07,36409.1,-2576.7,
+Open Positions,Data,Summary,Stocks,USD,T,1600,1,24.379375,39007,23.19,37104,-1903,
+Open Positions,Data,Summary,Stocks,USD,TXN,200,1,162.659025,32531.805,170.36,34072,1540.195,
+Open Positions,Data,Summary,Stocks,USD,ULE,4000,1,12.1586,48634.4,12.1605,48642,7.6,
+Open Positions,Data,Summary,Stocks,USD,USCI,400,1,50.2091,20083.64,57.05,22820,2736.36,
+Open Positions,Data,Summary,Stocks,USD,VTIP,5500,1,50.994323636,280468.78,52.11,286605,6136.22,
+Open Positions,Total,,Stocks,USD,,,,,646496.53,,656655.15,10158.62,
+Open Positions,Header,DataDiscriminator,Asset Category,Currency,Symbol,Quantity,Mult,Cost Price,Cost Basis,Close Price,Value,Unrealized P/L,Code
+Open Positions,Data,Summary,Equity and Index Options,USD,AMD 18MAR22 160.0 C,8,100,4.1527135,3322.1708,0.0011,0.88,-3321.2908,
+Open Positions,Data,Summary,Equity and Index Options,USD,MSFT 18MAR22 365.0 C,8,100,4.9067135,3925.3708,0.0001,0.08,-3925.2908,
+Open Positions,Data,Summary,Equity and Index Options,USD,SMH 14APR22 285.0 C,10,100,3.3069915,3306.9915,1.475,1475,-1831.9915,
+Open Positions,Data,Summary,Equity and Index Options,USD,SPY 14APR22 455.0 C,10,100,3.0269915,3026.9915,1.12,1120,-1906.9915,
+Open Positions,Total,,Equity and Index Options,USD,,,,,13581.5246,,2595.96,-10985.5646,
+Open Positions,Header,DataDiscriminator,Asset Category,Currency,Symbol,Quantity,Accrued Int,Cost Price,Cost Basis,Close Price,Value,Unrealized P/L,Code
+Open Positions,Data,Summary,Bonds,USD,AFSI 6 1/8 08/15/23 9AE1,1000,5.1,98.55,985.5,102.555,1025.55,40.05,
+Open Positions,Total,,Bonds,USD,,,,,985.5,,1025.55,40.05,
+Trades,Header,DataDiscriminator,Asset Category,Currency,Account,Symbol,Date/Time,Quantity,T. Price,C. Price,Proceeds,Comm/Fee,Basis,Realized P/L,MTM P/L,Code
+Trades,Data,Order,Stocks,USD,U10821297,AMZN,"2022-01-10, 14:05:19",5,3198.045,3229.72,-15990.225,-1,15991.225,0,158.375,O
+Trades,Data,Order,Stocks,USD,U10821297,AMZN,"2022-01-12, 11:55:17",-15,3313.955,3304.14,49709.325,-1.255467558,-49199.805,508.264532,147.225,C
+Trades,Data,Order,Stocks,USD,U10821297,AMZN,"2022-01-24, 13:47:53",10,2805.973,2890.88,-28059.73,-1,28060.73,0,849.07,O;P
+Trades,Data,Order,Stocks,USD,U10821297,AMZN,"2022-01-27, 11:05:43",5,2883.39,2792.75,-14416.95,-1,14417.95,0,-453.2,O
+Trades,Data,Order,Stocks,USD,U10821297,AMZN,"2022-02-04, 09:31:08",-100,3066.6145,3152.79,306661.45,-2.576973395,-195770.59170723,3531.408396,-8617.55,C;O;P
+Trades,Data,Order,Stocks,USD,U10821297,AMZN,"2022-02-04, 09:32:35",85,3044.935294118,3152.79,-258819.5,-1,260648.784629,1828.284629,9167.65,C;P
+Trades,SubTotal,,Stocks,USD,AMZN,,,-10,,,39084.37,-7.832440953,74148.29292177,5867.957557,1251.57,
+Trades,Data,Order,Stocks,USD,U10821297,ARKK,"2022-02-16, 09:30:33",-500,73.56,72.87,36780,-2.752578,-36777.247422,0,345,O
+Trades,Data,Order,Stocks,USD,U10821297,ARKK,"2022-02-17, 14:13:23",500,68.6305,68.18,-34315.25,-2.5,36777.247424,2459.497424,-225.25,C;P
+Trades,Data,Order,Stocks,USD,U10821297,ARKK,"2022-02-23, 10:28:30",-500,62.48129,60.88,31240.645,-2.72432729,-31237.92067271,0,800.645,O;P
+Trades,Data,Order,Stocks,USD,U10821297,ARKK,"2022-02-24, 10:43:55",500,61.6783,65.62,-30839.15,-2.5,31237.920675,396.270675,1970.85,C;P
+Trades,SubTotal,,Stocks,USD,ARKK,,,0,,,2866.245,-10.47690529,0.00000429,2855.768099,2891.245,
+Trades,Data,Order,Stocks,USD,U10821297,BABA,"2022-01-10, 09:47:47",250,128.5852,128.3,-32146.3,-1.25,32147.55,0,-71.3,O;P
+Trades,Data,Order,Stocks,USD,U10821297,BABA,"2022-01-10, 14:36:31",50,127.555,128.3,-6377.75,-1,6378.75,0,37.25,O
+Trades,Data,Order,Stocks,USD,U10821297,BABA,"2022-01-20, 09:37:32",100,134.155,131.03,-13415.5,-1,13416.5,0,-312.5,O
+Trades,Data,Order,Stocks,USD,U10821297,BABA,"2022-03-04, 09:33:49",-400,101.0332,100.6,40413.28,-2.258107728,-51942.8,-11531.778108,173.28,C;P
+Trades,SubTotal,,Stocks,USD,BABA,,,0,,,-11526.27,-5.508107728,0,-11531.778108,-173.27,
+Trades,Data,Order,Stocks,USD,U10821297,BRK B,"2022-01-27, 10:06:14",50,314.42,307.67,-15721,-1,15722,0,-337.5,O;P
+Trades,Data,Order,Stocks,USD,U10821297,BRK B,"2022-02-09, 11:46:18",-50,323.0633,322.38,16153.165,-1.088881142,-10642.5,5509.576119,34.165,C;P
+Trades,Data,Order,Stocks,USD,U10821297,BRK B,"2022-03-09, 15:26:30",-150,326.975033333,325.4,49046.255,-1.269635901,-40263.2,8781.785363,236.255,C;P
+Trades,SubTotal,,Stocks,USD,BRK B,,,-150,,,49478.42,-3.358517043,-35183.7,14291.361482,-67.08,
+Trades,Data,Order,Stocks,USD,U10821297,BXMT,"2022-02-07, 09:30:32","1,300",30.914142308,30.85,-40188.385,-6.5,40194.885,0,-83.385,O;P
+Trades,SubTotal,,Stocks,USD,BXMT,,,1300,,,-40188.385,-6.5,40194.885,0,-83.385,
+Trades,Data,Order,Stocks,USD,U10821297,CWH,"2022-01-13, 10:14:02","1,200",37.946158333,37.75,-45535.39,-6,45541.39,0,-235.39,O;P
+Trades,Data,Order,Stocks,USD,U10821297,CWH,"2022-01-24, 09:30:00","-1,200",31.54,33.7,37848,-6.3490248,-45541.39,-7699.739025,-2592,C
+Trades,SubTotal,,Stocks,USD,CWH,,,0,,,-7687.39,-12.3490248,0,-7699.739025,-2827.39,
+Trades,Data,Order,Stocks,USD,U10821297,DOCU,"2022-02-07, 09:30:00",200,119.052425,118.41,-23810.485,-1,23811.485,0,-128.485,O;P
+Trades,Data,Order,Stocks,USD,U10821297,DOCU,"2022-03-09, 09:33:56",-200,96.3375,98.05,19267.5,-1.12426425,-23811.485,-4545.109264,-342.5,C;P
+Trades,SubTotal,,Stocks,USD,DOCU,,,0,,,-4542.985,-2.12426425,0,-4545.109264,-470.985,
+Trades,Data,Order,Stocks,USD,U10821297,EFC,"2022-02-07, 09:30:13","1,200",17.498625,17.39,-20998.35,-6,21004.35,0,-130.35,O;P
+Trades,Data,Order,Stocks,USD,U10821297,EFC,"2022-02-07, 14:44:58","1,000",17.524215,17.39,-17524.215,-5,17529.215,0,-134.215,O;P
+Trades,Data,Order,Stocks,USD,U10821297,EFC,"2022-02-14, 11:16:58",100,17.475,17.48,-1747.5,-1,1748.5,0,0.5,O
+Trades,SubTotal,,Stocks,USD,EFC,,,2300,,,-40270.065,-12,40282.065,0,-264.065,
+Trades,Data,Order,Stocks,USD,U10821297,EMD,"2022-02-07, 09:31:05","1,800",11.779394444,11.78,-21202.91,-9,21211.91,0,1.09,O;P
+Trades,Data,Order,Stocks,USD,U10821297,EMD,"2022-02-07, 14:52:44","1,400",11.8,11.78,-16520,-7,16527,0,-28,O;P
+Trades,Data,Order,Stocks,USD,U10821297,EMD,"2022-02-14, 11:30:44",200,11.675525,11.62,-2335.105,-1,2336.105,0,-11.105,O;P
+Trades,Data,Order,Stocks,USD,U10821297,EMD,"2022-03-08, 09:53:13","-3,400",9.557167647,9.73,32494.37,-17.607721287,-40075.015,-7598.252731,-587.63,C;P
+Trades,SubTotal,,Stocks,USD,EMD,,,0,,,-7563.645,-34.607721287,0,-7598.252731,-625.645,
+Trades,Data,Order,Stocks,USD,U7546406,ETHE,"2022-01-20, 14:07:38",600,26.41,25.53,-15846,-3,15849,0,-528,O;P
+Trades,Data,Order,Stocks,USD,U7546406,ETHE,"2022-01-24, 08:56:04",-600,16.4,19.97,9840,-3.128184,-15849,-6012.128184,-2142,C
+Trades,Data,Order,Stocks,USD,U10821297,ETHE,"2022-02-07, 09:59:16",400,25.05,25.27,-10020,-2,10022,0,88,O
+Trades,SubTotal,,Stocks,USD,ETHE,,,400,,,-16026,-8.128184,10022,-6012.128184,-2582,
+Trades,Data,Order,Stocks,USD,U10821297,FB,"2022-02-07, 10:19:30",100,230.72,224.91,-23072,-1,23073,0,-581,O;P
+Trades,Data,Order,Stocks,USD,U10821297,FB,"2022-02-07, 12:32:46",100,225.48,224.91,-22548,-1,22549,0,-57,O
+Trades,Data,Order,Stocks,USD,U10821297,FB,"2022-02-09, 15:37:15",-20,232.62,232,4652.4,-1.02632724,-4615.114286,36.259387,12.4,C
+Trades,Data,Order,Stocks,USD,U10821297,FB,"2022-03-08, 09:31:19",-180,187.556111111,190.29,33760.1,-1.19557651,-41006.885714,-7247.981292,-492.1,C;P
+Trades,SubTotal,,Stocks,USD,FB,,,0,,,-7207.5,-4.22190375,0,-7211.721905,-1117.7,
+Trades,Data,Order,Stocks,USD,U7546406,GBTC,"2022-01-20, 14:06:51",500,29.37,29.02,-14685,-2.5,14687.5,0,-175,O;P
+Trades,Data,Order,Stocks,USD,U7546406,GBTC,"2022-01-24, 08:56:49",-500,22.45,25.8965,11225,-2.6222475,-14687.5,-3465.122248,-1723.25,C
+Trades,Data,Order,Stocks,USD,U10821297,GBTC,"2022-02-07, 09:59:13",350,30.27,30.57,-10594.5,-1.75,10596.25,0,105,O
+Trades,SubTotal,,Stocks,USD,GBTC,,,350,,,-14054.5,-6.8722475,10596.25,-3465.122248,-1793.25,
+Trades,Data,Order,Stocks,USD,U10821297,GOOGL,"2022-02-08, 09:30:00",12,2781.8,2787.98,-33381.6,-1,33382.6,0,74.16,O
+Trades,Data,Order,Stocks,USD,U10821297,GOOGL,"2022-02-24, 13:26:57",2,2580.53,2653.82,-5161.06,-1,5162.06,0,146.58,O
+Trades,Data,Order,Stocks,USD,U10821297,GOOGL,"2022-02-25, 14:03:03",1,2679.93,2689.19,-2679.93,-1,2680.93,0,9.26,O
+Trades,SubTotal,,Stocks,USD,GOOGL,,,15,,,-41222.59,-3,41225.59,0,230,
+Trades,Data,Order,Stocks,USD,U10821297,HSY,"2022-01-27, 10:29:57",50,196.725,194.37,-9836.25,-1,9837.25,0,-117.75,O;P
+Trades,SubTotal,,Stocks,USD,HSY,,,50,,,-9836.25,-1,9837.25,0,-117.75,
+Trades,Data,Order,Stocks,USD,U7546406,MSFT,"2022-01-27, 12:58:27",150,302.142533333,299.84,-45321.38,-1,45322.38,0,-345.38,O;P
+Trades,Data,Order,Stocks,USD,U7546406,MSFT,"2022-01-27, 13:42:38",30,299.365,299.84,-8980.95,-1,8981.95,0,14.25,O
+Trades,Data,Order,Stocks,USD,U7546406,MSFT,"2022-02-04, 09:35:14",-180,300.354444444,305.94,54063.8,-1.29912538,-54304.33,-241.829124,-1005.4,C;P
+Trades,Data,Order,Stocks,USD,U10821297,MSFT,"2022-02-08, 09:30:00",120,301.216666667,304.56,-36146,-1,36147,0,401.2,O;P
+Trades,Data,Order,Stocks,USD,U10821297,MSFT,"2022-02-24, 13:29:56",10,283.78,294.59,-2837.8,-1,2838.8,0,108.1,O
+Trades,SubTotal,,Stocks,USD,MSFT,,,130,,,-39222.33,-5.29912538,38985.8,-241.829124,-827.23,
+Trades,Data,Order,Stocks,USD,U10821297,SKYY,"2022-01-05, 10:29:24",80,100.25,97.34,-8020,-1,8021,0,-232.8,O;P
+Trades,Data,Order,Stocks,USD,U10821297,SKYY,"2022-01-06, 10:13:47",-400,96.0870125,97.43,38434.805,-2.243617506,-37096.35,1336.211387,-537.195,C;P
+Trades,SubTotal,,Stocks,USD,SKYY,,,-320,,,30414.805,-3.243617506,-29075.35,1336.211387,-769.995,
+Trades,Data,Order,Stocks,USD,U10821297,SQQQ,"2022-02-04, 15:27:46",200,37.62,38.55,-7524,-1,7525,0,186,O;P
+Trades,Data,Order,Stocks,USD,U10821297,SQQQ,"2022-02-07, 12:20:50",-200,38.875,39.36,7775,-1.0656525,-7525,248.934348,-97,C;P
+Trades,SubTotal,,Stocks,USD,SQQQ,,,0,,,251,-2.0656525,0,248.934348,89,
+Trades,Data,Order,Stocks,USD,U10821297,T,"2022-01-27, 11:10:58",700,24.425,24.12,-17097.5,-3.5,17101,0,-213.5,O;P
+Trades,Data,Order,Stocks,USD,U10821297,T,"2022-02-09, 14:09:41",-500,24.455,24.5,12227.5,-2.62736025,-12167,57.87264,-22.5,C;P
+Trades,Data,Order,Stocks,USD,U10821297,T,"2022-02-09, 14:17:14",-100,24.465,24.5,2446.5,-1.025477147,-2434,11.47452,-3.5,C;P
+Trades,SubTotal,,Stocks,USD,T,,,100,,,-2423.5,-7.152837397,2500,69.34716,-239.5,
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-01-24, 09:30:00",-500,53.83958,57.49,26919.79,-2.702290929,-26917.087709071,0,-1825.21,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-01-24, 10:11:27",-200,51.435,57.49,10287,-1.0784637,-10285.9215363,0,-1211,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-01-24, 12:08:55",700,49.667914286,57.49,-34767.54,-3.5,37203.009246,2431.969244,5475.46,C;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-01-24, 12:57:41",-700,50.995,57.49,35696.5,-3.77305215,-35692.72694785,0,-4546.5,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-01-25, 10:00:16",700,52.993428571,53.25,-37095.4,-3.5,35692.726949,-1406.173051,179.6,C;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-01-25, 13:54:00",-700,54.395,53.25,38076.5,-3.78519015,-38072.71480985,0,801.5,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-01-25, 15:55:08",700,53.255,53.25,-37278.5,-3.5,38072.714811,790.714808,-3.5,C;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-01-26, 09:52:05",-500,56.49294,53.15,28246.47,-2.709056997,-28243.760943003,0,1671.47,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-01-26, 14:03:55",-100,58.045,53.15,5804.5,-1.042602948,-5803.457397052,0,489.5,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-01-26, 15:57:14",600,53.102083333,53.15,-31861.25,-3,34047.218341,2182.968341,28.75,C;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-02, 11:42:06",-500,62.73667,64.5,31368.335,-2.724978508,-31365.610021492,0,-881.665,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-02, 11:58:57",-100,63.26995,64.5,6326.995,-1.045267675,-6325.949732325,0,-123.005,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-02, 12:11:41",-100,63.705,64.5,6370.5,-1.04548955,-6369.45451045,0,-79.5,O
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-02, 12:47:45",-100,64.365,64.5,6436.5,-1.045826149,-6435.454173851,0,-13.5,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-02, 15:19:38",-100,64.775,64.5,6477.5,-1.04603525,-6476.45396475,0,27.5,O
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-03, 12:32:24",900,58.692222222,56.74,-52823,-4.5,56972.922401,4145.422401,-1757,C;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-04, 09:30:00",-700,56.923685714,58.7,39846.58,-3.794217559,-39842.785782441,0,-1243.42,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-04, 10:05:26",-100,58.165,58.7,5816.5,-1.04266415,-5815.45733585,0,-53.5,O
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-04, 13:10:09",-100,58.975,58.7,5897.5,-1.04307725,-5896.45692275,0,27.5,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-08, 10:28:31",900,56.605,59.32,-50944.5,-4.5,51554.700041,605.70004,2443.5,C;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-08, 14:25:03",-700,58.402214286,59.32,40881.55,-3.799495905,-40877.750504095,0,-642.45,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-09, 15:50:11",-100,63.04,63,6304,-1.0451504,-6302.9548496,0,4,O
+Trades,Data,Order,Stocks,USD,U10821297,TQQQ,"2022-02-10, 15:31:08",800,58.87475625,58.82,-47099.805,-4,47180.705354,76.900355,-43.805,C;P
+Trades,SubTotal,,Stocks,USD,TQQQ,,,0,,,8886.725,-59.22285927,0.00000227,8827.502138,-1275.275,
+Trades,Data,Order,Stocks,USD,U10821297,TXN,"2022-02-14, 15:05:58",150,161.525366667,162.47,-24228.805,-1,24229.805,0,141.695,O;P
+Trades,Data,Order,Stocks,USD,U10821297,TXN,"2022-02-17, 10:46:33",50,166.02,164.65,-8301,-1,8302,0,-68.5,O
+Trades,SubTotal,,Stocks,USD,TXN,,,200,,,-32529.805,-2,32531.805,0,73.195,
+Trades,Data,Order,Stocks,USD,U10821297,ULE,"2022-03-08, 09:43:56","2,000",12.1725,12.15,-24345,-10,24355,0,-45,O;P
+Trades,Data,Order,Stocks,USD,U10821297,ULE,"2022-03-08, 10:06:54","2,000",12.1347,12.15,-24269.4,-10,24279.4,0,30.6,O;P
+Trades,SubTotal,,Stocks,USD,ULE,,,4000,,,-48614.4,-20,48634.4,0,-14.4,
+Trades,Data,Order,Stocks,USD,U10821297,USCI,"2022-02-28, 12:38:53",400,50.2041,50.06,-20081.64,-2,20083.64,0,-57.64,O;P
+Trades,SubTotal,,Stocks,USD,USCI,,,400,,,-20081.64,-2,20083.64,0,-57.64,
+Trades,Data,Order,Stocks,USD,U10821297,VZ,"2022-01-26, 09:30:01",-909,52.57430143,51.02,47790.04,-4.906899203,-50934.305,-3149.171897,1412.86,C;P
+Trades,SubTotal,,Stocks,USD,VZ,,,-909,,,47790.04,-4.906899203,-50934.305,-3149.171897,1412.86,
+Trades,Data,Order,Stocks,USD,U10821297,WMT,"2022-02-15, 09:32:59",-300,134.979983333,134.37,40493.995,-1.745519375,-42593.427085,-2101.177606,182.995,C;P
+Trades,SubTotal,,Stocks,USD,WMT,,,-300,,,40493.995,-1.745519375,-42593.427085,-2101.177606,182.995,
+Trades,Total,,Stocks,USD,,,,,,,-123731.655,-225.615827232,211255.19584333,-20058.947921,-7175.695, 
+Trades,Header,DataDiscriminator,Asset Category,Currency,Account,Symbol,Date/Time,Quantity,T. Price,C. Price,Proceeds,Comm/Fee,Basis,Realized P/L,MTM P/L,Code
+Trades,Data,Order,Equity and Index Options,USD,U7546406,AMD 18MAR22 160.0 C,"2022-01-07, 11:12:55",8,4.15,4.05,-3320,-2.1708,3322.1708,0,-80,O
+Trades,SubTotal,,Equity and Index Options,USD,AMD 18MAR22 160.0 C,,,8,,,-3320,-2.1708,3322.1708,0,-80,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,AMZN 18MAR22 2800.0 C,"2022-01-24, 12:27:33",8,147.9475,227.4468,-118358,-3.3508,118361.3508,0,63599.44,O;P
+Trades,Data,Order,Equity and Index Options,USD,U10821297,AMZN 18MAR22 2800.0 C,"2022-01-31, 13:19:27",-8,252.91,266.798,202328,-5.5301128,-118361.3508,83961.119088,-11110.4,C;P
+Trades,SubTotal,,Equity and Index Options,USD,AMZN 18MAR22 2800.0 C,,,0,,,83970,-8.8809128,-0,83961.119088,52489.04,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,AMZN 18MAR22 2810.0 C,"2022-01-24, 12:27:33",-8,143.25125,221.302,114601,-3.9527051,-114597.0472949,0,-62440.6,O;P
+Trades,Data,Order,Equity and Index Options,USD,U10821297,AMZN 18MAR22 2810.0 C,"2022-01-31, 13:19:27",8,246.335,259.5137,-197068,-4.4808,114597.047296,-82475.433504,10542.96,C;P
+Trades,SubTotal,,Equity and Index Options,USD,AMZN 18MAR22 2810.0 C,,,0,,,-82467,-8.4335051,0.0000011,-82475.433504,-51897.64,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,BABA 18FEB22 165.0 C,"2022-02-09, 10:57:05",-20,0.058,0.055,116,-11.0271916,-28666.077,-28561.104192,6,C;P
+Trades,SubTotal,,Equity and Index Options,USD,BABA 18FEB22 165.0 C,,,-20,,,116,-11.0271916,-28666.077,-28561.104192,6,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,BABA 18FEB22 170.0 C,"2022-02-09, 10:57:05",20,0.06,0.045,-120,-10.983,24352.758748,24221.775748,-30,C;P
+Trades,SubTotal,,Equity and Index Options,USD,BABA 18FEB22 170.0 C,,,20,,,-120,-10.983,24352.758748,24221.775748,-30,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,CAT 20MAY22 175.0 P,"2022-02-11, 15:24:57",6,4.95,5.675,-2970,-4.1949,2974.1949,0,435,O
+Trades,Data,Order,Equity and Index Options,USD,U10821297,CAT 20MAY22 175.0 P,"2022-02-22, 09:38:24",-6,6.5,5.9,3900,-1.70787,-2974.1949,924.09723,360,C
+Trades,SubTotal,,Equity and Index Options,USD,CAT 20MAY22 175.0 P,,,0,,,930,-5.90277,0,924.09723,795,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,FDX 20MAY22 210.0 P,"2022-02-09, 10:43:27",5,4.44,4.825,-2220,-3.49575,2223.49575,0,192.5,O;P
+Trades,Data,Order,Equity and Index Options,USD,U7546406,FDX 20MAY22 210.0 P,"2022-02-11, 14:47:21",-5,8.15,8.15,4075,-2.0274325,-2223.49575,1849.476818,0,C
+Trades,SubTotal,,Equity and Index Options,USD,FDX 20MAY22 210.0 P,,,0,,,1855,-5.5231825,0,1849.476818,192.5,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,GOLD 21JAN22 20.0 C,"2022-01-19, 15:30:07",-30,0.341666667,0.34,1025,-30.5911275,-4369.4815,-3375.072625,5,C;P
+Trades,SubTotal,,Equity and Index Options,USD,GOLD 21JAN22 20.0 C,,,-30,,,1025,-30.5911275,-4369.4815,-3375.072625,5,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,GOOGL 18FEB22 3010.0 C,"2022-02-02, 09:46:06",1,68,46.4117,-6800,-1.89135,6801.89135,0,-2158.83,O
+Trades,Data,Order,Equity and Index Options,USD,U7546406,GOOGL 18FEB22 3010.0 C,"2022-02-02, 09:49:55",-1,57.51,46.4117,5751,-1.0728601,-6801.89135,-1051.96421,1109.83,C
+Trades,SubTotal,,Equity and Index Options,USD,GOOGL 18FEB22 3010.0 C,,,0,,,-1049,-2.9642101,0,-1051.96421,-1049,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,GOOGL 14APR22 2520.0 C,"2022-01-24, 12:46:18",8,174.50875,221.7432,-139607,-1.7308,139608.7308,0,37787.56,O;P
+Trades,Data,Order,Equity and Index Options,USD,U10821297,GOOGL 14APR22 2520.0 C,"2022-02-02, 09:30:48",-8,512.895,469.5544,410316,-3.8408516,-139608.7308,270703.428348,34672.48,C;P
+Trades,SubTotal,,Equity and Index Options,USD,GOOGL 14APR22 2520.0 C,,,0,,,270709,-5.5716516,0,270703.428348,72460.04,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,GOOGL 14APR22 2530.0 C,"2022-01-24, 12:46:18",-8,169.21,215.3894,135368,-2.4386168,-135365.5613832,0,-36943.52,O;P
+Trades,Data,Order,Equity and Index Options,USD,U10821297,GOOGL 14APR22 2530.0 C,"2022-02-02, 09:30:48",8,504.1425,460.6363,-403314,-1.7308,135365.561382,-267950.169418,-34804.96,C;P
+Trades,SubTotal,,Equity and Index Options,USD,GOOGL 14APR22 2530.0 C,,,0,,,-267946,-4.1694168,-0.0000012,-267950.169418,-71748.48,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,MSFT 14APR22 285.0 C,"2022-01-24, 12:31:53",15,18.968,26.8189,-28452,-8.37025,28460.37025,0,11776.35,O;P
+Trades,Data,Order,Equity and Index Options,USD,U10821297,MSFT 14APR22 285.0 C,"2022-02-02, 10:40:53",-15,33.815333333,33.8984,50723,-8.3616373,-28460.37025,22254.268112,-124.6,C;P
+Trades,SubTotal,,Equity and Index Options,USD,MSFT 14APR22 285.0 C,,,0,,,22271,-16.7318873,-0,22254.268112,11651.75,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,MSFT 14APR22 290.0 C,"2022-01-24, 12:31:53",-15,16.486666667,23.7367,24730,-8.529073,-24721.470927,0,-10875.05,O;P
+Trades,Data,Order,Equity and Index Options,USD,U10821297,MSFT 14APR22 290.0 C,"2022-02-02, 10:40:53",15,29.949333333,29.9728,-44924,-8.07025,24721.470926,-20210.599324,35.2,C;P
+Trades,SubTotal,,Equity and Index Options,USD,MSFT 14APR22 290.0 C,,,0,,,-20194,-16.599323,-0.000001,-20210.599324,-10839.85,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SMH 18MAR22 285.0 C,"2022-01-28, 15:07:20",15,4.1,5.6972,-6150,-16.63025,6166.63025,0,2395.8,O;P
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SMH 18MAR22 285.0 C,"2022-01-31, 10:50:26",-15,7.35,8.85,11025,-4.1591775,-6166.63025,4854.210575,-2250,C
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SMH 18MAR22 285.0 C,"2022-01-31, 13:28:35",7,7.15,8.85,-5005,-1.89945,5006.89945,0,1190,O
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SMH 18MAR22 285.0 C,"2022-02-02, 09:31:20",-7,11.3,12.2,7910,-2.305051,-5006.89945,2900.795499,-630,C
+Trades,SubTotal,,Equity and Index Options,USD,SMH 18MAR22 285.0 C,,,0,,,7780,-24.9939285,0,7755.006074,705.8,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,SMH 14APR22 285.0 C,"2022-03-07, 10:06:19",10,3.3,2.09,-3300,-6.9915,3306.9915,0,-1210,O
+Trades,SubTotal,,Equity and Index Options,USD,SMH 14APR22 285.0 C,,,10,,,-3300,-6.9915,3306.9915,0,-1210,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,SMH 14APR22 235.0 P,"2022-02-16, 15:02:24",5,4.34,4.45,-2170,-3.49575,2173.49575,0,55,O
+Trades,Data,Order,Equity and Index Options,USD,U10821297,SMH 14APR22 235.0 P,"2022-02-16, 15:07:48",3,4.23,4.45,-1269,-2.09745,1271.09745,0,66,O;P
+Trades,Data,Order,Equity and Index Options,USD,U10821297,SMH 14APR22 235.0 P,"2022-02-17, 10:43:18",-8,6,6.2756,4800,-2.67512,-3444.5932,1352.73168,-220.48,C
+Trades,SubTotal,,Equity and Index Options,USD,SMH 14APR22 235.0 P,,,0,,,1361,-8.26832,0,1352.73168,-99.48,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SPY 18FEB22 490.0 C,"2022-01-20, 10:36:38",-10,0.28,0.1567,280,-9.906728,-4233.1935,-3963.100229,123.3,C;P
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SPY 18FEB22 490.0 C,"2022-01-20, 10:37:48",-2,0.28,0.1567,56,-1.3873456,-54.6126544,0,24.66,O
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SPY 18FEB22 490.0 C,"2022-01-20, 11:35:36",2,0.3,0.1567,-60,-2.0027,54.612654,-7.390046,-28.66,C
+Trades,SubTotal,,Equity and Index Options,USD,SPY 18FEB22 490.0 C,,,-10,,,276,-13.2967736,-4233.1935004,-3970.490275,119.3,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SPY 18MAR22 465.0 C,"2022-01-20, 15:32:59",2,6.56,5.705,-1312,-2.2027,1314.2027,0,-171,O
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SPY 18MAR22 465.0 C,"2022-02-09, 10:38:39",-2,5.57,5.75,1114,-1.4083414,-1314.2027,-201.611041,-36,C
+Trades,SubTotal,,Equity and Index Options,USD,SPY 18MAR22 465.0 C,,,0,,,-198,-3.6110414,0,-201.611041,-207,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SPY 18MAR22 475.0 C,"2022-01-20, 10:36:38",10,4.718,2.64,-4718,-7.9035,4725.9035,0,-2078,O;P
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SPY 18MAR22 475.0 C,"2022-01-20, 10:37:48",2,4.75,2.64,-950,-1.3827,951.3827,0,-422,O
+Trades,Data,Order,Equity and Index Options,USD,U7546406,SPY 18MAR22 475.0 C,"2022-02-09, 10:38:25",-12,2.21,2.29,2652,-12.1494852,-5677.2862,-3037.435684,-96,C
+Trades,SubTotal,,Equity and Index Options,USD,SPY 18MAR22 475.0 C,,,0,,,-3016,-21.4356852,0,-3037.435684,-2596,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,SPY 14APR22 455.0 C,"2022-03-01, 13:39:40",10,3.88,4.245,-3880,-6.9915,3886.9915,0,365,O
+Trades,Data,Order,Equity and Index Options,USD,U10821297,SPY 14APR22 455.0 C,"2022-03-02, 11:39:29",-10,5.5,5.565,5500,-3.34135,-3886.9915,1609.66715,-65,C
+Trades,Data,Order,Equity and Index Options,USD,U10821297,SPY 14APR22 455.0 C,"2022-03-07, 10:06:59",10,3.02,1.785,-3020,-6.9915,3026.9915,0,-1235,O;P
+Trades,SubTotal,,Equity and Index Options,USD,SPY 14APR22 455.0 C,,,10,,,-1400,-17.32435,3026.9915,1609.66715,-935,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,T 21JAN22 26.0 C,"2022-01-13, 12:39:41",-30,0.98,0.8928,2940,-20.820894,-2540.7105,378.468607,261.6,C;P
+Trades,SubTotal,,Equity and Index Options,USD,T 21JAN22 26.0 C,,,-30,,,2940,-20.820894,-2540.7105,378.468607,261.6,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,TSM 20MAY22 110.0 P,"2022-02-11, 10:06:47",8,3.65,5.25,-2920,-5.5932,2925.5932,0,1280,O
+Trades,Data,Order,Equity and Index Options,USD,U10821297,TSM 20MAY22 110.0 P,"2022-02-22, 09:39:26",-8,5.34,5.625,4272,-5.6324272,-2925.5932,1340.774372,-228,C;P
+Trades,SubTotal,,Equity and Index Options,USD,TSM 20MAY22 110.0 P,,,0,,,1352,-11.2256272,0,1340.774372,1052,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,VIAC 21JAN22 32.5 C,"2022-01-07, 11:15:13",-22,3.03,3.2526,6666,-15.2876966,-5019.7697,1630.942603,-489.72,C;P
+Trades,SubTotal,,Equity and Index Options,USD,VIAC 21JAN22 32.5 C,,,-22,,,6666,-15.2876966,-5019.7697,1630.942603,-489.72,
+Trades,Data,Order,Equity and Index Options,USD,U7546406,VIAC 18MAR22 35.0 C,"2022-02-01, 10:10:24",40,1.72,1.76,-6880,-10.854,6890.854,0,160,O;P
+Trades,Data,Order,Equity and Index Options,USD,U7546406,VIAC 18MAR22 35.0 C,"2022-02-02, 09:40:53",-40,1.43,1.36,5720,-10.970372,-6890.854,-1181.824372,280,C
+Trades,SubTotal,,Equity and Index Options,USD,VIAC 18MAR22 35.0 C,,,0,,,-1160,-21.824372,0,-1181.824372,440,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,WMT 21JAN22 142.0 C,"2022-01-21, 14:02:10",3,0.07,0,-21,-1.62405,805.875834,783.251784,-21,C
+Trades,SubTotal,,Equity and Index Options,USD,WMT 21JAN22 142.0 C,,,3,,,-21,-1.62405,805.875834,783.251784,-21,
+Trades,Data,Order,Equity and Index Options,USD,U10821297,WMT 18MAR22 140.0 C,"2022-02-02, 09:38:59",-3,4.6,4.6553,1380,-2.087628,-1377.912372,0,-16.59,O
+Trades,Data,Order,Equity and Index Options,USD,U10821297,WMT 18MAR22 140.0 C,"2022-02-14, 10:57:12",3,1.5,1.72,-450,-1.19745,1377.912372,926.714922,66,C
+Trades,SubTotal,,Equity and Index Options,USD,WMT 18MAR22 140.0 C,,,0,,,930,-3.285078,0,926.714922,49.41,
+Trades,Total,,Equity and Index Options,USD,,,,,,,17990,-299.5382948,-10014.4438195,7676.017891,-975.73, 
+Transfers,Header,Asset Category,Currency,Account,Symbol,Date,Type,Direction,Xfer Company,Xfer Account,Qty,Xfer Price,Market Value,Realized P/L,Cash Amount,Code
+Transfers,Data,U10821297,Stocks,USD,VTIP,2022-02-03,ACATS,In,--,11142215,"5,500",--,"280,500.00",0.00,0.00,
+Transfers,Data,Total,,,,,,,,,,,280500,0,0,
+Deposits & Withdrawals,Header,Currency,Account,Settle Date,Description,Amount
+Deposits & Withdrawals,Data,USD,U4819117,2022-01-24,Disbursement Initiated by Account Closure,-39.23
+Deposits & Withdrawals,Data,USD,U10821297,2022-02-03,ACATS Transfer In From Account 11142215,3240.83
+Deposits & Withdrawals,Data,USD,U10821297,2022-02-03,ACATS Transfer In From Account 11142215,-125
+Deposits & Withdrawals,Data,USD,U4819117,2022-02-04,Disbursement Initiated by Account Closure,-96.46
+Deposits & Withdrawals,Data,USD,U7546406,2022-02-07,Disbursement Initiated by Ivan V Cerovski,-80797.26
+Deposits & Withdrawals,Data,USD,U10821297,2022-02-08,Electronic Fund Transfer,138000
+Deposits & Withdrawals,Data,USD,U4819117,2022-02-08,Disbursement Initiated by Account Closure,-4.25
+Deposits & Withdrawals,Data,Total,,,,60178.63
+Fees,Header,Subtitle,Currency,Account,Date,Description,Amount
+Fees,Data,Other Fees,USD,U7546406,2022-01-04,i******10:US Equity and Options Add-On Streaming Bundle Non-Professional for Jan 2022,-4.5
+Fees,Data,Other Fees,USD,U7546406,2022-01-04,i******10:CUSIP Service Non-Professional for Dec 2021,1
+Fees,Data,Other Fees,USD,U7546406,2022-01-04,i******10:CUSIP Service Non-Professional for Jan 2022,-1
+Fees,Data,Other Fees,USD,U7546406,2022-01-04,i******10:US Securities Snapshot and Futures Value Bundle Non-Professional for Dec 2021,10
+Fees,Data,Other Fees,USD,U7546406,2022-01-04,i******10:US Securities Snapshot and Futures Value Bundle Non-Professional for Jan 2022,-10
+Fees,Data,Other Fees,USD,U7546406,2022-02-02,i******10:US Equity and Options Add-On Streaming Bundle Non-Professional for Feb 2022,-4.5
+Fees,Data,Other Fees,USD,U7546406,2022-02-02,i******10:CUSIP Service Non-Professional for Jan 2022,1
+Fees,Data,Other Fees,USD,U7546406,2022-02-02,i******10:CUSIP Service Non-Professional for Feb 2022,-1
+Fees,Data,Other Fees,USD,U7546406,2022-02-02,i******10:US Securities Snapshot and Futures Value Bundle Non-Professional for Jan 2022,10
+Fees,Data,Other Fees,USD,U7546406,2022-02-02,i******10:US Securities Snapshot and Futures Value Bundle Non-Professional for Feb 2022,-10
+Fees,Data,Other Fees,USD,U7546406,2022-03-03,i******10:US Equity and Options Add-On Streaming Bundle Non-Professional for Mar 2022,-4.5
+Fees,Data,Other Fees,USD,U7546406,2022-03-03,i******10:CUSIP Service Non-Professional for Feb 2022,1
+Fees,Data,Other Fees,USD,U7546406,2022-03-03,i******10:CUSIP Service Non-Professional for Mar 2022,-1
+Fees,Data,Other Fees,USD,U7546406,2022-03-03,i******10:US Securities Snapshot and Futures Value Bundle Non-Professional for Feb 2022,10
+Fees,Data,Other Fees,USD,U7546406,2022-03-03,i******10:US Securities Snapshot and Futures Value Bundle Non-Professional for Mar 2022,-10
+Fees,Data,Total,,,,,-13.5
+Fees,Notes,"Market data is provided by Global Financial Information Services (GmbH). Your local broker collects amounts owed for fees and tax for such data on behalf of Global Financial Information Services (GmbH). Note, you are responsible for any applicable taxes relating to the provision of these services."
+Dividends,Header,Currency,Account,Date,Description,Amount
+Dividends,Data,USD,U10821297,2022-01-03,WMT(US9311421039) Cash Dividend USD 0.55 per Share (Ordinary Dividend),165
+Dividends,Data,USD,U10821297,2022-02-01,T(US00206R1023) Cash Dividend USD 0.52 per Share (Ordinary Dividend),780
+Dividends,Data,USD,U10821297,2022-02-01,VZ(US92343V1044) Cash Dividend USD 0.64 per Share (Ordinary Dividend),581.76
+Dividends,Data,USD,U10821297,2022-03-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share (Ordinary Dividend),306
+Dividends,Data,USD,U10821297,2022-03-10,MSFT(US5949181045) Cash Dividend USD 0.62 per Share (Ordinary Dividend),74.4
+Dividends,Data,Total,,,,1907.16
+Withholding Tax,Header,Account,Currency,Date,Description,Amount,Code
+Withholding Tax,Data,U4819117,USD,2021-02-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,20.41,
+Withholding Tax,Data,U4819117,USD,2021-02-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,-12.03,
+Withholding Tax,Data,U4819117,USD,2021-02-25,EFC(US28852N1090) Cash Dividend USD 0.10 per Share - US Tax,16.59,
+Withholding Tax,Data,U4819117,USD,2021-02-25,EFC(US28852N1090) Cash Dividend USD 0.10 per Share - US Tax,-15.98,
+Withholding Tax,Data,U4819117,USD,2021-03-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,20.53,
+Withholding Tax,Data,U4819117,USD,2021-03-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,-12.1,
+Withholding Tax,Data,U4819117,USD,2021-03-25,EFC(US28852N1090) Cash Dividend USD 0.10 per Share - US Tax,16.59,
+Withholding Tax,Data,U4819117,USD,2021-03-25,EFC(US28852N1090) Cash Dividend USD 0.10 per Share - US Tax,-15.98,
+Withholding Tax,Data,U4819117,USD,2021-04-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,18.12,
+Withholding Tax,Data,U4819117,USD,2021-04-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,-10.68,
+Withholding Tax,Data,U4819117,USD,2021-04-26,EARN(US2885781078) Cash Dividend USD 0.28 per Share - US Tax,57.12,
+Withholding Tax,Data,U4819117,USD,2021-04-26,EFC(US28852N1090) Cash Dividend USD 0.10 per Share - US Tax,16.77,
+Withholding Tax,Data,U4819117,USD,2021-04-26,EFC(US28852N1090) Cash Dividend USD 0.10 per Share - US Tax,-16.15,
+Withholding Tax,Data,U4819117,USD,2021-05-03,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,18.23,
+Withholding Tax,Data,U4819117,USD,2021-05-03,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,-10.74,
+Withholding Tax,Data,U4819117,USD,2021-05-25,EFC(US28852N1090) Cash Dividend USD 0.14 per Share - US Tax,23.48,
+Withholding Tax,Data,U4819117,USD,2021-05-25,EFC(US28852N1090) Cash Dividend USD 0.14 per Share - US Tax,-22.61,
+Withholding Tax,Data,U4819117,USD,2021-06-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,18.23,
+Withholding Tax,Data,U4819117,USD,2021-06-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,-10.74,
+Withholding Tax,Data,U10821297,USD,2021-06-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,0.1,
+Withholding Tax,Data,U10821297,USD,2021-06-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,-0.06,
+Withholding Tax,Data,U4819117,USD,2021-06-25,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,25.16,
+Withholding Tax,Data,U4819117,USD,2021-06-25,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,-24.23,
+Withholding Tax,Data,U10821297,USD,2021-07-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,18.42,
+Withholding Tax,Data,U10821297,USD,2021-07-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,-10.86,
+Withholding Tax,Data,U10821297,USD,2021-07-26,EARN(US2885781078) Payment in Lieu of Dividend - US Tax,7.05,
+Withholding Tax,Data,U10821297,USD,2021-07-26,EARN(US2885781078) Cash Dividend USD 0.30 per Share - US Tax,55.38,
+Withholding Tax,Data,U10821297,USD,2021-07-26,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,25.44,
+Withholding Tax,Data,U10821297,USD,2021-07-26,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,-24.5,
+Withholding Tax,Data,U10821297,USD,2021-08-25,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,25.44,
+Withholding Tax,Data,U10821297,USD,2021-08-25,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,-24.5,
+Withholding Tax,Data,U10821297,USD,2021-09-27,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,25.65,
+Withholding Tax,Data,U10821297,USD,2021-09-27,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,-24.7,
+Withholding Tax,Data,U10821297,USD,2021-10-25,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,36.15,
+Withholding Tax,Data,U10821297,USD,2021-10-25,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,-34.82,
+Withholding Tax,Data,U10821297,USD,2021-10-29,NLY(US0357104092) Cash Dividend USD 0.22 per Share - US Tax,105.6,
+Withholding Tax,Data,U10821297,USD,2021-11-26,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,36.15,
+Withholding Tax,Data,U10821297,USD,2021-11-26,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,-34.82,
+Withholding Tax,Data,U10821297,USD,2021-12-27,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,36.15,
+Withholding Tax,Data,U10821297,USD,2021-12-27,EFC(US28852N1090) Cash Dividend USD 0.15 per Share - US Tax,-34.82,
+Withholding Tax,Data,U10821297,USD,2022-01-03,WMT(US9311421039) Cash Dividend USD 0.55 per Share - US Tax,-16.5,
+Withholding Tax,Data,U10821297,USD,2022-02-01,T(US00206R1023) Cash Dividend USD 0.52 per Share - US Tax,-78,
+Withholding Tax,Data,U10821297,USD,2022-02-01,VZ(US92343V1044) Cash Dividend USD 0.64 per Share - US Tax,-58.18,
+Withholding Tax,Data,U4819117,USD,2022-02-03,EARN(US2885781078) Cash Dividend USD 0.28 per Share - US Tax,56,
+Withholding Tax,Data,U4819117,USD,2022-02-03,EARN(US2885781078) Cash Dividend USD 0.28 per Share - US Tax,-16.66,
+Withholding Tax,Data,U4819117,USD,2022-02-07,EFC(US28852N1090) Cash Dividend USD 0.10 per Share - US Tax,16.5,
+Withholding Tax,Data,U4819117,USD,2022-02-07,EFC(US28852N1090) Cash Dividend USD 0.10 per Share - US Tax,-15.89,
+Withholding Tax,Data,U10821297,USD,2022-03-01,EMD(US95766A1016) Cash Dividend USD 0.09 per Share - US Tax,-30.6,
+Withholding Tax,Data,U10821297,USD,2022-03-10,MSFT(US5949181045) Cash Dividend USD 0.62 per Share - US Tax,-7.44,
+Withholding Tax,Data,Total,,,,131.67,
+Interest,Header,Currency,Account,Date,Description,Amount
+Interest,Data,USD,U10821297,2022-01-05,USD Debit Interest for Dec-2021,-6.09
+Interest,Data,USD,U10821297,2022-02-03,USD Borrow Fees for Jan-2022,-0.83
+Interest,Data,USD,U7546406,2022-02-15,Bond Coupon Payment (AFSI 6 1/8 08/15/23 9AE1),30.63
+Interest,Data,USD,U10821297,2022-03-03,USD Debit Interest for Feb-2022,-18.07
+Interest,Data,USD,U10821297,2022-03-03,USD Borrow Fees for Feb-2022,-44.39
+Interest,Data,Total,,,,-38.75
+Broker Fees,Header,Account,Currency,Date,Description,Amount,Code
+Broker Fees,Data,U7546406,USD,2022-01-05,USD Investment Loan Interest for Dec-2021,-0.04,
+Broker Fees,Data,U7546406,USD,2022-03-03,USD Investment Loan Interest for Feb-2022,-2.34,
+Broker Fees,Data,Total,,,,-2.38,
+Interest Accruals,Header,Currency,Field Name,Field Value
+Interest Accruals,Data,Base Currency Summary,Starting Accrual Balance,17.56
+Interest Accruals,Data,Base Currency Summary,Interest Accrued,-63.03
+Interest Accruals,Data,Base Currency Summary,Accrual Reversal,38.75
+Interest Accruals,Data,Base Currency Summary,FX Translation,0
+Interest Accruals,Data,Base Currency Summary,Ending Accrual Balance,-6.72
+Change in Dividend Accruals,Header,Asset Category,Currency,Account,Symbol,Date,Ex Date,Pay Date,Quantity,Tax,Fee,Gross Rate,Gross Amount,Net Amount,Code
+Change in Dividend Accruals,Data,Starting Dividend Accruals in USD,,,,,,,,,,,,148.5,
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,EFC,2022-02-24,2022-02-25,2022-03-25,2300,34.51,0,0.15,345,310.49,Po
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,EFC,2022-02-24,2022-02-25,2022-03-25,2300,34.5,0,0.15,345,310.5,Po
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,EFC,2022-02-24,2022-02-25,2022-03-25,2300,-34.51,0,0.15,-345,-310.49,Re
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,EMD,2022-02-16,2022-02-17,2022-03-01,3400,30.6,0,0.09,306,275.4,Po
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,EMD,2022-03-01,2022-02-17,2022-03-01,3400,-30.6,0,0.09,-306,-275.4,Re
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,HSY,2022-02-16,2022-02-17,2022-03-15,260,23.42,0,0.901,234.26,210.84,Po
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,HSY,2022-02-16,2022-02-17,2022-03-15,260,23.43,0,0.901,234.26,210.83,Po
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,HSY,2022-02-16,2022-02-17,2022-03-15,260,-23.42,0,0.901,-234.26,-210.84,Re
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,MSFT,2022-02-15,2022-02-16,2022-03-10,120,7.44,0,0.62,74.4,66.96,Po
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,MSFT,2022-03-10,2022-02-16,2022-03-10,120,-7.44,0,0.62,-74.4,-66.96,Re
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,T,2022-01-06,2022-01-07,2022-02-01,1500,78,0,0.52,780,702,Po
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,T,2022-02-01,2022-01-07,2022-02-01,1500,-78,0,0.52,-780,-702,Re
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,VZ,2022-01-06,2022-01-07,2022-02-01,909,58.18,0,0.64,581.76,523.58,Po
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,VZ,2022-02-01,2022-01-07,2022-02-01,909,-58.18,0,0.64,-581.76,-523.58,Re
+Change in Dividend Accruals,Data,Stocks,USD,U10821297,WMT,2022-01-03,2021-12-09,2022-01-03,300,-16.5,0,0.55,-165,-148.5,Re
+Change in Dividend Accruals,Data,Total,,,,,,,,41.43,0,,414.26,372.83,
+Change in Dividend Accruals,Data,Ending Dividend Accruals in USD,,,,,,,,,,,,521.33,
+Borrow Fee Details,Header,Currency,Account,Value Date,Symbol,Quantity,Price,Value,Fee Rate (%),Borrow Fee,Code
+Borrow Fee Details,Data,USD,U10821297,2022-01-26,TQQQ,700,55,38500,0.7742,-0.83,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-04,TQQQ,900,58,52200,0.7732,-1.12,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-05,TQQQ,900,58,52200,0.7732,-1.12,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-06,TQQQ,900,58,52200,0.7732,-1.12,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-08,TQQQ,900,59,53100,0.9681,-1.43,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-09,TQQQ,900,61,54900,0.9154,-1.4,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-10,TQQQ,700,65,45500,0.9125,-1.15,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-11,TQQQ,800,60,48000,0.957,-1.28,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-12,TQQQ,800,60,48000,0.957,-1.28,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-13,TQQQ,800,60,48000,0.957,-1.28,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-18,ARKK,500,70,35000,4.6552,-4.53,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-19,ARKK,500,70,35000,4.6552,-4.53,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-20,ARKK,500,70,35000,4.6552,-4.53,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-21,ARKK,500,70,35000,4.6552,-4.53,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-25,ARKK,500,67,33500,5.4017,-5.03,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-26,ARKK,500,67,33500,5.4017,-5.03,Po
+Borrow Fee Details,Data,USD,U10821297,2022-02-27,ARKK,500,67,33500,5.4017,-5.03,Po
+Borrow Fee Details,Data,Total,,,,,,,,-45.22,
+IBKR Managed Securities Collateral Held at IBSS (Stock Yield Enhancement Program),Header,Asset Category,Currency,Account,Symbol,Quantity,Price,Value
+Financial Instrument Information,Header,Asset Category,Symbol,Description,Conid,Security ID,Listing Exch,Multiplier,Type,Code
+Financial Instrument Information,Data,Stocks,AMZN,AMAZON.COM INC,3691937,US0231351067,NASDAQ,1,COMMON,
+Financial Instrument Information,Data,Stocks,ARKK,ARK INNOVATION ETF,172522644,US00214Q1040,ARCA,1,ETF,
+Financial Instrument Information,Data,Stocks,BABA,ALIBABA GROUP HOLDING-SP ADR,166090175,US01609W1027,NYSE,1,ADR,
+Financial Instrument Information,Data,Stocks,BRK B,BERKSHIRE HATHAWAY INC-CL B,72063691,US0846707026,NYSE,1,COMMON,
+Financial Instrument Information,Data,Stocks,BXMT,BLACKSTONE MORTGAGE TRU-CL A,127149807,US09257W1009,NYSE,1,REIT,
+Financial Instrument Information,Data,Stocks,CWH,CAMPING WORLD HOLDINGS INC-A,250142644,US13462K1097,NYSE,1,COMMON,
+Financial Instrument Information,Data,Stocks,DOCU,DOCUSIGN INC,316073742,US2561631068,NASDAQ,1,COMMON,
+Financial Instrument Information,Data,Stocks,EARN,ELLINGTON RESIDENTIAL MORTGA,126863008,US2885781078,NYSE,1,REIT,
+Financial Instrument Information,Data,Stocks,EFC,ELLINGTON FINANCIAL INC,355090937,US28852N1090,NYSE,1,REIT,
+Financial Instrument Information,Data,Stocks,EMD,WESTERN ASSET EMRG MRKT DBT,41073515,US95766A1016,NYSE,1,CLOSED-END FUND,
+Financial Instrument Information,Data,Stocks,ETHE,GRAYSCALE ETHEREUM TRUST,372707395,US3896381072,PINK,1,OPEN-END FUND,
+Financial Instrument Information,Data,Stocks,FB,META PLATFORMS INC-CLASS A,107113386,US30303M1027,NASDAQ,1,COMMON,
+Financial Instrument Information,Data,Stocks,GBTC,GRAYSCALE BITCOIN TRUST BTC,349966059,US3896371099,PINK,1,OPEN-END FUND,
+Financial Instrument Information,Data,Stocks,GOOGL,ALPHABET INC-CL A,208813719,US02079K3059,NASDAQ,1,COMMON,
+Financial Instrument Information,Data,Stocks,HSY,HERSHEY CO/THE,8199,US4278661081,NYSE,1,COMMON,
+Financial Instrument Information,Data,Stocks,MSFT,MICROSOFT CORP,272093,US5949181045,NASDAQ,1,COMMON,
+Financial Instrument Information,Data,Stocks,NLY,ANNALY CAPITAL MANAGEMENT IN,6278576,US0357104092,NYSE,1,REIT,
+Financial Instrument Information,Data,Stocks,SKYY,FIRST TRUST CLOUD COMPUTING,90617252,US33734X1928,NASDAQ,1,ETF,
+Financial Instrument Information,Data,Stocks,SQQQ,PROSHARES ULTRAPRO SHORT QQQ,537765515,US74347G4322,NASDAQ,1,ETF,
+Financial Instrument Information,Data,Stocks,T,AT&T INC,37018770,US00206R1023,NYSE,1,COMMON,
+Financial Instrument Information,Data,Stocks,TQQQ,PROSHARES ULTRAPRO QQQ,72539702,US74347X8314,NASDAQ,1,ETF,
+Financial Instrument Information,Data,Stocks,TXN,TEXAS INSTRUMENTS INC,13096,US8825081040,NASDAQ,1,COMMON,
+Financial Instrument Information,Data,Stocks,ULE,PROSHARES ULTRA EURO,56238804,US74347W8745,ARCA,1,ETF,
+Financial Instrument Information,Data,Stocks,USCI,UNITED STATES COMMODITY INDE,77842302,US9117171069,ARCA,1,ETF,
+Financial Instrument Information,Data,Stocks,VTIP,VANGUARD SHORT-TERM TIPS,115664156,US9220208055,NASDAQ,1,ETF,
+Financial Instrument Information,Data,Stocks,VZ,VERIZON COMMUNICATIONS INC,4901,US92343V1044,NYSE,1,COMMON,
+Financial Instrument Information,Data,Stocks,WMT,WALMART INC,13824,US9311421039,NYSE,1,COMMON,
+Financial Instrument Information,Header,Asset Category,Symbol,Description,Conid,Listing Exch,Multiplier,Expiry,Delivery Month,Type,Strike,Code
+Financial Instrument Information,Data,Equity and Index Options,AMD   220318C00160000,AMD 18MAR22 160.0 C,506480232,CBOE,100,2022-03-18,2022-03,C,160,
+Financial Instrument Information,Data,Equity and Index Options,AMZN  220318C02800000,AMZN 18MAR22 2800.0 C,475689130,CBOE,100,2022-03-18,2022-03,C,2800,
+Financial Instrument Information,Data,Equity and Index Options,AMZN  220318C02810000,AMZN 18MAR22 2810.0 C,475689135,CBOE,100,2022-03-18,2022-03,C,2810,
+Financial Instrument Information,Data,Equity and Index Options,BABA  220218C00165000,BABA 18FEB22 165.0 C,514494710,CBOE,100,2022-02-18,2022-02,C,165,
+Financial Instrument Information,Data,Equity and Index Options,BABA  220218C00170000,BABA 18FEB22 170.0 C,514494733,CBOE,100,2022-02-18,2022-02,C,170,
+Financial Instrument Information,Data,Equity and Index Options,CAT   220520P00175000,CAT 20MAY22 175.0 P,514840102,CBOE,100,2022-05-20,2022-05,P,175,
+Financial Instrument Information,Data,Equity and Index Options,FDX   220520P00210000,FDX 20MAY22 210.0 P,536401066,CBOE,100,2022-05-20,2022-05,P,210,
+Financial Instrument Information,Data,Equity and Index Options,GOLD  220121C00020000,GOLD 21JAN22 20.0 C,383440911,CBOE,100,2022-01-21,2022-01,C,20,
+Financial Instrument Information,Data,Equity and Index Options,GOOGL 220218C03010000,GOOGL 18FEB22 3010.0 C,540406181,CBOE,100,2022-02-18,2022-02,C,3010,
+Financial Instrument Information,Data,Equity and Index Options,GOOGL 220414C02520000,GOOGL 14APR22 2520.0 C,528482180,CBOE,100,2022-04-14,2022-04,C,2520,
+Financial Instrument Information,Data,Equity and Index Options,GOOGL 220414C02530000,GOOGL 14APR22 2530.0 C,528482231,CBOE,100,2022-04-14,2022-04,C,2530,
+Financial Instrument Information,Data,Equity and Index Options,MSFT  220318C00365000,MSFT 18MAR22 365.0 C,470494396,CBOE,100,2022-03-18,2022-03,C,365,
+Financial Instrument Information,Data,Equity and Index Options,MSFT  220414C00285000,MSFT 14APR22 285.0 C,509405783,CBOE,100,2022-04-14,2022-04,C,285,
+Financial Instrument Information,Data,Equity and Index Options,MSFT  220414C00290000,MSFT 14APR22 290.0 C,509405808,CBOE,100,2022-04-14,2022-04,C,290,
+Financial Instrument Information,Data,Equity and Index Options,SMH   220318C00285000,SMH 18MAR22 285.0 C,538850324,CBOE,100,2022-03-18,2022-03,C,285,
+Financial Instrument Information,Data,Equity and Index Options,SMH   220414C00285000,SMH 14APR22 285.0 C,538851746,CBOE,100,2022-04-14,2022-04,C,285,
+Financial Instrument Information,Data,Equity and Index Options,SMH   220414P00235000,SMH 14APR22 235.0 P,539688517,CBOE,100,2022-04-14,2022-04,P,235,
+Financial Instrument Information,Data,Equity and Index Options,SPY   220218C00490000,SPY 18FEB22 490.0 C,462955064,CBOE,100,2022-02-18,2022-02,C,490,
+Financial Instrument Information,Data,Equity and Index Options,SPY   220318C00465000,SPY 18MAR22 465.0 C,425407674,CBOE,100,2022-03-18,2022-03,C,465,
+Financial Instrument Information,Data,Equity and Index Options,SPY   220318C00475000,SPY 18MAR22 475.0 C,425949973,CBOE,100,2022-03-18,2022-03,C,475,
+Financial Instrument Information,Data,Equity and Index Options,SPY   220414C00455000,SPY 14APR22 455.0 C,523232979,CBOE,100,2022-04-14,2022-04,C,455,
+Financial Instrument Information,Data,Equity and Index Options,T     220121C00026000,T 21JAN22 26.0 C,492646990,CBOE,100,2022-01-21,2022-01,C,26,
+Financial Instrument Information,Data,Equity and Index Options,TSM   220520P00110000,TSM 20MAY22 110.0 P,535677054,CBOE,100,2022-05-20,2022-05,P,110,
+Financial Instrument Information,Data,Equity and Index Options,VIAC  220121C00032500,VIAC 21JAN22 32.5 C,383408596,CBOE,100,2022-01-21,2022-01,C,32.5,
+Financial Instrument Information,Data,Equity and Index Options,VIAC  220318C00035000,VIAC 18MAR22 35.0 C,503025840,CBOE,100,2022-03-18,2022-03,C,35,
+Financial Instrument Information,Data,Equity and Index Options,WMT   220121C00142000,WMT 21JAN22 142.0 C,533942473,CBOE,100,2022-01-21,2022-01,C,142,
+Financial Instrument Information,Data,Equity and Index Options,WMT   220318C00140000,WMT 18MAR22 140.0 C,503030808,CBOE,100,2022-03-18,2022-03,C,140,
+Financial Instrument Information,Header,Asset Category,Symbol,Description,Conid,Security ID,Listing Exch,Multiplier,Type,Issuer,Maturity,Code
+Financial Instrument Information,Data,Bonds,AFSI 6 1/8 08/15/23 9AE1,AFSI 6 1/8 08/15/23,164664489,US032359AE12,,1,Corp,AFSI,2023-08-15,
