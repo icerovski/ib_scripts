@@ -1,4 +1,5 @@
 import csv
+from multiprocessing.sharedctypes import Value
 
 def sort_ib_file():
     data = []
@@ -31,6 +32,10 @@ def clean_date(line):
     
     return(D)
 
+def print_dict(dict):
+    for key, val in dict.items():
+        print(key, '-->', val)
+
 # round_trade_sum = 0 # if equal to zero then we have a round trade
 # remaining_shares = 0
 # entry_number = 0 # number of shares entered into
@@ -45,5 +50,4 @@ if __name__ == "__main__":
     raw_table = sort_ib_file()
     print(raw_table)
     table = convert_to_dict(raw_table, date_col, symbol_col, q_col, p_col)
-    print(table)
-    
+    print_dict(table)
