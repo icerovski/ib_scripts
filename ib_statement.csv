@@ -16,13 +16,13 @@ Account Information,Data,Customer Type,Individual
 Account Information,Data,Account Capabilities,Margin
 Account Information,Data,Base Currency,USD
 Net Asset Value,Header,Asset Class,Prior Total,Current Long,Current Short,Current Total,Change
-Net Asset Value,Data,Cash ,130271.443311385,86158.164189353,0,86158.164189353,-44113.279122032
+Net Asset Value,Data,Cash,130271.443311385,86158.164189353,0,86158.164189353,-44113.279122032
 Net Asset Value,Data,Stock,279739.94,656655.15,0,656655.15,376915.21
 Net Asset Value,Data,Options,7273.48,2595.96,0,2595.96,-4677.52
 Net Asset Value,Data,Bonds,1006.11,1025.55,0,1025.55,19.44
 Net Asset Value,Data,Interest Accruals,17.56,5.1,-11.82,-6.72,-24.28
-Net Asset Value,Data,    Broker Interest Accruals,-6.09,0,-11.82,-11.82,-5.73
-Net Asset Value,Data,    Bond Interest Accruals,23.65,5.1,0,5.1,-18.55
+Net Asset Value,Data,Broker Interest Accruals,-6.09,0,-11.82,-11.82,-5.73
+Net Asset Value,Data,Bond Interest Accruals,23.65,5.1,0,5.1,-18.55
 Net Asset Value,Data,Dividend Accruals,148.5,521.33,0,521.33,372.83
 Net Asset Value,Data,Total,418457.033311385,746961.254189353,-11.82,746949.434189353,328492.400877968
 Net Asset Value,Header,Time Weighted Rate of Return
@@ -316,7 +316,7 @@ Trades,Data,Order,Stocks,USD,U10821297,VZ,"2022-01-26, 09:30:01",-909,52.5743014
 Trades,SubTotal,,Stocks,USD,VZ,,,-909,,,47790.04,-4.906899203,-50934.305,-3149.171897,1412.86,
 Trades,Data,Order,Stocks,USD,U10821297,WMT,"2022-02-15, 09:32:59",-300,134.979983333,134.37,40493.995,-1.745519375,-42593.427085,-2101.177606,182.995,C;P
 Trades,SubTotal,,Stocks,USD,WMT,,,-300,,,40493.995,-1.745519375,-42593.427085,-2101.177606,182.995,
-Trades,Total,,Stocks,USD,,,,,,,-123731.655,-225.615827232,211255.19584333,-20058.947921,-7175.695, 
+Trades,Total,,Stocks,USD,,,,,,,-123731.655,-225.615827232,211255.19584333,-20058.947921,-7175.695,
 Trades,Header,DataDiscriminator,Asset Category,Currency,Account,Symbol,Date/Time,Quantity,T. Price,C. Price,Proceeds,Comm/Fee,Basis,Realized P/L,MTM P/L,Code
 Trades,Data,Order,Equity and Index Options,USD,U7546406,AMD 18MAR22 160.0 C,"2022-01-07, 11:12:55",8,4.15,4.05,-3320,-2.1708,3322.1708,0,-80,O
 Trades,SubTotal,,Equity and Index Options,USD,AMD 18MAR22 160.0 C,,,8,,,-3320,-2.1708,3322.1708,0,-80,
@@ -394,7 +394,7 @@ Trades,SubTotal,,Equity and Index Options,USD,WMT 21JAN22 142.0 C,,,3,,,-21,-1.6
 Trades,Data,Order,Equity and Index Options,USD,U10821297,WMT 18MAR22 140.0 C,"2022-02-02, 09:38:59",-3,4.6,4.6553,1380,-2.087628,-1377.912372,0,-16.59,O
 Trades,Data,Order,Equity and Index Options,USD,U10821297,WMT 18MAR22 140.0 C,"2022-02-14, 10:57:12",3,1.5,1.72,-450,-1.19745,1377.912372,926.714922,66,C
 Trades,SubTotal,,Equity and Index Options,USD,WMT 18MAR22 140.0 C,,,0,,,930,-3.285078,0,926.714922,49.41,
-Trades,Total,,Equity and Index Options,USD,,,,,,,17990,-299.5382948,-10014.4438195,7676.017891,-975.73, 
+Trades,Total,,Equity and Index Options,USD,,,,,,,17990,-299.5382948,-10014.4438195,7676.017891,-975.73,
 Transfers,Header,Asset Category,Currency,Account,Symbol,Date,Type,Direction,Xfer Company,Xfer Account,Qty,Xfer Price,Market Value,Realized P/L,Cash Amount,Code
 Transfers,Data,U10821297,Stocks,USD,VTIP,2022-02-03,ACATS,In,--,11142215,"5,500",--,"280,500.00",0.00,0.00,
 Transfers,Data,Total,,,,,,,,,,,280500,0,0,
