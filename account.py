@@ -42,6 +42,28 @@ def print_db(db):
     for x in db:
         print(x[:1], '-->', x[1:])
 
+# loop through database and list all unique symbols at index[0]
+# skip lines when the same symbol
+def unique_symbols(db):
+    # symbol = db[0][0]
+    i = 0
+    while i < len(db):
+        symbol = db[i][0]
+        print(symbol)
+
+        # Sort out unique symbols and their trades
+        while db[i][0] == symbol:
+            print(db[i][1:])
+            i += 1
+
+            # during the final itteration i goes beyond len(db) and 
+            # when it returns to the while loop to check one final time
+            # db[i][0] is no longer a valid statement, because there is 
+            # no i index in the db. It produces an error. That's why 
+            # you need to check if i is within the len(db) range.
+            if i >= len(db):
+                break
+
 # round_trade_sum = 0 # if equal to zero then we have a round trade
 # remaining_shares = 0
 # entry_number = 0 # number of shares entered into
@@ -55,6 +77,7 @@ p_col = 10 + 1
 if __name__ == "__main__":
     raw_db = sort_ib_file()
     db = convert_to_dict(raw_db, symbol_col, date_col, q_col, p_col)
-    print_db(db)
-    print()
-    
+    # print(db)
+    # print()
+    # print_db(db)
+    unique_symbols(db)
