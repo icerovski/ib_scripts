@@ -1,5 +1,4 @@
 import csv
-from multiprocessing.sharedctypes import Value
 
 def sort_ib_file():
     data = []
@@ -57,6 +56,15 @@ def wa_invested(q1, p1, q2, p2):
     ans = (q1 * p1 + q2 * p2) / (q1 + q2)
     return(ans)
 
+def float_entry(db_line, date_col, q_col, p_col):
+    pass
+
+def opposite_signs(x, y):
+    return (y >= 0) if (x < y) else (x < 0)
+
+def same_signs(x, y):
+    return (x * y > 0)
+
 # loop through database and list all unique symbols at index[0]
 # skip lines when the same symbol
 def unique_symbols(db, symbol_col, date_col, q_col, p_col):
@@ -66,26 +74,22 @@ def unique_symbols(db, symbol_col, date_col, q_col, p_col):
         symbol = db[i][symbol_col]
         print(f'\n{symbol}')
         
-        # Evaluate the sign of the first trade to determine your strategy: either long or short
-        if db[i][q_col] > 0:
-            is_long_trade = True
-        else:
-            is_long_trade = False
-
+        first_trade = db[i][q_col]
+        entry = []
+        exit = []
         while db[i][symbol_col] == symbol:
-            trade_contracts = db[i][q_col]
-            trade_price = db[i][p_col]
+            current_contracts = db[i][q_col]
+            current_price = db[i][p_col]
             trade_date = db[i][date_col]
-            invested = trade_contracts * trade_price
+            invested = current_contracts * current_price
 
-            if is_long_trade and trade_contracts > 0:
-                print('Entry:')
-            elif not is_long_trade and trade_contracts < 0:
-                print('Entry')
+            float_line = [trade_date, current_contracts, current_price, invested]
+
+            # Evaluate the sign of the first trade to determine your strategy: either long or short
+            if same_signs(first_trade, current_contracts):
+                entry.append(float_line)
             else:
-                print('Exit')
-
-            print(f'\t {trade_date}: {trade_contracts} * {trade_price} = {invested}')
+                exit.append(float_line)
             
             i += 1
 
@@ -97,6 +101,9 @@ def unique_symbols(db, symbol_col, date_col, q_col, p_col):
             if i >= len(db):
                 print(f'Total number of transactions: {i}')
                 break
+        
+        print(f'Entry: {entry}')
+        print(f'Exit: {exit}')
 
 # round_trade_sum = 0 # if equal to zero then we have a round trade
 # remaining_shares = 0
