@@ -11,7 +11,7 @@ def sort_ib_file():
                 counter += 1 # used to count the transactions
                 row = [counter, *row] # using unpack insert an item in the begining of the list
                 data.append(row) # append the newly created row to the data
-
+                
         return(data)
 
 def convert_to_dict(raw_db, symbol_col, date_col, q_col, p_col):
@@ -38,22 +38,56 @@ def clean_date(line):
     
     return(D)
 
+def convert_str(line):
+    S = ''
+    for char in line:
+        if char != ',':
+            S += char
+        else:
+            continue
+    
+    return(S)
+
 def print_db(db):
     for x in db:
         print(x[:1], '-->', x[1:])
 
 # loop through database and list all unique symbols at index[0]
 # skip lines when the same symbol
-def unique_symbols(db):
-    # symbol = db[0][0]
+def unique_symbols(db, symbol_col, date_col, q_col, p_col):
     i = 0
     while i < len(db):
-        symbol = db[i][0]
-        print(symbol)
-
         # Sort out unique symbols and their trades
-        while db[i][0] == symbol:
-            print(db[i][1:])
+        symbol = db[i][symbol_col]
+        print(f'\n{symbol}')
+                
+        # Evaluate the first trade to determine your strategy: either long or short
+        first_contract = float(convert_str(db[i][q_col]))
+        if first_contract > 0:
+            is_long_trade = True
+        else:
+            is_long_trade = False
+
+        while db[i][symbol_col] == symbol:
+            trade_contracts_str = convert_str(db[i][q_col])
+            trade_price_str = convert_str(db[i][p_col])
+
+            trade_date = db[i][date_col]
+            trade_contracts = int(trade_contracts_str)
+            trade_price = float(trade_price_str)
+
+            if is_long_trade and trade_contracts > 0:
+                print('Entry:')
+            elif not is_long_trade and trade_contracts < 0:
+                print('Entry')
+            else:
+                print('Exit')
+
+            print(f'\tdate: {trade_date}')
+            print(f'\tcontracts: {trade_contracts}')
+            print(f'\tprice: {trade_price}')
+            # print(db[i][1:])
+            
             i += 1
 
             # during the final itteration i goes beyond len(db) and 
@@ -62,6 +96,7 @@ def unique_symbols(db):
             # no i index in the db. It produces an error. That's why 
             # you need to check if i is within the len(db) range.
             if i >= len(db):
+                print(f'Total number of transactions: {i}')
                 break
 
 # round_trade_sum = 0 # if equal to zero then we have a round trade
@@ -77,7 +112,5 @@ p_col = 10 + 1
 if __name__ == "__main__":
     raw_db = sort_ib_file()
     db = convert_to_dict(raw_db, symbol_col, date_col, q_col, p_col)
-    # print(db)
-    # print()
     # print_db(db)
-    unique_symbols(db)
+    unique_symbols(db, symbol_col=0, date_col=2, q_col=3, p_col=4)
