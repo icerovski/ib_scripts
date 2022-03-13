@@ -14,13 +14,19 @@ def sort_ib_file():
 
         return(data)
 
-def convert_to_dict(raw_table, key_col, item_1_col, item_2_col, item_3_col):
-    ib_dict = {}
-    for x in raw_table:
-        key = clean_date(x[key_col])
-        ib_dict[x[0]] = [key, x[item_1_col], x[item_2_col], x[item_3_col]]
+def convert_to_dict(raw_db, symbol_col, date_col, q_col, p_col):
+    db = []
+    # This is erazing existing values with new ones, until we get a different key
+    # I guess this is a feature of dictionary, so perhaps I should use lists only
+    for x in raw_db:
+        symbol_val = x[symbol_col]
+        date_val = clean_date(x[date_col]) # Use the date_col to find the date/time and clean it up
+        q_val = x[q_col]
+        p_val = x[p_col]
+        float_row = [symbol_val, x[0], date_val, q_val, p_val]
+        db.append(float_row)
     
-    return(ib_dict)
+    return(db)
 
 def clean_date(line):
     D = ''
@@ -32,9 +38,9 @@ def clean_date(line):
     
     return(D)
 
-def print_dict(dict):
-    for key, val in dict.items():
-        print(key, '-->', val)
+def print_db(db):
+    for x in db:
+        print(x[:1], '-->', x[1:])
 
 # round_trade_sum = 0 # if equal to zero then we have a round trade
 # remaining_shares = 0
@@ -47,7 +53,8 @@ q_col = 8 + 1
 p_col = 10 + 1
 
 if __name__ == "__main__":
-    raw_table = sort_ib_file()
-    print(raw_table)
-    table = convert_to_dict(raw_table, date_col, symbol_col, q_col, p_col)
-    print_dict(table)
+    raw_db = sort_ib_file()
+    db = convert_to_dict(raw_db, symbol_col, date_col, q_col, p_col)
+    print_db(db)
+    print()
+    
