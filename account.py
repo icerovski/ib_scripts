@@ -69,12 +69,12 @@ def same_signs(x, y):
 # skip lines when the same symbol
 def unique_symbols(db, symbol_col, date_col, q_col, p_col):
     i = 0
+    trade_dict = {}
     while i < len(db):
         # Sort out unique symbols and their trades
         symbol = db[i][symbol_col]
-        print(f'\n{symbol}')
-        
         first_trade = db[i][q_col]
+
         entry = []
         exit = []
         while db[i][symbol_col] == symbol:
@@ -99,11 +99,14 @@ def unique_symbols(db, symbol_col, date_col, q_col, p_col):
             # no i index in the db. It produces an error. That's why 
             # you need to check if i is within the len(db) range.
             if i >= len(db):
-                print(f'Total number of transactions: {i}')
+                # print(f'Total number of transactions: {i}')
                 break
         
-        print(f'Entry: {entry}')
-        print(f'Exit: {exit}')
+        # print(f'Entry: {entry}')
+        # print(f'Exit: {exit}')
+        trade_dict[symbol] = [entry, exit]
+    
+    return(trade_dict)
 
 # round_trade_sum = 0 # if equal to zero then we have a round trade
 # remaining_shares = 0
@@ -119,4 +122,6 @@ if __name__ == "__main__":
     raw_db = sort_ib_file()
     db = compress_db(raw_db, symbol_col, date_col, q_col, p_col)
     # print_db(db)
-    unique_symbols(db, symbol_col=0, date_col=2, q_col=3, p_col=4)
+    trade_dict = unique_symbols(db, symbol_col=0, date_col=2, q_col=3, p_col=4)
+    for key, value in trade_dict.items():
+        print(f'{key} : {value}')
