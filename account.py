@@ -1,5 +1,128 @@
 import csv
-import itertools
+
+from numpy import quantile
+
+class Queue:
+
+    def __init__(self) -> None:
+        self.items = []
+    
+    def enqueue(self, item):
+        """Takes in an item and inserts that item into the 0th index of the list
+        that is representing the Queue.
+
+        The runtime is O(n), or linear time, because inserting into the 0th
+        index of a list forces all the other items in the list to move one index
+        to the right.
+        """
+        self.items.insert(0, item)
+    
+    def dequeue(self):
+        """Returns and removes the front-most item of the Queue, which is
+        represented by the last item in the list.
+
+        The runtime is O(1), or constant time, because indexing to the end of a
+        list happens in constant time.
+        """
+        if self.items:
+            return self.items.pop()
+        return None
+
+    def peek(self):
+        """Returns the last item in the list. which represents the front-most
+        item in the Queue.
+
+        The runtime is constant because we're just indexing to the last item of
+        the list and returning the value found there.
+        """
+
+        if self.items:
+            return self.items[-1]
+        return None
+
+    def size(self):
+        """Returns the size of the Queue, which is represent by the length of
+        the list.
+
+        The runtime is O(1), or constant time, because we're only returning the length."""
+        return len(self.items)
+
+    def is_empty(self):
+        """Returns a Boolean value expressing whether or not the list
+        representing the Queue is empty.
+
+        Runs in constant time, because it's only checking for equality.
+        """
+        return self.items == []
+
+
+class Trade:
+
+    # def __init__(self, **args) -> None:
+    #     self.items = []
+    #     self._symbol = args['symbol']
+    #     self._quantity = args['quantity']
+    #     self._price_entry = args['price_entry']
+    #     self._date_entry = args['date_entry']
+        # self._price_exit = args['price_exit']
+        # self._date_exit = args['date_exit']
+
+    def __init__(self) -> None:
+        self.items = []
+        # self._symbol = symbol
+        # self._quantity = quantity
+        # self._price_entry = price_entry
+        # self._date_entry = date_entry
+    
+    def symbol(self, s=None):
+        if s: 
+            self._symbol = s
+        return self._symbol
+
+    def quantity(self, q=None):
+        if q:
+            self._quantity = q
+        return self._quantity
+
+    def price_entry(self, p=None):
+        if p:
+            self._price_entry = p
+        return self._price_entry
+
+    def date_entry(self, d=None):
+        if d:
+            self._date_entry = d
+        return self._date_entry
+    
+    def populate(self):
+        self.items.append(self.symbol)
+        self.items.append(self.date_entry)
+        self.items.append(self.quantity)
+        self.items.append(self.price_entry)
+        return self.items
+    
+    def __str__(self) -> str:
+        return self.items
+
+    # def price_exit(self, p=None):
+    #     if p:
+    #         self._date_exit = p
+    #     return self._price_exit
+
+    # def date_exit(self, d=None):
+    #     if d:
+    #         self._date_exit = d
+    #     return self._date_exit
+
+    # def cost(self):
+    #     return self._quantity * self._price_entry
+
+    # def income(self):
+    #     return self._quantity * self._price_exit
+
+    # def profit(self):
+    #     return self.income - self.cost
+
 
 def sort_ib_file():
     data = []
@@ -16,36 +139,40 @@ def sort_ib_file():
 
 def compress_db(raw_db, symbol_col, date_col, q_col, p_col):
     db = []
-    # This is erazing existing values with new ones, until we get a different key
-    # I guess this is a feature of dictionary, so perhaps I should use lists only
+
+    # symbol_trade = Trade()
     for x in raw_db:
         symbol_val = x[symbol_col]
-        date_val = clean_date(x[date_col]) # Use the date_col to find the date/time and clean it up
-        q_val = int(convert_str(x[q_col])) 
-        p_val = float(convert_str(x[p_col]))
+        date_val = comma_break(x[date_col]) # Use the date_col to find the date/time and clean it up
+        q_val = int(comma_cleanup(x[q_col])) 
+        p_val = float(comma_cleanup(x[p_col]))
+        
+        # symbol_trade.symbol(symbol_val)
+        # symbol_trade.date_entry(date_val)
+        # symbol_trade.quantity(q_val)
+        # symbol_trade.price_entry(p_val)
+        # symbol_trade.populate()
         float_row = [symbol_val, x[0], date_val, q_val, p_val]
+
+        # db.append(symbol_trade)
         db.append(float_row)
-    
+            
     return(db)
 
-def clean_date(line):
+def comma_break(line):
     D = ''
     for char in line:
-        if char != ',':
-            D += char
-        else:
-            break
-    
+        if char != ',': D += char
+        else: break
+
     return(D)
 
 # Some string numbers have ',' in them; clean up before conversion
-def convert_str(line):
+def comma_cleanup(line):
     S = ''
     for char in line:
-        if char != ',':
-            S += char
-        else:
-            continue
+        if char != ',': S += char
+        else: continue
     
     return(S)
 
@@ -53,18 +180,7 @@ def print_db(db):
     for x in db:
         print(x[:1], '-->', x[1:])
 
-def wa_invested(q1, p1, q2, p2):
-    ans = (q1 * p1 + q2 * p2) / (q1 + q2)
-    return(ans)
-
-def float_entry(db_line, date_col, q_col, p_col):
-    pass
-
-def opposite_signs(x, y):
-    return (y >= 0) if (x < y) else (x < 0)
-
-def same_signs(x, y):
-    return (x * y > 0)
+def same_signs(x, y): (x * y > 0)
 
 # loop through database and list all unique symbols at index[0]
 # skip lines when the same symbol
@@ -74,69 +190,83 @@ def unique_symbols(db, symbol_col, date_col, q_col, p_col):
     while i < len(db):
         # Sort out unique symbols and their trades
         symbol = db[i][symbol_col]
-        first_trade = db[i][q_col]
+        print(symbol.__str__())
+        trades_q = Queue()
 
-        entry = []
-        exit = []
         while db[i][symbol_col] == symbol:
             current_contracts = db[i][q_col]
             current_price = db[i][p_col]
-            trade_date = db[i][date_col]
-            invested = current_contracts * current_price
+            current_date = db[i][date_col]
 
-            float_line = [trade_date, current_contracts, current_price, invested]
-
-            # Evaluate the sign of the first trade to determine your strategy: either long or short
-            if same_signs(first_trade, current_contracts):
-                entry.append(float_line)
-            else:
-                exit.append(float_line)
+            float_line = [current_date, current_contracts, current_price]
+            trades_q.enqueue(float_line)
             
             i += 1
 
-            # during the final itteration i goes beyond len(db) and 
-            # when it returns to the while loop to check one final time
-            # db[i][0] is no longer a valid statement, because there is 
-            # no i index in the db. It produces an error. That's why 
-            # you need to check if i is within the len(db) range.
             if i >= len(db):
-                # print(f'Total number of transactions: {i}')
+                print(f'Total number of transactions: {i}')
                 break
         
-        # print(f'Entry: {entry}')
-        # print(f'Exit: {exit}')
-        trade_dict[symbol] = [entry, exit]
+        trade_dict[symbol] = trades_q.items
     
     return(trade_dict)
 
-def compare_sub_lists(l):
+def symbol_pnl(symbol, list, q_col= 1):
+    trades_q = Queue()
 
+    balance = existing_balance(list)
+    print(balance)
+    queue_list = []
+
+    first_trade = list[q_col]
+
+
+    
+    ##########################################
+    # first_trade = db[i][q_col]
+
+    # entry = []
+    # exit = []
+    # # Evaluate the sign of the first trade to determine your strategy: either long or short
+    # if same_signs(first_trade, current_contracts):
+    #     entry.append(float_line)
+    # else:
+    #     exit.append(float_line)    
+    ###########################################
     pass
 
-# round_trade_sum = 0 # if equal to zero then we have a round trade
-# remaining_shares = 0
-# entry_number = 0 # number of shares entered into
-# exit_number = 0 # number of shares exited
+def existing_balance(list, q_col= 1):
+    sum = 0
+    for item in list:
+        sum += item[q_col]
 
-symbol_col = 6 + 1
-date_col = 7 + 1
-q_col = 8 + 1
-p_col = 10 + 1
+    return sum
 
-if __name__ == "__main__":
+def first_entry(list, q_col= 1):
+    return list[q_col]
+
+
+def fill_symbol_pnl(symbol, q, p_entry, d_entry, p_exit, d_exit):
+    cost = q * p_entry
+    income = q * p_exit
+    profit = income - cost
+    
+    return [symbol, q, p_entry, cost, d_entry, p_exit, income, d_exit, profit]
+
+def main():
+    symbol_col = 6 + 1
+    date_col = 7 + 1
+    q_col = 8 + 1
+    p_col = 10 + 1
+
     raw_db = sort_ib_file()
     db = compress_db(raw_db, symbol_col, date_col, q_col, p_col)
-    # print_db(db)
     trade_dict = unique_symbols(db, symbol_col=0, date_col=2, q_col=3, p_col=4)
+
     for key, value in trade_dict.items():
         print(f'{key} : {value}')
-    
-    # for i in trade_dict:
-    #     x = trade_dict[i]['Entry']
-    #     y = trade_dict[i]['Exit']
 
-        # simultaneous iterration over two lists
-        # https://www.programiz.com/python-programming/dictionary
-        # https://www.geeksforgeeks.org/python-accessing-key-value-in-dictionary/
-        # for (a,b) in itertools.zip_longest(x, y):
-        #     print (a, b)
+    for i in trade_dict['BABA']:
+        print(i)
+
+if __name__ == "__main__": main()
