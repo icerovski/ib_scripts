@@ -128,15 +128,15 @@ if __name__ == "__main__":
     db = compress_db(raw_db, symbol_col, date_col, q_col, p_col)
     # print_db(db)
     trade_dict = unique_symbols(db, symbol_col=0, date_col=2, q_col=3, p_col=4)
-    # for key, value in trade_dict.items():
-        # print(f'{key} : {value}')
+    for key, value in trade_dict.items():
+        print(f'{key} : {value}')
     
-    for i in trade_dict:
-        x = trade_dict[i][0][1]
-        y = trade_dict[i][1][1]
+    # for i in trade_dict:
+    #     x = trade_dict[i]['Entry']
+    #     y = trade_dict[i]['Exit']
 
         # simultaneous iterration over two lists
         # https://www.programiz.com/python-programming/dictionary
         # https://www.geeksforgeeks.org/python-accessing-key-value-in-dictionary/
-        for (a,b) in itertools.zip_longest(x, y):
-            print (a, b)
+        # for (a,b) in itertools.zip_longest(x, y):
+        #     print (a, b)
