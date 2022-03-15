@@ -60,7 +60,6 @@ class tradeTicket:
     def __init__(self) -> None:
         self._items = {}
 
-    #If there is a space ' ' in the ticker, this means it is an options --> quantity *= 100
     def ticker(self, s=None):
         if s:
             self._items['ticker'] = s
@@ -136,13 +135,12 @@ def unique_tickers(db, ticker_col, date_col, q_col, p_col):
     while i < len(db):
         # Sort out unique tickers and their trades
         ticker = db[i][ticker_col]
-              
         ticker_trades = Queue()
 
         while db[i][ticker_col] == ticker:
             current_trade = tradeTicket()
 
-            current_trade.ticker(db[i][ticker_col])
+            current_trade.ticker(ticker)
             current_trade.quantity(db[i][q_col])
             current_trade.price(db[i][p_col])
             current_trade.date(db[i][date_col])
@@ -158,6 +156,10 @@ def unique_tickers(db, ticker_col, date_col, q_col, p_col):
                 break
         
         ledger[ticker] = ticker_trades.items
+
+        for key, value in ledger.items():
+            print(f'{key} : {value}')
+
     
     return(ledger)
 
