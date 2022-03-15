@@ -1,6 +1,5 @@
 import csv
-
-from numpy import quantile
+from datetime import date
 
 class Queue:
 
@@ -29,7 +28,7 @@ class Queue:
         return None
 
     def peek(self):
-        """Returns the last item in the list. which represents the front-most
+        """Returns the last item in the list, which represents the front-most
         item in the Queue.
 
         The runtime is constant because we're just indexing to the last item of
@@ -56,73 +55,36 @@ class Queue:
         return self.items == []
 
 
-class Trade:
-
-    # def __init__(self, **args) -> None:
-    #     self.items = []
-    #     self._symbol = args['symbol']
-    #     self._quantity = args['quantity']
-    #     self._price_entry = args['price_entry']
-    #     self._date_entry = args['date_entry']
-        # self._price_exit = args['price_exit']
-        # self._date_exit = args['date_exit']
+class tradeTicket:
 
     def __init__(self) -> None:
-        self.items = []
-        # self._symbol = symbol
-        # self._quantity = quantity
-        # self._price_entry = price_entry
-        # self._date_entry = date_entry
-    
+        self.items = {}
+
     def symbol(self, s=None):
         if s: 
-            self._symbol = s
+            self._symbol = {'symbol':s}
         return self._symbol
 
     def quantity(self, q=None):
         if q:
-            self._quantity = q
+            self._quantity = {'quantity':q}
         return self._quantity
 
-    def price_entry(self, p=None):
+    def price(self, p=None):
         if p:
-            self._price_entry = p
-        return self._price_entry
-
-    def date_entry(self, d=None):
+            self._price = {'price':p}
+        return self._price
+    
+    def date(self, d=None):
         if d:
-            self._date_entry = d
-        return self._date_entry
+            self._date = {'date':d}
+        return self._date
     
-    def populate(self):
-        self.items.append(self.symbol)
-        self.items.append(self.date_entry)
-        self.items.append(self.quantity)
-        self.items.append(self.price_entry)
+    def members(self):
         return self.items
-    
+
     def __str__(self) -> str:
         return self.items
-
-    # def price_exit(self, p=None):
-    #     if p:
-    #         self._date_exit = p
-    #     return self._price_exit
-
-    # def date_exit(self, d=None):
-    #     if d:
-    #         self._date_exit = d
-    #     return self._date_exit
-
-    # def cost(self):
-    #     return self._quantity * self._price_entry
-
-    # def income(self):
-    #     return self._quantity * self._price_exit
-
-    # def profit(self):
-    #     return self.income - self.cost
-
 
 def sort_ib_file():
     data = []
@@ -144,8 +106,12 @@ def compress_db(raw_db, symbol_col, date_col, q_col, p_col):
     for x in raw_db:
         symbol_val = x[symbol_col]
         date_val = comma_break(x[date_col]) # Use the date_col to find the date/time and clean it up
-        q_val = int(comma_cleanup(x[q_col])) 
-        p_val = float(comma_cleanup(x[p_col]))
+
+        q_val = x[q_col]
+        # q_val = int(comma_cleanup(x[q_col])) 
+        
+        p_val = x[p_col]
+        # p_val = float(comma_cleanup(x[p_col]))
         
         # symbol_trade.symbol(symbol_val)
         # symbol_trade.date_entry(date_val)
@@ -190,24 +156,34 @@ def unique_symbols(db, symbol_col, date_col, q_col, p_col):
     while i < len(db):
         # Sort out unique symbols and their trades
         symbol = db[i][symbol_col]
-        print(symbol.__str__())
-        trades_q = Queue()
+              
+        print(symbol)
+        symbol_trades = Queue()
 
         while db[i][symbol_col] == symbol:
-            current_contracts = db[i][q_col]
-            current_price = db[i][p_col]
-            current_date = db[i][date_col]
+            current_trade = tradeTicket()
 
-            float_line = [current_date, current_contracts, current_price]
-            trades_q.enqueue(float_line)
+            current_trade.quantity(db[i][q_col])
+            current_trade.price(db[i][p_col])
+            current_trade.date(db[i][date_col])
+
+            # current_contracts = db[i][q_col]
+            # current_price = db[i][p_col]
+            # current_date = db[i][date_col]
+            # float_line = [current_date, current_contracts, current_price]
+
+            float_line = [current_trade.date(), current_trade.quantity(), current_trade.price()]    
+            symbol_trades.enqueue(float_line)
             
             i += 1
+
+            # Here you need to dequeue as well and produce the new 
 
             if i >= len(db):
                 print(f'Total number of transactions: {i}')
                 break
         
-        trade_dict[symbol] = trades_q.items
+        trade_dict[symbol] = symbol_trades.items
     
     return(trade_dict)
 
