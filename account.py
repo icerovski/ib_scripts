@@ -97,41 +97,6 @@ def sort_ib_file():
 
         return(data)
 
-def compress_db(raw_db, symbol_col, date_col, q_col, p_col):
-    db = []
-
-    for x in raw_db:
-        symbol_val = x[symbol_col]
-        date_val = comma_break(x[date_col]) # Use the date_col to find the date/time and clean it up
-
-        q_val = x[q_col]
-        # q_val = int(comma_cleanup(x[q_col])) 
-        
-        p_val = x[p_col]
-        # p_val = float(comma_cleanup(x[p_col]))
-
-        float_row = [symbol_val, date_val, q_val, p_val]
-
-        # db.append(symbol_trade)
-        db.append(float_row)
-            
-    return(db)
-
-def comma_break(line):
-    D = ''
-    for char in line:
-        if char != ',': D += char
-        else: break
-
-    return(D)
-
-def comma_cleanup(line):
-    S = ''
-    for char in line:
-        if char != ',': S += char
-        else: continue
-    
-    return(S)
 
 # loop through database and list all unique symbols at index[0]
 # skip lines when the same symbol
@@ -150,7 +115,7 @@ def unique_symbols(db, symbol_col, date_col, q_col, p_col):
 
             current_trade.quantity(db[i][q_col])
             current_trade.price(db[i][p_col])
-            current_trade.date(db[i][date_col])
+            current_trade.date(comma_break(db[i][date_col]))
 
             symbol_trades.enqueue(current_trade.items())
             
@@ -166,6 +131,23 @@ def unique_symbols(db, symbol_col, date_col, q_col, p_col):
     
     return(trade_dict)
 
+def comma_break(line):
+    D = ''
+    for char in line:
+        if char != ',': D += char
+        else: break
+
+    return(D)
+
+def comma_cleanup(line):
+    S = ''
+    for char in line:
+        if char != ',': S += char
+        else: continue
+    
+    return(S)
+
+
 def main():
     symbol_col = 6 + 1
     date_col = 7 + 1
@@ -173,8 +155,7 @@ def main():
     p_col = 10 + 1
 
     raw_db = sort_ib_file()
-    db = compress_db(raw_db, symbol_col, date_col, q_col, p_col)
-    trade_dict = unique_symbols(db, symbol_col=0, date_col=1, q_col=2, p_col=3)
+    trade_dict = unique_symbols(raw_db, symbol_col, date_col, q_col, p_col)
 
     for key, value in trade_dict.items():
         print(f'{key} : {value}')
