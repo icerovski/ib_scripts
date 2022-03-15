@@ -18,3 +18,6 @@ https://www.linkedin.com/learning/python-recursion/the-power-of-recursion?u=2142
 
 List comprehension:
 https://realpython.com/list-comprehension-python/
+
+Dictionary tutorial:
+https://stackabuse.com/python-dictionary-tutorial/

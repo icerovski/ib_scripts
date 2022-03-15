@@ -1,5 +1,4 @@
 import csv
-from datetime import date
 
 class Queue:
 
@@ -54,37 +53,36 @@ class Queue:
         """
         return self.items == []
 
-
 class tradeTicket:
 
     def __init__(self) -> None:
-        self.items = {}
+        self._items = {}
 
     def symbol(self, s=None):
         if s: 
-            self._symbol = {'symbol':s}
-        return self._symbol
+            self._items['symbol'] = s
+        return self._items['symbol']
 
     def quantity(self, q=None):
         if q:
-            self._quantity = {'quantity':q}
-        return self._quantity
+            self._items['quantity'] = q
+        return self._items['quantity']
 
     def price(self, p=None):
         if p:
-            self._price = {'price':p}
-        return self._price
+            self._items['price'] = p
+        return self._items['price']
     
     def date(self, d=None):
         if d:
-            self._date = {'date':d}
-        return self._date
+            self._items['date'] = d
+        return self._items['date']
     
-    def members(self):
-        return self.items
+    def items(self):
+        return self._items
 
-    def __str__(self) -> str:
-        return self.items
+    # def __str__(self) -> str:
+    #     return self.items
 
 def sort_ib_file():
     data = []
@@ -102,7 +100,6 @@ def sort_ib_file():
 def compress_db(raw_db, symbol_col, date_col, q_col, p_col):
     db = []
 
-    # symbol_trade = Trade()
     for x in raw_db:
         symbol_val = x[symbol_col]
         date_val = comma_break(x[date_col]) # Use the date_col to find the date/time and clean it up
@@ -112,12 +109,7 @@ def compress_db(raw_db, symbol_col, date_col, q_col, p_col):
         
         p_val = x[p_col]
         # p_val = float(comma_cleanup(x[p_col]))
-        
-        # symbol_trade.symbol(symbol_val)
-        # symbol_trade.date_entry(date_val)
-        # symbol_trade.quantity(q_val)
-        # symbol_trade.price_entry(p_val)
-        # symbol_trade.populate()
+
         float_row = [symbol_val, date_val, q_val, p_val]
 
         # db.append(symbol_trade)
@@ -133,7 +125,6 @@ def comma_break(line):
 
     return(D)
 
-# Some string numbers have ',' in them; clean up before conversion
 def comma_cleanup(line):
     S = ''
     for char in line:
@@ -141,12 +132,6 @@ def comma_cleanup(line):
         else: continue
     
     return(S)
-
-def print_db(db):
-    for x in db:
-        print(x[:1], '-->', x[1:])
-
-def same_signs(x, y): (x * y > 0)
 
 # loop through database and list all unique symbols at index[0]
 # skip lines when the same symbol
@@ -167,13 +152,7 @@ def unique_symbols(db, symbol_col, date_col, q_col, p_col):
             current_trade.price(db[i][p_col])
             current_trade.date(db[i][date_col])
 
-            # current_contracts = db[i][q_col]
-            # current_price = db[i][p_col]
-            # current_date = db[i][date_col]
-            # float_line = [current_date, current_contracts, current_price]
-
-            float_line = [current_trade.date(), current_trade.quantity(), current_trade.price()]    
-            symbol_trades.enqueue(float_line)
+            symbol_trades.enqueue(current_trade.items())
             
             i += 1
 
@@ -187,48 +166,6 @@ def unique_symbols(db, symbol_col, date_col, q_col, p_col):
     
     return(trade_dict)
 
-def symbol_pnl(symbol, list, q_col= 1):
-    trades_q = Queue()
-
-    balance = existing_balance(list)
-    print(balance)
-    queue_list = []
-
-    first_trade = list[q_col]
-
-
-    
-    ##########################################
-    # first_trade = db[i][q_col]
-
-    # entry = []
-    # exit = []
-    # # Evaluate the sign of the first trade to determine your strategy: either long or short
-    # if same_signs(first_trade, current_contracts):
-    #     entry.append(float_line)
-    # else:
-    #     exit.append(float_line)    
-    ###########################################
-    pass
-
-def existing_balance(list, q_col= 1):
-    sum = 0
-    for item in list:
-        sum += item[q_col]
-
-    return sum
-
-def first_entry(list, q_col= 1):
-    return list[q_col]
-
-
-def fill_symbol_pnl(symbol, q, p_entry, d_entry, p_exit, d_exit):
-    cost = q * p_entry
-    income = q * p_exit
-    profit = income - cost
-    
-    return [symbol, q, p_entry, cost, d_entry, p_exit, income, d_exit, profit]
-
 def main():
     symbol_col = 6 + 1
     date_col = 7 + 1
@@ -241,8 +178,5 @@ def main():
 
     for key, value in trade_dict.items():
         print(f'{key} : {value}')
-
-    for i in trade_dict['BABA']:
-        print(i)
 
 if __name__ == "__main__": main()
