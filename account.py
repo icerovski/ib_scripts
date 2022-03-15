@@ -152,7 +152,7 @@ def compress_db(raw_db, symbol_col, date_col, q_col, p_col):
         # symbol_trade.quantity(q_val)
         # symbol_trade.price_entry(p_val)
         # symbol_trade.populate()
-        float_row = [symbol_val, x[0], date_val, q_val, p_val]
+        float_row = [symbol_val, date_val, q_val, p_val]
 
         # db.append(symbol_trade)
         db.append(float_row)
@@ -261,7 +261,7 @@ def main():
 
     raw_db = sort_ib_file()
     db = compress_db(raw_db, symbol_col, date_col, q_col, p_col)
-    trade_dict = unique_symbols(db, symbol_col=0, date_col=2, q_col=3, p_col=4)
+    trade_dict = unique_symbols(db, symbol_col=0, date_col=1, q_col=2, p_col=3)
 
     for key, value in trade_dict.items():
         print(f'{key} : {value}')
