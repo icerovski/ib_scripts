@@ -1,5 +1,7 @@
 import csv
 
+from yfinance import Ticker
+
 class Queue:
 
     def __init__(self) -> None:
@@ -58,31 +60,61 @@ class tradeTicket:
     def __init__(self) -> None:
         self._items = {}
 
-    def symbol(self, s=None):
-        if s: 
-            self._items['symbol'] = s
-        return self._items['symbol']
+    #If there is a space ' ' in the ticker, this means it is an options --> quantity *= 100
+    def ticker(self, s=None):
+        if s:
+            self._items['ticker'] = s
+        return self._items['ticker']
 
     def quantity(self, q=None):
         if q:
-            self._items['quantity'] = q
-        return self._items['quantity']
+            if is_option(self._items['ticker']):
+                self._items['q'] = int(comma_cleanup(q)) * 100
+            else:
+                self._items['q'] = int(comma_cleanup(q))
+        return self._items['q']
 
     def price(self, p=None):
         if p:
-            self._items['price'] = p
-        return self._items['price']
+            self._items['p'] = float(comma_cleanup(p))
+        return self._items['p']
     
     def date(self, d=None):
         if d:
-            self._items['date'] = d
-        return self._items['date']
+            self._items['d'] = comma_break(d)
+        return self._items['d']
     
     def items(self):
         return self._items
 
-    # def __str__(self) -> str:
-    #     return self.items
+    def __str__(self) -> str:
+        return self._items
+
+class tradeLedger(tradeTicket):
+
+    pass
+
+def comma_break(line):
+    D = ''
+    for char in line:
+        if char != ',': D += char
+        else: break
+
+    return(D)
+
+def comma_cleanup(line):
+    D = ''
+    for char in line:
+        if char != ',': D += char
+        else: continue
+    
+    return(D)
+
+def is_option(ticker):
+    if ' ' in ticker:
+        return True
+    else:
+        return False
 
 def sort_ib_file():
     data = []
@@ -97,27 +129,25 @@ def sort_ib_file():
 
         return(data)
 
-
-# loop through database and list all unique symbols at index[0]
-# skip lines when the same symbol
-def unique_symbols(db, symbol_col, date_col, q_col, p_col):
+# loop through database and list all unique tickers at index[0] skip lines when the same ticker
+def unique_tickers(db, ticker_col, date_col, q_col, p_col):
     i = 0
-    trade_dict = {}
+    ledger = {}
     while i < len(db):
-        # Sort out unique symbols and their trades
-        symbol = db[i][symbol_col]
+        # Sort out unique tickers and their trades
+        ticker = db[i][ticker_col]
               
-        print(symbol)
-        symbol_trades = Queue()
+        ticker_trades = Queue()
 
-        while db[i][symbol_col] == symbol:
+        while db[i][ticker_col] == ticker:
             current_trade = tradeTicket()
 
+            current_trade.ticker(db[i][ticker_col])
             current_trade.quantity(db[i][q_col])
             current_trade.price(db[i][p_col])
-            current_trade.date(comma_break(db[i][date_col]))
+            current_trade.date(db[i][date_col])
 
-            symbol_trades.enqueue(current_trade.items())
+            ticker_trades.enqueue(current_trade.items())
             
             i += 1
 
@@ -127,37 +157,20 @@ def unique_symbols(db, symbol_col, date_col, q_col, p_col):
                 print(f'Total number of transactions: {i}')
                 break
         
-        trade_dict[symbol] = symbol_trades.items
+        ledger[ticker] = ticker_trades.items
     
-    return(trade_dict)
-
-def comma_break(line):
-    D = ''
-    for char in line:
-        if char != ',': D += char
-        else: break
-
-    return(D)
-
-def comma_cleanup(line):
-    S = ''
-    for char in line:
-        if char != ',': S += char
-        else: continue
-    
-    return(S)
-
+    return(ledger)
 
 def main():
-    symbol_col = 6 + 1
+    ticker_col = 6 + 1
     date_col = 7 + 1
     q_col = 8 + 1
     p_col = 10 + 1
 
     raw_db = sort_ib_file()
-    trade_dict = unique_symbols(raw_db, symbol_col, date_col, q_col, p_col)
+    ledger = unique_tickers(raw_db, ticker_col, date_col, q_col, p_col)
 
-    for key, value in trade_dict.items():
+    for key, value in ledger.items():
         print(f'{key} : {value}')
 
 if __name__ == "__main__": main()
