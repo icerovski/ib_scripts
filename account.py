@@ -1,6 +1,6 @@
 import csv
 
-from yfinance import Ticker
+# from yfinance import Ticker
 
 class Queue:
 
@@ -54,6 +54,9 @@ class Queue:
         Runs in constant time, because it's only checking for equality.
         """
         return self.items == []
+    
+    def __str__(self) -> str:
+        return self.items
 
 class tradeTicket:
 
@@ -89,10 +92,39 @@ class tradeTicket:
     def __str__(self) -> str:
         return self._items
 
-class tradeLedger(tradeTicket):
+class tradeLedger():  
+    def __init__(self) -> None:
+        self._items = {}
+    
+    def entry(self, e=None):
+        if e:
+            self._entry = {'entry':e}
+        return self._entry
+
+
+
+    def exit(self, e=None):
+        if e:
+            self._exit = {'exit':e}
+        return self._exit
+    
+
+    
 
     pass
 
+class dealPipe(Queue):
+    '''Track each entry and act depending on the sign and the size of the entry. Enqueue entries with the same sign, until you get
+    an entry with a different sign. In that case you dequeue it from the enqueued entries (FIFO). You do that until you either
+    get to zero, or switch signs from the remaining entry. Keep entries IDs, which you can link to the built up database to obtain
+    prices and dates of the transaction.'''
+    def __init__(self) -> None:
+        super().__init__()
+    
+    def enqueue(self, item_id, item):
+        new_item = {'id':item_id, 'item':item}      
+        return super().enqueue(new_item)
+     
 def comma_break(line):
     D = ''
     for char in line:
@@ -115,6 +147,9 @@ def is_option(ticker):
     else:
         return False
 
+def equal_signs(a, b):
+    return ((a == b) & (a == 0)) | (a * b > 0)
+
 def sort_ib_file():
     data = []
     counter = 0
@@ -135,8 +170,13 @@ def unique_tickers(db, ticker_col, date_col, q_col, p_col):
     while i < len(db):
         # Sort out unique tickers and their trades
         ticker = db[i][ticker_col]
-        ticker_trades = Queue()
+        ticker_trades_list = Queue()
+        # ticker_trades_list_list = []
+        current_pipe = dealPipe()
 
+        tax_ledger = []
+        
+        j = 0
         while db[i][ticker_col] == ticker:
             current_trade = tradeTicket()
 
@@ -145,22 +185,53 @@ def unique_tickers(db, ticker_col, date_col, q_col, p_col):
             current_trade.price(db[i][p_col])
             current_trade.date(db[i][date_col])
 
-            ticker_trades.enqueue(current_trade.items())
-            
-            i += 1
+            ticker_trades_list.enqueue(current_trade.items())
+            # ticker_trades_list_list.append(current_trade.items())
 
-            # Here you need to dequeue as well and produce the new 
+            current_quantity = current_trade.quantity()
+            if current_pipe.is_empty():
+                current_pipe.enqueue(j, current_quantity)
+                X = current_pipe.peek()
+                first_quantity = X['item']        
+            elif equal_signs(current_quantity, first_quantity):
+                current_pipe.enqueue(j, current_quantity)
+            else:
+                yEn = ticker_trades_list.items[X['id']]
+                en_date = yEn['d']
+                en_quantity = yEn['q']
+                en_price = yEn['p']
+                yEx = ticker_trades_list.items[j]
+                ex_date = yEx['d']
+                ex_quantity = yEx['q']
+                ex_price = yEx['p']
+                
+                if abs(en_quantity) > abs(ex_quantity):
+                    quantity = - 1 * ex_quantity
+                    first_quantity -= quantity # decrease the first quantity with the one that we are booking now
+                elif abs(en_quantity) < abs(ex_quantity):
+                    quantity = - 1 * en_quantity
+                    first_quantity -= quantity
+                elif abs(en_quantity) == abs(ex_quantity):
+                    quantity = en_quantity
+                    current_pipe.dequeue(quantity)
+            
+                tax_ledger.append([ticker, quantity, en_date, en_price, -1 * quantity, ex_date, ex_price])
+                print(tax_ledger)
+
+                
+
+
+            j += 1
+
+            i += 1
 
             if i >= len(db):
                 print(f'Total number of transactions: {i}')
                 break
         
-        ledger[ticker] = ticker_trades.items
-
-        for key, value in ledger.items():
-            print(f'{key} : {value}')
-
-    
+        ledger[ticker] = ticker_trades_list.items
+        # ledger[ticker] = ticker_trades_list_list
+                
     return(ledger)
 
 def main():

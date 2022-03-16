@@ -21,3 +21,6 @@ https://realpython.com/list-comprehension-python/
 
 Dictionary tutorial:
 https://stackabuse.com/python-dictionary-tutorial/
+
+List of dictionaries:
+https://pythonexamples.org/python-list-of-dictionaries/
