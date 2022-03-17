@@ -58,6 +58,7 @@ class Queue:
     def __str__(self) -> str:
         return self.items
 
+
 class tradeTicket:
 
     def __init__(self) -> None:
@@ -92,6 +93,7 @@ class tradeTicket:
     def __str__(self) -> str:
         return self._items
 
+
 class tradeLedger():  
     def __init__(self) -> None:
         self._items = {}
@@ -124,6 +126,10 @@ class dealPipe(Queue):
     def enqueue(self, item_id, item):
         new_item = {'id':item_id, 'item':item}      
         return super().enqueue(new_item)
+
+    # def dequeue(self, item_id, item):
+    #     new_item = {'id':item_id, 'item':item}      
+    #     return super().dequeue(new_item)
      
 def comma_break(line):
     D = ''
@@ -213,7 +219,7 @@ def unique_tickers(db, ticker_col, date_col, q_col, p_col):
                     first_quantity -= quantity
                 elif abs(en_quantity) == abs(ex_quantity):
                     quantity = en_quantity
-                    current_pipe.dequeue(quantity)
+                    current_pipe.dequeue()
             
                 tax_ledger.append([ticker, quantity, en_date, en_price, -1 * quantity, ex_date, ex_price])
                 print(tax_ledger)
@@ -243,7 +249,7 @@ def main():
     raw_db = sort_ib_file()
     ledger = unique_tickers(raw_db, ticker_col, date_col, q_col, p_col)
 
-    for key, value in ledger.items():
-        print(f'{key} : {value}')
+    # for key, value in ledger.items():
+    #     print(f'{key} : {value}')
 
 if __name__ == "__main__": main()
