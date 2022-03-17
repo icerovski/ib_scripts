@@ -183,6 +183,7 @@ def unique_tickers(db, ticker_col, date_col, q_col, p_col):
         tax_ledger = []
         
         j = 0
+        is_empty = True
         while db[i][ticker_col] == ticker:
             current_trade = tradeTicket()
 
@@ -195,10 +196,13 @@ def unique_tickers(db, ticker_col, date_col, q_col, p_col):
             # ticker_trades_list_list.append(current_trade.items())
 
             current_quantity = current_trade.quantity()
+            if not is_empty:
+                X = current_pipe.peek()
+                first_quantity = X['item']  
+                  
             if current_pipe.is_empty():
                 current_pipe.enqueue(j, current_quantity)
-                X = current_pipe.peek()
-                first_quantity = X['item']        
+                is_empty = False
             elif equal_signs(current_quantity, first_quantity):
                 current_pipe.enqueue(j, current_quantity)
             else:
