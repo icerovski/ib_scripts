@@ -1,4 +1,5 @@
 import csv
+from re import I
 
 # from yfinance import Ticker
 
@@ -81,12 +82,17 @@ class tradeTicket(Queue):
             self._items['ticker'] = s
         return self._items['ticker']
 
+    def instrumet_type(self, it=None):
+        if it:
+            self._items['type'] = it
+        return self._items['type']
+
     def quantity(self, q=None):
         if q:
-            if is_option(self._items['ticker']):
-                self._items['q'] = int(comma_cleanup(q)) * 100
-            else:
+            if self.instrumet_type() == 'Stocks':
                 self._items['q'] = int(comma_cleanup(q))
+            else:
+                self._items['q'] = int(comma_cleanup(q)) * 100
         return self._items['q']
 
     def price(self, p=None):
@@ -99,8 +105,9 @@ class tradeTicket(Queue):
             self._items['d'] = comma_break(d)
         return self._items['d']
     
-    def populate(self, t, q, p, d):
+    def populate(self, t, it, q, p, d):
         self.ticker(t)
+        self.instrumet_type(it)
         self.quantity(q)
         self.price(p)
         self.date(d)
@@ -143,20 +150,20 @@ class tickerSummary (tradeSummary):
         
 
 
-class dealPipe(Queue):
-    '''Track each entry and act depending on the sign and the size of the entry. Enqueue entries with the same sign, until you get
-    an entry with a different sign. In that case you dequeue it from the enqueued entries (FIFO). You do that until you either
-    get to zero, or switch signs from the remaining entry. Keep entries IDs, which you can link to the built up database to obtain
-    prices and dates of the transaction.'''
-    def __init__(self) -> None:
-        super().__init__()
+# class dealPipe(Queue):
+#     '''Track each entry and act depending on the sign and the size of the entry. Enqueue entries with the same sign, until you get
+#     an entry with a different sign. In that case you dequeue it from the enqueued entries (FIFO). You do that until you either
+#     get to zero, or switch signs from the remaining entry. Keep entries IDs, which you can link to the built up database to obtain
+#     prices and dates of the transaction.'''
+#     def __init__(self) -> None:
+#         super().__init__()
     
-    def enqueue(self, item_id, item):
-        '''Definitions:
-        id- the trade number in the sequence of trades as shown in the IB Trade table.
-        item- the number of contracts for the current row.'''
-        new_item = {'id':item_id, 'item':item}      
-        return super().enqueue(new_item)
+#     def enqueue(self, item_id, item):
+#         '''Definitions:
+#         id- the trade number in the sequence of trades as shown in the IB Trade table.
+#         item- the number of contracts for the current row.'''
+#         new_item = {'id':item_id, 'item':item}      
+#         return super().enqueue(new_item)
      
 def comma_break(line):
     D = ''
@@ -174,11 +181,11 @@ def comma_cleanup(line):
     
     return(D)
 
-def is_option(ticker):
-    if ' ' in ticker:
-        return True
-    else:
-        return False
+# def is_option(ticker):
+#     if ' ' in ticker:
+#         return True
+#     else:
+#         return False
 
 def equal_signs(a, b):
     return ((a == b) & (a == 0)) | (a * b > 0)
@@ -197,24 +204,30 @@ def sort_ib_file():
         return(data)
 
 # loop through database and list all unique tickers at index[0] skip lines when the same ticker
-def unique_tickers(db, ticker_col, date_col, q_col, p_col):
+def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
     i = 0
     ledger = {}
     
+    script_ended = False
     while i < len(db):
+        instrument_type = db[i][type_col]
         ticker = db[i][ticker_col]
         ticker_PNL = Queue()
         tax_ledger = []
 
         while db[i][ticker_col] == ticker:
             current_trade = tradeTicket()
-            current_trade.populate(ticker, db[i][q_col], db[i][p_col], db[i][date_col])
+            current_trade.populate(ticker, instrument_type, db[i][q_col], db[i][p_col], db[i][date_col])
             ticker_PNL.enqueue(current_trade.items())
             
             i += 1
             if i >= len(db):
                 print(f'Total number of transactions: {i}')
+                script_ended = True
                 break
+        
+        if script_ended:
+            break
 
         while not ticker_PNL.is_empty():
 
@@ -309,13 +322,14 @@ def unique_tickers(db, ticker_col, date_col, q_col, p_col):
     return(ledger)
 
 def main():
+    type_col = 3 + 1
     ticker_col = 6 + 1
     date_col = 7 + 1
     q_col = 8 + 1
     p_col = 10 + 1
 
     raw_db = sort_ib_file()
-    ledger = unique_tickers(raw_db, ticker_col, date_col, q_col, p_col)
+    ledger = unique_tickers(raw_db, type_col, ticker_col, date_col, q_col, p_col)
 
     # for key, value in ledger.items():
     #     print(f'{key} : {value}')
