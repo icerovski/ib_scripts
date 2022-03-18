@@ -39,6 +39,18 @@ class Queue:
         if self.items:
             return self.items[-1]
         return None
+    
+    def peek_2(self):
+        """Returns the one before the last item in the list, which represents the one behind the front-most
+        item in the Queue.
+
+        The runtime is constant because we're just indexing to the last item of
+        the list and returning the value found there.
+        """
+
+        if self.items:
+            return self.items[-2]
+        return None
 
     def size(self):
         """Returns the size of the Queue, which is represent by the length of
@@ -87,6 +99,12 @@ class tradeTicket(Queue):
             self._items['d'] = comma_break(d)
         return self._items['d']
     
+    def populate(self, t, q, p, d):
+        self.ticker(t)
+        self.quantity(q)
+        self.price(p)
+        self.date(d)
+    
     def items(self):
         return self._items
 
@@ -94,23 +112,37 @@ class tradeTicket(Queue):
         return self._items
 
 
-class transactionConstructor(Queue):
-    '''All methods and cases that involve the transition from raw data to transactionPNL Object'''
+# class tradeConstructor(Queue):
+#     '''All methods and cases that involve the transition from raw data to transactionPNL Object'''
 
-    def __init__(self) -> None:
-        super().__init__()
-    
+#     def __init__(self) -> None:
+#         super().__init__()
 
-class transactionPNL(tradeTicket):
-    '''Build each row in the summary table. It consists of the following items:
+class tradeSummary (tradeTicket):
+    '''Produced by one or maximum two trades. Consists of the following items:
     Stock, Quantity, Date Entry, Price Entry, Date Exit, Price Exit, Cost, Income, Profit'''
 
     def __init__(self) -> None:
         super().__init__()
-        
 
-class transactionSummaryTable (transactionPNL):
-    '''Full summary of all transactions, which consits  of transactionPNL Objects.'''
+    def case_1(self, front=None, rear=None):
+        if front and rear:
+            if equal_signs(front, rear) and self.size < 2:
+                return front + rear
+    
+    def case_2(self, front=None, rear=None):
+        if front and rear:
+            if equal_signs(front, rear) and self.size > 2:
+                pass
+    
+    def case_3(self, front=None, rear=None):
+        if front and rear:
+            if not equal_signs(front, rear):
+                pass
+
+
+class tickerSummary (tradeSummary):
+    '''Consists of all tradeSummary Objects for a ticker.'''
 
     def __init__(self) -> None:
         super().__init__()
@@ -179,7 +211,7 @@ def unique_tickers(db, ticker_col, date_col, q_col, p_col):
         # Sort out unique tickers and their trades
         ticker = db[i][ticker_col]
         ticker_PNL = Queue()
-        current_pipe = dealPipe()
+        # current_pipe = dealPipe()
         tax_ledger = []
         
         # j iteration wouldn't work. The pipe will only have two positions:
@@ -187,75 +219,182 @@ def unique_tickers(db, ticker_col, date_col, q_col, p_col):
         # TWO, which is temporary, where you save the incoming trade_q of a different sign, 
         # so that you can subtract it from ONE, remove the smaller of the two, and leave the result as the new ONE.
         
-        j = 0
+        # j = 0
         while db[i][ticker_col] == ticker:
             current_trade = tradeTicket()
-            current_trade.ticker(ticker)
-            current_trade.quantity(db[i][q_col])
-            current_trade.price(db[i][p_col])
-            current_trade.date(db[i][date_col])
-            current_q = current_trade.quantity()
-            # first_q_correct = ticker_PNL.peek_first()['q']
-
-            if current_pipe.is_empty():
-                current_pipe.enqueue(j, current_q)
-                ticker_PNL.enqueue(current_trade.items())
-            elif equal_signs(current_trade.quantity(), ticker_PNL.peek()['q']):
-                # compare the current (latest) item, with the 'first item' in the queue
-                # if different signs, check if this item is not the second one, i.e. there's no other items ahead of you (other than the 'first item')
-                # if there is another item ahead of you, do these two things: (1) add current row at the back of the queue and (2) subtract the second item and the first item
-                # Then remove the smaller of the two, and leave the result as the new 'first item'.
-                ticker_PNL.enqueue(current_trade.items())
-                print(ticker_PNL.items)
-                # consider the case when there is only one entry
-            else:
-                first_q = current_pipe.peek()['item']
-                first_q_id = current_pipe.peek()['id']
-
-                if equal_signs(current_q, first_q):
-                    current_pipe.enqueue(j, current_q)
-                else:
-                    yEn = ticker_PNL.items[j] 
-                    en_date = yEn['d']
-                    entry_q = yEn['q']
-                    en_price = yEn['p']
-                    yEx = ticker_PNL.items[first_q_id]
-                    ex_date = yEx['d']
-                    exit_q = yEx['q']
-                    ex_price = yEx['p']
-                    
-                    if abs(entry_q) > abs(exit_q):
-                        transaction_q = - 1 * exit_q
-                        # first_q -= transaction_q # decrease the first quantity with the one that we are booking now
-                        current_pipe.dequeue()
-                        current_pipe.enqueue(j, entry_q - transaction_q)
-                        ticker_PNL.dequeue()
-                        ticker_PNL.items[j - 1]['q'] -= transaction_q                    
-                    elif abs(entry_q) < abs(exit_q):
-                        transaction_q = - 1 * entry_q
-                        # first_q -= transaction_q
-                        current_pipe.dequeue()
-                        current_pipe.enqueue(j, exit_q - transaction_q)
-                        ticker_PNL.dequeue()
-                        ticker_PNL.items[j - 1]['q'] -= transaction_q
-                    elif abs(entry_q) == abs(exit_q):
-                        transaction_q = entry_q
-                        current_pipe.dequeue()
-                        ticker_PNL.dequeue()
-
-                    tax_ledger.append([ticker, transaction_q, en_date, en_price, -1 * transaction_q, ex_date, ex_price])
-                       
-                    # print(tax_ledger)
+            current_trade.populate(ticker, db[i][q_col], db[i][p_col], db[i][date_col])
+            ticker_PNL.enqueue(current_trade.items())
             
-            print(ticker_PNL.items)
-            j += 1            
             i += 1
-        
             if i >= len(db):
                 print(f'Total number of transactions: {i}')
                 break
 
-        ledger[ticker] = ticker_PNL.items
+        # j = ticker_PNL.size()
+        # print(ticker_PNL.items)
+        while not ticker_PNL.is_empty():
+
+            first_q = ticker_PNL.peek()['q']
+            # second_q = ticker_PNL.peek_2()['q']
+
+            if ticker_PNL.size() > 2:
+                second_q = ticker_PNL.peek_2()['q']
+                current_q = ticker_PNL.items[-3]['q'] # marks the first item in the list, which is also the last item in the queue
+            elif ticker_PNL.size() == 2:
+                second_q = ticker_PNL.peek_2()['q']
+                current_q = second_q
+            elif ticker_PNL.size() == 1:
+                trade_q = ticker_PNL.items[0]['q']
+                first_date = ticker_PNL.items[0]['d']
+                first_price = ticker_PNL.items[0]['p']
+                # second_date = None
+                # second_price = None
+
+                tax_ledger.append([ticker, trade_q, first_date, first_price, None, None, None])
+                # print(tax_ledger)
+                
+                break
+
+
+            # if equal_signs(first_q, second_q) and ticker_PNL.size() < 2:
+            #     i += 1
+            #     if i >= len(db):
+            #         print(f'Total number of transactions: {i}')
+            #         break
+            #     else:
+            #         continue
+            
+            if equal_signs(first_q, second_q):
+                if abs(first_q) > abs(current_q):
+                    trade_q = -1 * current_q
+                    ticker_PNL.peek()['q'] -= trade_q # decrease the first_q with the second_q
+                    ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object
+
+                    first_date = ticker_PNL.peek()['d']
+                    first_price = ticker_PNL.peek()['p']
+                    second_date = ticker_PNL.peek_2()['d']
+                    second_price = ticker_PNL.peek_2()['p']
+
+                    ticker_PNL.dequeue() # Delete the first object
+                elif abs(first_q) < abs(current_q):
+                    trade_q = -1 * first_q
+                    ticker_PNL.peek_2()['q'] -= trade_q # decrease the second_q with the first_q
+                    
+                    first_date = ticker_PNL.peek()['d']
+                    first_price = ticker_PNL.peek()['p']
+                    second_date = ticker_PNL.peek_2()['d']
+                    second_price = ticker_PNL.peek_2()['p']
+
+                    ticker_PNL.dequeue() # Delete the first object
+                elif abs(first_q) == abs(current_q):
+                    trade_q = -1 * first_q
+
+                    first_date = ticker_PNL.peek()['d']
+                    first_price = ticker_PNL.peek()['p']
+                    second_date = ticker_PNL.peek_2()['d']
+                    second_price = ticker_PNL.peek_2()['p']
+
+                    ticker_PNL.dequeue()
+                    ticker_PNL.dequeue()
+            
+            elif not equal_signs(first_q, second_q):
+                if abs(first_q) > abs(second_q):
+                    trade_q = second_q
+                    ticker_PNL.peek()['q'] += trade_q # decrease the first_q with the second_q
+                    ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object
+
+                    first_date = ticker_PNL.peek()['d']
+                    first_price = ticker_PNL.peek()['p']
+                    second_date = ticker_PNL.peek_2()['d']
+                    second_price = ticker_PNL.peek_2()['p']
+
+                    ticker_PNL.dequeue() # Delete the first object
+                elif abs(first_q) < abs(second_q):
+                    trade_q = first_q
+                    ticker_PNL.peek_2()['q'] += trade_q # decrease the second_q with the first_q
+
+                    first_date = ticker_PNL.peek()['d']
+                    first_price = ticker_PNL.peek()['p']
+                    second_date = ticker_PNL.peek_2()['d']
+                    second_price = ticker_PNL.peek_2()['p']
+
+                    ticker_PNL.dequeue() # Delete the first object
+                elif abs(first_q) == abs(second_q):
+                    trade_q = first_q
+
+                    first_date = ticker_PNL.peek()['d']
+                    first_price = ticker_PNL.peek()['p']
+                    second_date = ticker_PNL.peek_2()['d']
+                    second_price = ticker_PNL.peek_2()['p']
+
+                    ticker_PNL.dequeue()
+                    ticker_PNL.dequeue()
+
+            # first_date = ticker_PNL.peek()['d']
+            # first_price = ticker_PNL.peek()['p']
+            # second_date = ticker_PNL.peek_2()['d']
+            # second_price = ticker_PNL.peek_2()['p']
+
+            tax_ledger.append([ticker, trade_q, first_date, first_price, -1 * trade_q, second_date, second_price])
+
+            # ##################################################################################
+            # if equal_signs(current_trade.quantity(), ticker_PNL.peek()['q']):
+            #     # compare the current (latest) item, with the 'first item' in the queue
+            #     # if different signs, check if this item is not the second one, i.e. there's no other items ahead of you (other than the 'first item')
+            #     # if there is another item ahead of you, do these two things: (1) add current row at the back of the queue and (2) subtract the second item and the first item
+            #     # Then remove the smaller of the two, and leave the result as the new 'first item'.
+            #     ticker_PNL.enqueue(current_trade.items())
+            #     print(ticker_PNL.items)
+            #     # consider the case when there is only one entry
+            # else:
+            #     first_q = ticker_PNL.peek()['q']
+            #     first_q_id = ticker_PNL.peek()['id']
+
+            #     if equal_signs(current_q, first_q):
+            #         current_pipe.enqueue(j, current_q)
+            #     else:
+            #         yEn = ticker_PNL.items[j] 
+            #         en_date = yEn['d']
+            #         entry_q = yEn['q']
+            #         en_price = yEn['p']
+            #         yEx = ticker_PNL.items[first_q_id]
+            #         ex_date = yEx['d']
+            #         exit_q = yEx['q']
+            #         ex_price = yEx['p']
+                    
+            #         if abs(entry_q) > abs(exit_q):
+            #             transaction_q = - 1 * exit_q
+            #             # first_q -= transaction_q # decrease the first quantity with the one that we are booking now
+            #             # current_pipe.dequeue()
+            #             # current_pipe.enqueue(j, entry_q - transaction_q)
+            #             ticker_PNL.dequeue()
+            #             ticker_PNL.items[j - 1]['q'] -= transaction_q                    
+            #         elif abs(entry_q) < abs(exit_q):
+            #             transaction_q = - 1 * entry_q
+            #             # first_q -= transaction_q
+            #             # current_pipe.dequeue()
+            #             # current_pipe.enqueue(j, exit_q - transaction_q)
+            #             ticker_PNL.dequeue()
+            #             ticker_PNL.items[j - 1]['q'] -= transaction_q
+            #         elif abs(entry_q) == abs(exit_q):
+            #             transaction_q = entry_q
+            #             current_pipe.dequeue()
+            #             ticker_PNL.dequeue()
+
+            #         tax_ledger.append([ticker, transaction_q, en_date, en_price, -1 * transaction_q, ex_date, ex_price])
+                       
+            #         # print(tax_ledger)
+            # #########################################################################3######
+            
+            # print(ticker_PNL.items)
+            # print(tax_ledger)
+
+        # i += 1
+        
+
+        
+        print(tax_ledger)
+        # ledger[ticker] = ticker_PNL.items
                 
     return(ledger)
 
