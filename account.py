@@ -1,9 +1,4 @@
 import csv
-from pdb import line_prefix
-from posixpath import split
-from re import I
-import string
-
 # from yfinance import Ticker
 
 class Queue:
@@ -31,6 +26,14 @@ class Queue:
         if self.items:
             return self.items.pop()
         return None
+
+    def replace_last_items(self):
+        '''Replaces the last two values in the list'''
+
+        # return list(map(lambda x: x.replace(self.peek(), self.peek_2()), self.items))
+        i = self.items.index(self.peek_2())
+        self.items.insert(i - 1, self.peek())
+        self.dequeue()
 
     def peek(self):
         """Returns the last item in the list, which represents the front-most
@@ -151,22 +154,6 @@ class tickerSummary (tradeSummary):
     def __init__(self) -> None:
         super().__init__()
         
-
-
-# class dealPipe(Queue):
-#     '''Track each entry and act depending on the sign and the size of the entry. Enqueue entries with the same sign, until you get
-#     an entry with a different sign. In that case you dequeue it from the enqueued entries (FIFO). You do that until you either
-#     get to zero, or switch signs from the remaining entry. Keep entries IDs, which you can link to the built up database to obtain
-#     prices and dates of the transaction.'''
-#     def __init__(self) -> None:
-#         super().__init__()
-    
-#     def enqueue(self, item_id, item):
-#         '''Definitions:
-#         id- the trade number in the sequence of trades as shown in the IB Trade table.
-#         item- the number of contracts for the current row.'''
-#         new_item = {'id':item_id, 'item':item}      
-#         return super().enqueue(new_item)
      
 def comma_break(line):
     D = ''
@@ -183,12 +170,6 @@ def comma_cleanup(line):
         else: continue
     
     return(D)
-
-# def is_option(ticker):
-#     if ' ' in ticker:
-#         return True
-#     else:
-#         return False
 
 def equal_signs(a, b):
     return ((a == b) & (a == 0)) | (a * b > 0)
@@ -217,9 +198,8 @@ def data_to_string(data_set):
     pass
 
 def write(data_set):
-
     with open('tax_statement.csv', 'w') as f:
-        fieldnames = ['Ticker', 'Quantity', 'Date entry', 'Price entry', 'Quantity', 'Date exit', 'Price exit']
+        fieldnames = ['Ticker', 'Date entry', 'Quantity', 'Price entry', 'Expense', 'Date exit', 'Quantity', 'Price exit', 'Income', 'Profit']
         writer = csv.writer(f)
 
         writer.writerow(fieldnames)
@@ -231,8 +211,6 @@ def write(data_set):
             
             writer.writerow(line)
     
-
-# loop through database and list all unique tickers at index[0] skip lines when the same ticker
 def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
     i = 0
     ledger = []
@@ -273,8 +251,18 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                 first_date = ticker_PNL.items[0]['d']
                 first_price = ticker_PNL.items[0]['p']
 
-                tax_ledger.append([ticker, trade_q, first_date, first_price, None, None, None])
-                ledger.append([ticker, trade_q, first_date, first_price, None, None, None])
+                # Case 1: If you sold short an option and it expired without being excercised, you keep the profit.
+                # Case 2: If you bought an option and it expires worthless, you book the cost.
+                # Case 3: If you sold short a stock, it does not expire until you buy it back. So, it is unrealized profit/ expense and goes to the balance.
+                if ticker_PNL.items[0]['type'] != 'Stocks':
+                    trade_profit = -1 * trade_q * first_price
+                else:
+                    trade_profit = None
+
+                float_line = [ticker, first_date, trade_q, first_price, trade_profit, None, None, None, None, trade_profit]
+
+                tax_ledger.append(float_line)
+                ledger.append(float_line)
                 
                 break
             
@@ -315,14 +303,16 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                 if abs(first_q) > abs(second_q):
                     trade_q = second_q
                     ticker_PNL.peek()['q'] += trade_q # decrease the first_q with the second_q
-                    ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object
 
                     first_date = ticker_PNL.peek()['d']
                     first_price = ticker_PNL.peek()['p']
                     second_date = ticker_PNL.peek_2()['d']
                     second_price = ticker_PNL.peek_2()['p']
 
+                    ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object [DOES NOT WORK!!]
+                    ticker_PNL.replace_last_items()
                     ticker_PNL.dequeue() # Delete the first object
+                    # ticker_PNL.deque_2()
                 elif abs(first_q) < abs(second_q):
                     trade_q = first_q
                     ticker_PNL.peek_2()['q'] += trade_q # decrease the second_q with the first_q
@@ -343,11 +333,14 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
 
                     ticker_PNL.dequeue()
                     ticker_PNL.dequeue()
+            
+            trade_expense = trade_q * first_price
+            trade_income = -1 * trade_q * second_price
+            trade_profit = trade_income + trade_expense
+            float_line = [ticker, first_date, trade_q, first_price, trade_expense, second_date, -1 * trade_q, second_price, trade_income, trade_profit]
 
-            tax_ledger.append([ticker, trade_q, first_date, first_price, -1 * trade_q, second_date, second_price])
-            ledger.append([ticker, trade_q, first_date, first_price, -1 * trade_q, second_date, second_price])
-        # print(tax_ledger)
-        # ledger.append(tax_ledger)
+            tax_ledger.append(float_line)
+            ledger.append(float_line)
                 
     return(ledger)
 
