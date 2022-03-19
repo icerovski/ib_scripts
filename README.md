@@ -30,3 +30,7 @@ https://www.youtube.com/watch?v=sugvnHA7ElY
 
 Write CSV files in Python:
 https://www.youtube.com/watch?v=s1XiCh-mGCA
+
+TODO:
+- Problems with EFC
+- Problems with T

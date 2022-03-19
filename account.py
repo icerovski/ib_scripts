@@ -32,7 +32,7 @@ class Queue:
 
         # return list(map(lambda x: x.replace(self.peek(), self.peek_2()), self.items))
         i = self.items.index(self.peek_2())
-        self.items.insert(i - 1, self.peek())
+        self.items.insert(i, self.peek())
         self.dequeue()
 
     def peek(self):
@@ -275,6 +275,7 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
 
                     tax_ledger.append(float_line)
                     ledger.append(float_line)
+                    print(float_line)
 
             if all_same_sign:
                 break
@@ -359,7 +360,8 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
 
             tax_ledger.append(float_line)
             ledger.append(float_line)
-                
+            print(float_line)
+
     return(ledger)
 
 def main():
