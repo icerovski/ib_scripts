@@ -247,17 +247,12 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
             for j in range(obj_last_index, -1, -1):
                 if not equal_signs(ticker_PNL.items[j]['q'], first_q):
                     current_item = ticker_PNL.items[j]
+                    current_q = current_item['q']
+                    second_q = ticker_PNL.peek_2()['q']
                     all_same_sign = False
                     break
 
-
-            if ticker_PNL.size() >= 2:
-                second_q = ticker_PNL.peek_2()['q']
-                # current_q = ticker_PNL.items[-3]['q'] # marks the first item in the list, which is also the last item in the queue
-            # elif ticker_PNL.size() == 2:
-                # second_q = ticker_PNL.peek_2()['q']
-                # current_q = second_q
-            else:
+            if all_same_sign:
                 for j in range(obj_last_index, -1, -1):
                     trade_q = ticker_PNL.items[j]['q']
                     first_date = ticker_PNL.items[j]['d']
@@ -277,12 +272,11 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                     ledger.append(float_line)
                     print(float_line)
 
-            if all_same_sign:
                 break
             
             if equal_signs(first_q, second_q):
-                if abs(first_q) > abs(current_item['q']):
-                    trade_q = -1 * current_item['q']
+                if abs(first_q) > abs(current_q):
+                    trade_q = -1 * current_q
                     ticker_PNL.peek()['q'] -= trade_q # decrease the first_q with the second_q
                     ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object
 
@@ -292,20 +286,17 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                     second_price = ticker_PNL.peek_2()['p']
 
                     ticker_PNL.dequeue() # Delete the first object
-                elif abs(first_q) < abs(current_item['q']):
+                elif abs(first_q) < abs(current_q):
                     trade_q = -1 * first_q
                     current_item['q'] -= trade_q
-                    # ticker_PNL.peek_2()['q'] -= trade_q # decrease the second_q with the first_q
                     
                     first_date = ticker_PNL.peek()['d']
                     first_price = ticker_PNL.peek()['p']
                     second_date = current_item['d']
                     second_price = current_item['p']
-                    # second_date = ticker_PNL.peek_2()['d']
-                    # second_price = ticker_PNL.peek_2()['p']
 
                     ticker_PNL.dequeue() # Delete the first object
-                elif abs(first_q) == abs(current_item['q']):
+                elif abs(first_q) == abs(current_q):
                     trade_q = -1 * first_q
 
                     first_date = ticker_PNL.peek()['d']
@@ -319,21 +310,20 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
             elif not equal_signs(first_q, second_q):
                 # THIS HERE DOESN'T CALCULATE PROPERLY. CHECK OUT 'T'
                 if abs(first_q) > abs(second_q):
-                    trade_q = second_q
-                    ticker_PNL.peek()['q'] += trade_q # decrease the first_q with the second_q
+                    trade_q = -1 * second_q
+                    ticker_PNL.peek()['q'] -= trade_q # decrease the first_q with the second_q
 
                     first_date = ticker_PNL.peek()['d']
                     first_price = ticker_PNL.peek()['p']
                     second_date = ticker_PNL.peek_2()['d']
                     second_price = ticker_PNL.peek_2()['p']
 
-                    # ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object [DOES NOT WORK!!]
                     ticker_PNL.replace_last_items() # Replace the second object with the first object [DOES NOT WORK!!]
                     ticker_PNL.dequeue() # Delete the first object
-                    # ticker_PNL.deque_2()
+
                 elif abs(first_q) < abs(second_q):
-                    trade_q = first_q
-                    ticker_PNL.peek_2()['q'] += trade_q # decrease the second_q with the first_q
+                    trade_q = -1 * first_q
+                    ticker_PNL.peek_2()['q'] -= trade_q # decrease the second_q with the first_q
 
                     first_date = ticker_PNL.peek()['d']
                     first_price = ticker_PNL.peek()['p']
