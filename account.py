@@ -217,6 +217,7 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
     
     script_ended = False
     while i < len(db):
+        # Iterate through a NEW TICKER
         instrument_type = db[i][type_col]
         ticker = db[i][ticker_col]
         ticker_PNL = Queue()
@@ -235,40 +236,52 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
         
         if script_ended:
             break
-
+        
+        print(ticker)
         while not ticker_PNL.is_empty():
-
             first_q = ticker_PNL.peek()['q']
+            obj_last_index = ticker_PNL.size() - 1
+    
+            current_item = {}
+            all_same_sign = True
+            for j in range(obj_last_index, -1, -1):
+                if not equal_signs(ticker_PNL.items[j]['q'], first_q):
+                    current_item = ticker_PNL.items[j]
+                    all_same_sign = False
+                    break
 
-            if ticker_PNL.size() > 2:
+
+            if ticker_PNL.size() >= 2:
                 second_q = ticker_PNL.peek_2()['q']
-                current_q = ticker_PNL.items[-3]['q'] # marks the first item in the list, which is also the last item in the queue
-            elif ticker_PNL.size() == 2:
-                second_q = ticker_PNL.peek_2()['q']
-                current_q = second_q
-            elif ticker_PNL.size() == 1:
-                trade_q = ticker_PNL.items[0]['q']
-                first_date = ticker_PNL.items[0]['d']
-                first_price = ticker_PNL.items[0]['p']
+                # current_q = ticker_PNL.items[-3]['q'] # marks the first item in the list, which is also the last item in the queue
+            # elif ticker_PNL.size() == 2:
+                # second_q = ticker_PNL.peek_2()['q']
+                # current_q = second_q
+            else:
+                for j in range(obj_last_index, -1, -1):
+                    trade_q = ticker_PNL.items[j]['q']
+                    first_date = ticker_PNL.items[j]['d']
+                    first_price = ticker_PNL.items[j]['p']
 
-                # Case 1: If you sold short an option and it expired without being excercised, you keep the profit.
-                # Case 2: If you bought an option and it expires worthless, you book the cost.
-                # Case 3: If you sold short a stock, it does not expire until you buy it back. So, it is unrealized profit/ expense and goes to the balance.
-                if ticker_PNL.items[0]['type'] != 'Stocks':
-                    trade_profit = -1 * trade_q * first_price
-                else:
-                    trade_profit = None
+                    # Case 1: If you sold short an option and it expired without being excercised, you keep the profit.
+                    # Case 2: If you bought an option and it expires worthless, you book the cost.
+                    # Case 3: If you sold short a stock, it does not expire until you buy it back. So, it is unrealized profit/ expense and goes to the balance.
+                    if ticker_PNL.items[j]['type'] != 'Stocks':
+                        trade_profit = -1 * trade_q * first_price
+                    else:
+                        trade_profit = None
 
-                float_line = [ticker, first_date, trade_q, first_price, trade_profit, None, None, None, None, trade_profit]
+                    float_line = [ticker, first_date, trade_q, first_price, trade_profit, None, None, None, None, trade_profit]
 
-                tax_ledger.append(float_line)
-                ledger.append(float_line)
-                
+                    tax_ledger.append(float_line)
+                    ledger.append(float_line)
+
+            if all_same_sign:
                 break
             
             if equal_signs(first_q, second_q):
-                if abs(first_q) > abs(current_q):
-                    trade_q = -1 * current_q
+                if abs(first_q) > abs(current_item['q']):
+                    trade_q = -1 * current_item['q']
                     ticker_PNL.peek()['q'] -= trade_q # decrease the first_q with the second_q
                     ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object
 
@@ -278,17 +291,20 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                     second_price = ticker_PNL.peek_2()['p']
 
                     ticker_PNL.dequeue() # Delete the first object
-                elif abs(first_q) < abs(current_q):
+                elif abs(first_q) < abs(current_item['q']):
                     trade_q = -1 * first_q
-                    ticker_PNL.peek_2()['q'] -= trade_q # decrease the second_q with the first_q
+                    current_item['q'] -= trade_q
+                    # ticker_PNL.peek_2()['q'] -= trade_q # decrease the second_q with the first_q
                     
                     first_date = ticker_PNL.peek()['d']
                     first_price = ticker_PNL.peek()['p']
-                    second_date = ticker_PNL.peek_2()['d']
-                    second_price = ticker_PNL.peek_2()['p']
+                    second_date = current_item['d']
+                    second_price = current_item['p']
+                    # second_date = ticker_PNL.peek_2()['d']
+                    # second_price = ticker_PNL.peek_2()['p']
 
                     ticker_PNL.dequeue() # Delete the first object
-                elif abs(first_q) == abs(current_q):
+                elif abs(first_q) == abs(current_item['q']):
                     trade_q = -1 * first_q
 
                     first_date = ticker_PNL.peek()['d']
@@ -300,6 +316,7 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                     ticker_PNL.dequeue()
             
             elif not equal_signs(first_q, second_q):
+                # THIS HERE DOESN'T CALCULATE PROPERLY. CHECK OUT 'T'
                 if abs(first_q) > abs(second_q):
                     trade_q = second_q
                     ticker_PNL.peek()['q'] += trade_q # decrease the first_q with the second_q
@@ -309,8 +326,8 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                     second_date = ticker_PNL.peek_2()['d']
                     second_price = ticker_PNL.peek_2()['p']
 
-                    ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object [DOES NOT WORK!!]
-                    ticker_PNL.replace_last_items()
+                    # ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object [DOES NOT WORK!!]
+                    ticker_PNL.replace_last_items() # Replace the second object with the first object [DOES NOT WORK!!]
                     ticker_PNL.dequeue() # Delete the first object
                     # ticker_PNL.deque_2()
                 elif abs(first_q) < abs(second_q):
@@ -334,6 +351,7 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                     ticker_PNL.dequeue()
                     ticker_PNL.dequeue()
             
+             
             trade_expense = trade_q * first_price
             trade_income = -1 * trade_q * second_price
             trade_profit = trade_income + trade_expense
