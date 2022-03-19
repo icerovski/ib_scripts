@@ -27,6 +27,11 @@ class Queue:
             return self.items.pop()
         return None
 
+    def remove_item(self, item):
+        '''Remove the item from the array'''
+        
+        self.items.remove(item)
+
     def replace_last_items(self):
         '''Replaces the last two values in the list'''
 
@@ -278,17 +283,20 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                 if abs(first_q) > abs(current_q):
                     trade_q = -1 * current_q
                     ticker_PNL.peek()['q'] -= trade_q # decrease the first_q with the second_q
-                    ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object
+                    # ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object
 
                     first_date = ticker_PNL.peek()['d']
                     first_price = ticker_PNL.peek()['p']
-                    second_date = ticker_PNL.peek_2()['d']
-                    second_price = ticker_PNL.peek_2()['p']
+                    second_date = current_item['d']
+                    second_price = current_item['p']
 
-                    ticker_PNL.dequeue() # Delete the first object
+                    ticker_PNL.remove_item(current_item)
+                    # ticker_PNL.replace_last_items() # Replace the second object with the first object [DOES NOT WORK!!]
+                    # ticker_PNL.dequeue() # Delete the first object                    
+
                 elif abs(first_q) < abs(current_q):
-                    trade_q = -1 * first_q
-                    current_item['q'] -= trade_q
+                    trade_q = first_q
+                    current_item['q'] += trade_q
                     
                     first_date = ticker_PNL.peek()['d']
                     first_price = ticker_PNL.peek()['p']
@@ -331,6 +339,7 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                     second_price = ticker_PNL.peek_2()['p']
 
                     ticker_PNL.dequeue() # Delete the first object
+
                 elif abs(first_q) == abs(second_q):
                     trade_q = first_q
 
