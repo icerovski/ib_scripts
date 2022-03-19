@@ -24,3 +24,9 @@ https://stackabuse.com/python-dictionary-tutorial/
 
 List of dictionaries:
 https://pythonexamples.org/python-list-of-dictionaries/
+
+Python Tutorial: if __name__ == '__main__'
+https://www.youtube.com/watch?v=sugvnHA7ElY
+
+Write CSV files in Python:
+https://www.youtube.com/watch?v=s1XiCh-mGCA

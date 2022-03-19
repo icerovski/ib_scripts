@@ -1,5 +1,8 @@
 import csv
+from pdb import line_prefix
+from posixpath import split
 from re import I
+import string
 
 # from yfinance import Ticker
 
@@ -200,13 +203,39 @@ def sort_ib_file():
                 counter += 1 # used to count the transactions
                 row = [counter, *row] # using unpack insert an item in the begining of the list
                 data.append(row) # append the newly created row to the data
+    
+    return(data)
+    
 
-        return(data)
+def data_to_string(data_set):
+    data_string = ''
+    for item in data_set:
+        for i in range(len(item)):
+            data_string += str(i)
+        
+
+    pass
+
+def write(data_set):
+
+    with open('tax_statement.csv', 'w') as f:
+        fieldnames = ['Ticker', 'Quantity', 'Date entry', 'Price entry', 'Quantity', 'Date exit', 'Price exit']
+        writer = csv.writer(f)
+
+        writer.writerow(fieldnames)
+
+        for list in data_set:
+            line = []
+            for item in list:
+                line.append(str(item))
+            
+            writer.writerow(line)
+    
 
 # loop through database and list all unique tickers at index[0] skip lines when the same ticker
 def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
     i = 0
-    ledger = {}
+    ledger = []
     
     script_ended = False
     while i < len(db):
@@ -245,6 +274,7 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                 first_price = ticker_PNL.items[0]['p']
 
                 tax_ledger.append([ticker, trade_q, first_date, first_price, None, None, None])
+                ledger.append([ticker, trade_q, first_date, first_price, None, None, None])
                 
                 break
             
@@ -315,9 +345,9 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                     ticker_PNL.dequeue()
 
             tax_ledger.append([ticker, trade_q, first_date, first_price, -1 * trade_q, second_date, second_price])
-
-        print(tax_ledger)
-        # ledger[ticker] = ticker_PNL.items
+            ledger.append([ticker, trade_q, first_date, first_price, -1 * trade_q, second_date, second_price])
+        # print(tax_ledger)
+        # ledger.append(tax_ledger)
                 
     return(ledger)
 
@@ -326,10 +356,12 @@ def main():
     ticker_col = 6 + 1
     date_col = 7 + 1
     q_col = 8 + 1
-    p_col = 10 + 1
+    p_col = 9 + 1
 
     raw_db = sort_ib_file()
     ledger = unique_tickers(raw_db, type_col, ticker_col, date_col, q_col, p_col)
+    print(*ledger, sep = '\n')
+    write(ledger)
 
     # for key, value in ledger.items():
     #     print(f'{key} : {value}')
