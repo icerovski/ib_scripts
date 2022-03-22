@@ -1,6 +1,14 @@
 import csv
 # from yfinance import Ticker
 
+class tradePairing:
+    '''Find a matching entry / exit pair (incl. price, quantity and date) based on
+    the existing balances in the ledger of trades.'''
+    pass
+
+class tickerLedger:
+    pass
+
 class Queue:
 
     def __init__(self) -> None:
@@ -83,8 +91,7 @@ class Queue:
         return self.items
 
 
-class tradeTicket(Queue):
-
+class tradeTicket():
     def __init__(self) -> None:
         self._items = {}
 
@@ -228,6 +235,7 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
         ticker_PNL = Queue()
         tax_ledger = []
 
+        # Build up the ledger for the ticker
         while db[i][ticker_col] == ticker:
             current_trade = tradeTicket()
             current_trade.populate(ticker, instrument_type, db[i][q_col], db[i][p_col], db[i][date_col])
@@ -242,6 +250,7 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
         if script_ended:
             break
         
+        # Pair entry and exits
         print(ticker)
         while not ticker_PNL.is_empty():
             first_q = ticker_PNL.peek()['q']
