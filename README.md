@@ -31,6 +31,9 @@ https://www.youtube.com/watch?v=sugvnHA7ElY
 Write CSV files in Python:
 https://www.youtube.com/watch?v=s1XiCh-mGCA
 
+.gitignore:
+https://www.freecodecamp.org/news/gitignore-what-is-it-and-how-to-add-to-repo/
+
 TODO:
 - Problems with EFC
 - Problems with T

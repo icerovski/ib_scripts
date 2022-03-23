@@ -137,6 +137,53 @@ class tradeTicket():
         return self._items
 
 
+class Ticker():
+    def __init__(self, ticker, instrument_type) -> None:
+
+        # Instance variables
+        self._ticker = ticker
+        self._instrumet_type = instrument_type
+        self._items = {}
+
+    # def ticker(self, s=None):
+    #     if s:
+    #         self._items['ticker'] = s
+    #     return self._items['ticker']
+
+    # def instrumet_type(self, it=None):
+    #     if it:
+    #         self._items['type'] = it
+    #     return self._items['type']
+
+    def quantity(self, q=None):
+        if q:
+            if self._instrumet_type == 'Stocks':
+                self._items['q'] = int(comma_cleanup(q))
+            else:
+                self._items['q'] = int(comma_cleanup(q)) * 100
+        return self._items['q']
+
+    def price(self, p=None):
+        if p:
+            self._items['p'] = float(comma_cleanup(p))
+        return self._items['p']
+    
+    def date(self, d=None):
+        if d:
+            self._items['d'] = comma_break(d)
+        return self._items['d']
+    
+    def populate(self, q, p, d):
+        self.quantity(q)
+        self.price(p)
+        self.date(d)
+    
+    def items(self):
+        return self._items
+
+    def __str__(self) -> str:
+        return self._items
+
 class tradeSummary (tradeTicket):
     '''Produced by one or maximum two trades. Consists of the following items:
     Stock, Quantity, Date Entry, Price Entry, Date Exit, Price Exit, Cost, Income, Profit'''
@@ -160,11 +207,11 @@ class tradeSummary (tradeTicket):
                 pass
 
 
-class tickerSummary (tradeSummary):
-    '''Consists of all tradeSummary Objects for a ticker.'''
+# class tickerSummary (tradeSummary):
+#     '''Consists of all tradeSummary Objects for a ticker.'''
 
-    def __init__(self) -> None:
-        super().__init__()
+#     def __init__(self) -> None:
+#         super().__init__()
         
      
 def comma_break(line):
@@ -235,11 +282,17 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
         ticker_PNL = Queue()
         tax_ledger = []
 
+        ticker_ledger = Ticker(ticker=ticker, instrument_type=instrument_type)
+        # ticker_ledger.ticker(ticker)
+        # ticker_ledger.instrumet_type(instrument_type)
+
         # Build up the ledger for the ticker
         while db[i][ticker_col] == ticker:
+
             current_trade = tradeTicket()
             current_trade.populate(ticker, instrument_type, db[i][q_col], db[i][p_col], db[i][date_col])
             ticker_PNL.enqueue(current_trade.items())
+            ticker_ledger.populate(db[i][q_col], db[i][p_col], db[i][date_col])
             
             i += 1
             if i >= len(db):
