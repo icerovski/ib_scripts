@@ -1,4 +1,5 @@
 import csv
+from multiprocessing.sharedctypes import Value
 # from yfinance import Ticker
 
 class tradePairing:
@@ -43,7 +44,6 @@ class Queue:
     def replace_last_items(self):
         '''Replaces the last two values in the list'''
 
-        # return list(map(lambda x: x.replace(self.peek(), self.peek_2()), self.items))
         i = self.items.index(self.peek_2())
         self.items.insert(i, self.peek())
         self.dequeue()
@@ -91,73 +91,43 @@ class Queue:
         return self.items
 
 
-class tradeTicket():
-    def __init__(self) -> None:
-        self._items = {}
+class Ticker:
+    INSTRUMENT_TYPES = ('Stocks', 'Equity and Index Options')
 
-    def ticker(self, s=None):
-        if s:
-            self._items['ticker'] = s
-        return self._items['ticker']
-
-    def instrumet_type(self, it=None):
-        if it:
-            self._items['type'] = it
-        return self._items['type']
-
-    def quantity(self, q=None):
-        if q:
-            if self.instrumet_type() == 'Stocks':
-                self._items['q'] = int(comma_cleanup(q))
-            else:
-                self._items['q'] = int(comma_cleanup(q)) * 100
-        return self._items['q']
-
-    def price(self, p=None):
-        if p:
-            self._items['p'] = float(comma_cleanup(p))
-        return self._items['p']
-    
-    def date(self, d=None):
-        if d:
-            self._items['d'] = comma_break(d)
-        return self._items['d']
-    
-    def populate(self, t, it, q, p, d):
-        self.ticker(t)
-        self.instrumet_type(it)
-        self.quantity(q)
-        self.price(p)
-        self.date(d)
-    
-    def items(self):
-        return self._items
-
-    def __str__(self) -> str:
-        return self._items
-
-
-class Ticker():
-    def __init__(self, ticker, instrument_type) -> None:
+    def __init__(self, ticker, type) -> None:
 
         # Instance variables
         self._ticker = ticker
-        self._instrumet_type = instrument_type
+        if (not type in Ticker.INSTRUMENT_TYPES):
+            raise ValueError(f'{type} is not a valid instrument type.')
+        else:
+            self._instrumet_type = type
+        self._tradelist = Queue()
+    
+    def filltrades(self, singletrade):
+        self._tradelist.enqueue(singletrade)
+
+    def getticker(self):
+        return self._ticker
+
+    def getinstrument(self):
+        return self._instrumet_type
+    
+    def getitems(self):
+        return self._tradelist
+
+    def __str__(self) -> str:
+        return self._tradelist
+
+class Trade(Ticker):
+
+    def __init__(self, ticker, type) -> None:
+        super().__init__(ticker, type)
         self._items = {}
-
-    # def ticker(self, s=None):
-    #     if s:
-    #         self._items['ticker'] = s
-    #     return self._items['ticker']
-
-    # def instrumet_type(self, it=None):
-    #     if it:
-    #         self._items['type'] = it
-    #     return self._items['type']
 
     def quantity(self, q=None):
         if q:
-            if self._instrumet_type == 'Stocks':
+            if Ticker.getinstrument(self) == Ticker.INSTRUMENT_TYPES[0]:
                 self._items['q'] = int(comma_cleanup(q))
             else:
                 self._items['q'] = int(comma_cleanup(q)) * 100
@@ -177,42 +147,10 @@ class Ticker():
         self.quantity(q)
         self.price(p)
         self.date(d)
-    
-    def items(self):
+
+    def getitems(self):
         return self._items
 
-    def __str__(self) -> str:
-        return self._items
-
-class tradeSummary (tradeTicket):
-    '''Produced by one or maximum two trades. Consists of the following items:
-    Stock, Quantity, Date Entry, Price Entry, Date Exit, Price Exit, Cost, Income, Profit'''
-
-    def __init__(self) -> None:
-        super().__init__()
-
-    def case_1(self, front=None, rear=None):
-        if front and rear:
-            if equal_signs(front, rear) and self.size < 2:
-                return front + rear
-    
-    def case_2(self, front=None, rear=None):
-        if front and rear:
-            if equal_signs(front, rear) and self.size > 2:
-                pass
-    
-    def case_3(self, front=None, rear=None):
-        if front and rear:
-            if not equal_signs(front, rear):
-                pass
-
-
-# class tickerSummary (tradeSummary):
-#     '''Consists of all tradeSummary Objects for a ticker.'''
-
-#     def __init__(self) -> None:
-#         super().__init__()
-        
      
 def comma_break(line):
     D = ''
@@ -245,16 +183,6 @@ def sort_ib_file():
                 data.append(row) # append the newly created row to the data
     
     return(data)
-    
-
-def data_to_string(data_set):
-    data_string = ''
-    for item in data_set:
-        for i in range(len(item)):
-            data_string += str(i)
-        
-
-    pass
 
 def write(data_set):
     with open('tax_statement.csv', 'w') as f:
@@ -274,25 +202,21 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
     i = 0
     ledger = []
     
+    # Improved this part!!!!!
     script_ended = False
     while i < len(db):
         # Iterate through a NEW TICKER
-        instrument_type = db[i][type_col]
+        type = db[i][type_col]
         ticker = db[i][ticker_col]
-        ticker_PNL = Queue()
         tax_ledger = []
 
-        ticker_ledger = Ticker(ticker=ticker, instrument_type=instrument_type)
-        # ticker_ledger.ticker(ticker)
-        # ticker_ledger.instrumet_type(instrument_type)
+        ticker_ledger = Ticker(ticker=ticker, type=type)
 
         # Build up the ledger for the ticker
         while db[i][ticker_col] == ticker:
-
-            current_trade = tradeTicket()
-            current_trade.populate(ticker, instrument_type, db[i][q_col], db[i][p_col], db[i][date_col])
-            ticker_PNL.enqueue(current_trade.items())
-            ticker_ledger.populate(db[i][q_col], db[i][p_col], db[i][date_col])
+            single_trade = Trade(ticker=ticker, type=type)
+            single_trade.populate(db[i][q_col], db[i][p_col], db[i][date_col])
+            ticker_ledger.filltrades(single_trade.getitems())
             
             i += 1
             if i >= len(db):
@@ -304,6 +228,7 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
             break
         
         # Pair entry and exits
+        ticker_PNL = ticker_ledger.getitems()
         print(ticker)
         while not ticker_PNL.is_empty():
             first_q = ticker_PNL.peek()['q']
@@ -328,7 +253,7 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                     # Case 1: If you sold short an option and it expired without being excercised, you keep the profit.
                     # Case 2: If you bought an option and it expires worthless, you book the cost.
                     # Case 3: If you sold short a stock, it does not expire until you buy it back. So, it is unrealized profit/ expense and goes to the balance.
-                    if ticker_PNL.items[j]['type'] != 'Stocks':
+                    if ticker_ledger.getinstrument() != Ticker.INSTRUMENT_TYPES[0]:
                         trade_profit = -1 * trade_q * first_price
                     else:
                         trade_profit = None
@@ -345,16 +270,13 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                 if abs(first_q) > abs(current_q):
                     trade_q = -1 * current_q
                     ticker_PNL.peek()['q'] -= trade_q # decrease the first_q with the second_q
-                    # ticker_PNL.peek_2 = ticker_PNL.peek # Replace the second object with the first object
 
                     first_date = ticker_PNL.peek()['d']
                     first_price = ticker_PNL.peek()['p']
                     second_date = current_item['d']
                     second_price = current_item['p']
 
-                    ticker_PNL.remove_item(current_item)
-                    # ticker_PNL.replace_last_items() # Replace the second object with the first object [DOES NOT WORK!!]
-                    # ticker_PNL.dequeue() # Delete the first object                    
+                    ticker_PNL.remove_item(current_item)                
 
                 elif abs(first_q) < abs(current_q):
                     trade_q = first_q
