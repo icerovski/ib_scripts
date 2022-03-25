@@ -127,7 +127,7 @@ class Trade(Ticker):
 
     def quantity(self, q=None):
         if q:
-            if Ticker.getinstrument(self) == Ticker.INSTRUMENT_TYPES[0]:
+            if self.getinstrument() == Ticker.INSTRUMENT_TYPES[0]:
                 self._items['q'] = int(comma_cleanup(q))
             else:
                 self._items['q'] = int(comma_cleanup(q)) * 100
