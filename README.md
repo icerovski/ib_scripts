@@ -34,6 +34,9 @@ https://www.youtube.com/watch?v=s1XiCh-mGCA
 .gitignore:
 https://www.freecodecamp.org/news/gitignore-what-is-it-and-how-to-add-to-repo/
 
+classmethod()
+https://www.programiz.com/python-programming/methods/built-in/classmethod
+
 TODO:
 - Problems with EFC
 - Problems with T
