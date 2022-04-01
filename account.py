@@ -1,5 +1,4 @@
 import csv
-from multiprocessing.sharedctypes import Value
 # from yfinance import Ticker
 
 class tradePairing:

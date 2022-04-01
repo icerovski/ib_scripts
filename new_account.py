@@ -1,6 +1,4 @@
 import csv
-from multiprocessing.sharedctypes import Value
-
 
 class TaxStatement:
     type_col = 3 + 1
@@ -84,7 +82,7 @@ class TaxStatement:
                         # Case 1: If you sold short an option and it expired without being excercised, you keep the profit.
                         # Case 2: If you bought an option and it expires worthless, you book the cost.
                         # Case 3: If you sold short a stock, it does not expire until you buy it back. So, it is unrealized profit/ expense and goes to the balance.
-                        if single_trade.is_instrumet_type:
+                        if single_trade.is_instrument_type():
                             trade_profit = -1 * trade_q * first_price
                         else:
                             trade_profit = None
@@ -324,7 +322,7 @@ class Trade:
 
     def quantity(self, q=None):
         if q:
-            if self.is_instrumet_type():
+            if self.is_instrument_type():
                 self._items['q'] = int(self.comma_cleanup(q))
             else:
                 self._items['q'] = int(self.comma_cleanup(q)) * 100
@@ -341,6 +339,7 @@ class Trade:
         return self._items['d']
     
     def populate(self, q, p, d):
+        self._items = {}
         self.quantity(q)
         self.price(p)
         self.date(d)
@@ -349,7 +348,7 @@ class Trade:
         return self._items
 
 
-    def is_instrumet_type(self):
+    def is_instrument_type(self):
         return self._instrumet_type == self.INSTRUMENT_TYPES[0]
 
 
