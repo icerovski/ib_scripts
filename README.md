@@ -37,6 +37,9 @@ https://www.freecodecamp.org/news/gitignore-what-is-it-and-how-to-add-to-repo/
 classmethod()
 https://www.programiz.com/python-programming/methods/built-in/classmethod
 
+Commands:
+- pylint new_account.py
+
 TODO:
 - Problems with EFC
 - Problems with T

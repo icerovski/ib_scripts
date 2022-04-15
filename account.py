@@ -1,19 +1,23 @@
 import csv
+
 # from yfinance import Ticker
 
+
 class tradePairing:
-    '''Find a matching entry / exit pair (incl. price, quantity and date) based on
-    the existing balances in the ledger of trades.'''
+    """Find a matching entry / exit pair (incl. price, quantity and date) based on
+    the existing balances in the ledger of trades."""
+
     pass
+
 
 class tickerLedger:
     pass
 
-class Queue:
 
+class Queue:
     def __init__(self) -> None:
         self.items = []
-    
+
     def enqueue(self, item):
         """Takes in an item and inserts that item into the 0th index of the list
         that is representing the Queue.
@@ -23,7 +27,7 @@ class Queue:
         to the right.
         """
         self.items.insert(0, item)
-    
+
     def dequeue(self):
         """Returns and removes the front-most item of the Queue, which is
         represented by the last item in the list.
@@ -36,12 +40,12 @@ class Queue:
         return None
 
     def remove_item(self, item):
-        '''Remove the item from the array'''
-        
+        """Remove the item from the array"""
+
         self.items.remove(item)
 
     def replace_last_items(self):
-        '''Replaces the last two values in the list'''
+        """Replaces the last two values in the list"""
 
         i = self.items.index(self.peek_2())
         self.items.insert(i, self.peek())
@@ -58,7 +62,7 @@ class Queue:
         if self.items:
             return self.items[-1]
         return None
-    
+
     def peek_2(self):
         """Returns the one before the last item in the list, which represents the one behind the front-most
         item in the Queue.
@@ -85,24 +89,24 @@ class Queue:
         Runs in constant time, because it's only checking for equality.
         """
         return self.items == []
-    
+
     def __str__(self) -> str:
         return self.items
 
 
 class Ticker:
-    INSTRUMENT_TYPES = ('Stocks', 'Equity and Index Options')
+    INSTRUMENT_TYPES = ("Stocks", "Equity and Index Options")
 
     def __init__(self, ticker, type) -> None:
 
         # Instance variables
         self._ticker = ticker
-        if (not type in Ticker.INSTRUMENT_TYPES):
-            raise ValueError(f'{type} is not a valid instrument type.')
+        if not type in Ticker.INSTRUMENT_TYPES:
+            raise ValueError(f"{type} is not a valid instrument type.")
         else:
             self._instrumet_type = type
         self._tradelist = Queue()
-    
+
     def filltrades(self, singletrade):
         self._tradelist.enqueue(singletrade)
 
@@ -111,15 +115,15 @@ class Ticker:
 
     def getinstrument(self):
         return self._instrumet_type
-    
+
     def getitems(self):
         return self._tradelist
 
     def __str__(self) -> str:
         return self._tradelist
 
-class Trade(Ticker):
 
+class Trade(Ticker):
     def __init__(self, ticker, type) -> None:
         super().__init__(ticker, type)
         self._items = {}
@@ -127,21 +131,21 @@ class Trade(Ticker):
     def quantity(self, q=None):
         if q:
             if self.getinstrument() == Ticker.INSTRUMENT_TYPES[0]:
-                self._items['q'] = int(comma_cleanup(q))
+                self._items["q"] = int(comma_cleanup(q))
             else:
-                self._items['q'] = int(comma_cleanup(q)) * 100
-        return self._items['q']
+                self._items["q"] = int(comma_cleanup(q)) * 100
+        return self._items["q"]
 
     def price(self, p=None):
         if p:
-            self._items['p'] = float(comma_cleanup(p))
-        return self._items['p']
-    
+            self._items["p"] = float(comma_cleanup(p))
+        return self._items["p"]
+
     def date(self, d=None):
         if d:
-            self._items['d'] = comma_break(d)
-        return self._items['d']
-    
+            self._items["d"] = comma_break(d)
+        return self._items["d"]
+
     def populate(self, q, p, d):
         self.quantity(q)
         self.price(p)
@@ -150,42 +154,64 @@ class Trade(Ticker):
     def getitems(self):
         return self._items
 
-     
-def comma_break(line):
-    D = ''
-    for char in line:
-        if char != ',': D += char
-        else: break
 
-    return(D)
+def comma_break(line):
+    D = ""
+    for char in line:
+        if char != ",":
+            D += char
+        else:
+            break
+
+    return D
+
 
 def comma_cleanup(line):
-    D = ''
+    D = ""
     for char in line:
-        if char != ',': D += char
-        else: continue
-    
-    return(D)
+        if char != ",":
+            D += char
+        else:
+            continue
+
+    return D
+
 
 def equal_signs(a, b):
     return ((a == b) & (a == 0)) | (a * b > 0)
 
+
 def sort_ib_file():
     data = []
     counter = 0
-    with open('ib_statement.csv', 'r') as f:
-        reader = csv.reader(f, delimiter=',')
+    with open("ib_statement.csv", "r") as f:
+        reader = csv.reader(f, delimiter=",")
         for row in reader:
-            if row[0] == 'Trades' and row[1] == 'Data':
-                counter += 1 # used to count the transactions
-                row = [counter, *row] # using unpack insert an item in the begining of the list
-                data.append(row) # append the newly created row to the data
-    
-    return(data)
+            if row[0] == "Trades" and row[1] == "Data":
+                counter += 1  # used to count the transactions
+                row = [
+                    counter,
+                    *row,
+                ]  # using unpack insert an item in the begining of the list
+                data.append(row)  # append the newly created row to the data
+
+    return data
+
 
 def write(data_set):
-    with open('tax_statement.csv', 'w') as f:
-        fieldnames = ['Ticker', 'Date entry', 'Quantity', 'Price entry', 'Expense', 'Date exit', 'Quantity', 'Price exit', 'Income', 'Profit']
+    with open("tax_statement.csv", "w") as f:
+        fieldnames = [
+            "Ticker",
+            "Date entry",
+            "Quantity",
+            "Price entry",
+            "Expense",
+            "Date exit",
+            "Quantity",
+            "Price exit",
+            "Income",
+            "Profit",
+        ]
         writer = csv.writer(f)
 
         writer.writerow(fieldnames)
@@ -194,13 +220,14 @@ def write(data_set):
             line = []
             for item in list:
                 line.append(str(item))
-            
+
             writer.writerow(line)
-    
+
+
 def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
     i = 0
     ledger = []
-    
+
     # Improved this part!!!!!
     script_ended = False
     while i < len(db):
@@ -216,38 +243,38 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
             single_trade = Trade(ticker=ticker, type=type)
             single_trade.populate(db[i][q_col], db[i][p_col], db[i][date_col])
             ticker_ledger.filltrades(single_trade.getitems())
-            
+
             i += 1
             if i >= len(db):
-                print(f'Total number of transactions: {i}')
+                print(f"Total number of transactions: {i}")
                 script_ended = True
                 break
-        
+
         if script_ended:
             break
-        
+
         # Pair entry and exits
         ticker_PNL = ticker_ledger.getitems()
         print(ticker)
         while not ticker_PNL.is_empty():
-            first_q = ticker_PNL.peek()['q']
+            first_q = ticker_PNL.peek()["q"]
             obj_last_index = ticker_PNL.size() - 1
-    
+
             current_item = {}
             all_same_sign = True
             for j in range(obj_last_index, -1, -1):
-                if not equal_signs(ticker_PNL.items[j]['q'], first_q):
+                if not equal_signs(ticker_PNL.items[j]["q"], first_q):
                     current_item = ticker_PNL.items[j]
-                    current_q = current_item['q']
-                    second_q = ticker_PNL.peek_2()['q']
+                    current_q = current_item["q"]
+                    second_q = ticker_PNL.peek_2()["q"]
                     all_same_sign = False
                     break
 
             if all_same_sign:
                 for j in range(obj_last_index, -1, -1):
-                    trade_q = ticker_PNL.items[j]['q']
-                    first_date = ticker_PNL.items[j]['d']
-                    first_price = ticker_PNL.items[j]['p']
+                    trade_q = ticker_PNL.items[j]["q"]
+                    first_date = ticker_PNL.items[j]["d"]
+                    first_price = ticker_PNL.items[j]["p"]
 
                     # Case 1: If you sold short an option and it expired without being excercised, you keep the profit.
                     # Case 2: If you bought an option and it expires worthless, you book the cost.
@@ -257,94 +284,122 @@ def unique_tickers(db, type_col, ticker_col, date_col, q_col, p_col):
                     else:
                         trade_profit = None
 
-                    float_line = [ticker, first_date, trade_q, first_price, trade_profit, None, None, None, None, trade_profit]
+                    float_line = [
+                        ticker,
+                        first_date,
+                        trade_q,
+                        first_price,
+                        trade_profit,
+                        None,
+                        None,
+                        None,
+                        None,
+                        trade_profit,
+                    ]
 
                     tax_ledger.append(float_line)
                     ledger.append(float_line)
                     print(float_line)
 
                 break
-            
+
             if equal_signs(first_q, second_q):
                 if abs(first_q) > abs(current_q):
                     trade_q = -1 * current_q
-                    ticker_PNL.peek()['q'] -= trade_q # decrease the first_q with the second_q
+                    ticker_PNL.peek()[
+                        "q"
+                    ] -= trade_q  # decrease the first_q with the second_q
 
-                    first_date = ticker_PNL.peek()['d']
-                    first_price = ticker_PNL.peek()['p']
-                    second_date = current_item['d']
-                    second_price = current_item['p']
+                    first_date = ticker_PNL.peek()["d"]
+                    first_price = ticker_PNL.peek()["p"]
+                    second_date = current_item["d"]
+                    second_price = current_item["p"]
 
-                    ticker_PNL.remove_item(current_item)                
+                    ticker_PNL.remove_item(current_item)
 
                 elif abs(first_q) < abs(current_q):
                     trade_q = first_q
-                    current_item['q'] += trade_q
-                    
-                    first_date = ticker_PNL.peek()['d']
-                    first_price = ticker_PNL.peek()['p']
-                    second_date = current_item['d']
-                    second_price = current_item['p']
+                    current_item["q"] += trade_q
 
-                    ticker_PNL.dequeue() # Delete the first object
+                    first_date = ticker_PNL.peek()["d"]
+                    first_price = ticker_PNL.peek()["p"]
+                    second_date = current_item["d"]
+                    second_price = current_item["p"]
+
+                    ticker_PNL.dequeue()  # Delete the first object
                 elif abs(first_q) == abs(current_q):
                     trade_q = -1 * first_q
 
-                    first_date = ticker_PNL.peek()['d']
-                    first_price = ticker_PNL.peek()['p']
-                    second_date = ticker_PNL.peek_2()['d']
-                    second_price = ticker_PNL.peek_2()['p']
+                    first_date = ticker_PNL.peek()["d"]
+                    first_price = ticker_PNL.peek()["p"]
+                    second_date = ticker_PNL.peek_2()["d"]
+                    second_price = ticker_PNL.peek_2()["p"]
 
                     ticker_PNL.dequeue()
                     ticker_PNL.dequeue()
-            
+
             elif not equal_signs(first_q, second_q):
                 # THIS HERE DOESN'T CALCULATE PROPERLY. CHECK OUT 'T'
                 if abs(first_q) > abs(second_q):
                     trade_q = -1 * second_q
-                    ticker_PNL.peek()['q'] -= trade_q # decrease the first_q with the second_q
+                    ticker_PNL.peek()[
+                        "q"
+                    ] -= trade_q  # decrease the first_q with the second_q
 
-                    first_date = ticker_PNL.peek()['d']
-                    first_price = ticker_PNL.peek()['p']
-                    second_date = ticker_PNL.peek_2()['d']
-                    second_price = ticker_PNL.peek_2()['p']
+                    first_date = ticker_PNL.peek()["d"]
+                    first_price = ticker_PNL.peek()["p"]
+                    second_date = ticker_PNL.peek_2()["d"]
+                    second_price = ticker_PNL.peek_2()["p"]
 
-                    ticker_PNL.replace_last_items() # Replace the second object with the first object [DOES NOT WORK!!]
-                    ticker_PNL.dequeue() # Delete the first object
+                    ticker_PNL.replace_last_items()  # Replace the second object with the first object [DOES NOT WORK!!]
+                    ticker_PNL.dequeue()  # Delete the first object
 
                 elif abs(first_q) < abs(second_q):
                     trade_q = -1 * first_q
-                    ticker_PNL.peek_2()['q'] -= trade_q # decrease the second_q with the first_q
+                    ticker_PNL.peek_2()[
+                        "q"
+                    ] -= trade_q  # decrease the second_q with the first_q
 
-                    first_date = ticker_PNL.peek()['d']
-                    first_price = ticker_PNL.peek()['p']
-                    second_date = ticker_PNL.peek_2()['d']
-                    second_price = ticker_PNL.peek_2()['p']
+                    first_date = ticker_PNL.peek()["d"]
+                    first_price = ticker_PNL.peek()["p"]
+                    second_date = ticker_PNL.peek_2()["d"]
+                    second_price = ticker_PNL.peek_2()["p"]
 
-                    ticker_PNL.dequeue() # Delete the first object
+                    ticker_PNL.dequeue()  # Delete the first object
 
                 elif abs(first_q) == abs(second_q):
                     trade_q = first_q
 
-                    first_date = ticker_PNL.peek()['d']
-                    first_price = ticker_PNL.peek()['p']
-                    second_date = ticker_PNL.peek_2()['d']
-                    second_price = ticker_PNL.peek_2()['p']
+                    first_date = ticker_PNL.peek()["d"]
+                    first_price = ticker_PNL.peek()["p"]
+                    second_date = ticker_PNL.peek_2()["d"]
+                    second_price = ticker_PNL.peek_2()["p"]
 
                     ticker_PNL.dequeue()
                     ticker_PNL.dequeue()
-            
-             
+
             trade_expense = trade_q * first_price
             trade_income = -1 * trade_q * second_price
             trade_profit = trade_income + trade_expense
-            float_line = [ticker, first_date, trade_q, first_price, trade_expense, second_date, -1 * trade_q, second_price, trade_income, trade_profit]
+            float_line = [
+                ticker,
+                first_date,
+                trade_q,
+                first_price,
+                trade_expense,
+                second_date,
+                -1 * trade_q,
+                second_price,
+                trade_income,
+                trade_profit,
+            ]
 
             tax_ledger.append(float_line)
             ledger.append(float_line)
             print(float_line)
 
-    return(ledger)
+    return ledger
+
 
 def main():
     type_col = 3 + 1
@@ -355,10 +410,12 @@ def main():
 
     raw_db = sort_ib_file()
     ledger = unique_tickers(raw_db, type_col, ticker_col, date_col, q_col, p_col)
-    print(*ledger, sep = '\n')
+    print(*ledger, sep="\n")
     write(ledger)
 
     # for key, value in ledger.items():
     #     print(f'{key} : {value}')
 
-if __name__ == "__main__": main()
+
+if __name__ == "__main__":
+    main()
