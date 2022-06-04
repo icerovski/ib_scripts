@@ -1,5 +1,24 @@
 import csv
-from typing import Type
+
+def comma_break(line):
+    digit = ""
+    for char in line:
+        if char != ",":
+            digit += char
+        else:
+            break
+
+    return digit
+
+def comma_cleanup(line):
+    digit = ""
+    for char in line:
+        if char != ",":
+            digit += char
+        else:
+            continue
+
+    return digit
 
 def call_data(source_file, main_criterion, sub_criteria):
     data = []
@@ -48,9 +67,9 @@ def main():
         ticker_name = row[header_index['Symbol']]
         ticker_current_transactions = {
             'Type':row[header_index['DataDiscriminator']],
-            'Date':row[header_index['Date/Time']],
-            'Quantity':row[header_index['Quantity']],
-            'Price':row[header_index['T. Price']]
+            'Date':comma_break(row[header_index['Date/Time']]),
+            'Quantity':int(comma_cleanup(row[header_index['Quantity']])),
+            'Price':float(row[header_index['T. Price']])
         }
         if ticker_name not in tickers_data:
             tickers_data[ticker_name] = {}
@@ -72,30 +91,30 @@ def main():
     #     if any(list_of_bool):
     #         print(f'{key} - {cat}')
 
-    open_val = 'Trade'
-    close_val = 'ClosedLot'
-    transaction_start = False
-    transaction_in_progress = False
-    transaction_close = False
+    entry_lot = 'ClosedLot'
+    exit_lot = 'Trade'
     for key in tickers_data:    
         ticker_transactions = tickers_data[key]['Transactions']
-        for sub_key in ticker_transactions:
-            if sub_key['Type'] == open_val:
-                transaction_start == True
-            elif sub_key['Type'] == close_val:
-                transaction_in_progress = True
-            
-        for sub_key in ticker_transactions:
-            if sub_key['Type'] == rlzd_value:
-                is_realized = True
-                break
-        if is_realized:
-            print(key)
+        
+        for i in range(len(ticker_transactions)):
+            if ticker_transactions[i]['Type'] == entry_lot:
+                exit_trade = ticker_transactions[i-1]
+                remaining_quantity = exit_trade['Quantity']
 
-            for i in range(len(ticker_transactions)):
-                print(ticker_transactions[i])
-        else:
-            continue
+            while remaining_quantity > 0:
+                entry_trade = ticker_transactions[i]
+                remaining_quantity += entry_trade['Quantity']
+                temp_sum = entry_trade['Quantity'] + exit_trade['Quantity']
+                print(temp_sum)
+            
+        # for sub_key in ticker_transactions:
+        #     # temp_sum = 0
+        #     if sub_key['Type'] == entry_lot:
+        #         temp_sum = 0
+        #         # transaction_start == True
+        #         temp_sum += sub_key['Quantity']
+        #     elif sub_key['Type'] == exit_lot:
+        #         temp_sum += sub_key['Quantity']
         
 if __name__ == "__main__":
     main()
