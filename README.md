@@ -36,6 +36,7 @@ https://www.freecodecamp.org/news/gitignore-what-is-it-and-how-to-add-to-repo/
 
 classmethod()
 https://www.programiz.com/python-programming/methods/built-in/classmethod
+https://realpython.com/instance-class-and-static-methods-demystified/
 
 Commands:
 - pylint new_account.py

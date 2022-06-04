@@ -2,10 +2,10 @@ import csv
 
 class TaxStatement:
     type_col = 3 + 1
-    ticker_col = 6 + 1
-    date_col = 7 + 1
-    q_col = 8 + 1
-    p_col = 9 + 1
+    ticker_col = 5 + 1
+    date_col = 6 + 1
+    q_col = 7 + 1
+    p_col = 8 + 1
 
     @classmethod
     def sort_ib_file(cls):
