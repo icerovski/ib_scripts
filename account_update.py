@@ -95,17 +95,25 @@ def main():
     exit_lot = 'Trade'
     for key in tickers_data:    
         ticker_transactions = tickers_data[key]['Transactions']
-        
+        # exit_trade = []
+        remaining_quantity = 0
+
         for i in range(len(ticker_transactions)):
             if ticker_transactions[i]['Type'] == entry_lot:
-                exit_trade = ticker_transactions[i-1]
-                remaining_quantity = exit_trade['Quantity']
-
-            while remaining_quantity > 0:
                 entry_trade = ticker_transactions[i]
-                remaining_quantity += entry_trade['Quantity']
-                temp_sum = entry_trade['Quantity'] + exit_trade['Quantity']
-                print(temp_sum)
+                if remaining_quantity == 0:
+                    exit_trade = ticker_transactions[i-1]
+                    remaining_quantity = exit_trade['Quantity'] + entry_trade['Quantity']
+                else:
+                    remaining_quantity += entry_trade['Quantity']
+                    print(remaining_quantity)
+
+
+            # while remaining_quantity > 0:
+            #     entry_trade = ticker_transactions[i]
+            #     remaining_quantity += entry_trade['Quantity']
+            #     temp_sum = entry_trade['Quantity'] + exit_trade['Quantity']
+            #     print(temp_sum)
             
         # for sub_key in ticker_transactions:
         #     # temp_sum = 0
