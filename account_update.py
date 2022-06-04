@@ -47,7 +47,7 @@ def main():
     for row in trades_data:
         ticker_name = row[header_index['Symbol']]
         ticker_current_transactions = {
-            'Type': row[header_index['DataDiscriminator']],
+            'Type':row[header_index['DataDiscriminator']],
             'Date':row[header_index['Date/Time']],
             'Quantity':row[header_index['Quantity']],
             'Price':row[header_index['T. Price']]
@@ -72,16 +72,28 @@ def main():
     #     if any(list_of_bool):
     #         print(f'{key} - {cat}')
 
-    rlzd_value = 'ClosedLot'
+    open_val = 'Trade'
+    close_val = 'ClosedLot'
+    transaction_start = False
+    transaction_in_progress = False
+    transaction_close = False
     for key in tickers_data:    
         ticker_transactions = tickers_data[key]['Transactions']
-        is_realized = False
-        for i in ticker_transactions:
-            if i['Type'] == rlzd_value:
+        for sub_key in ticker_transactions:
+            if sub_key['Type'] == open_val:
+                transaction_start == True
+            elif sub_key['Type'] == close_val:
+                transaction_in_progress = True
+            
+        for sub_key in ticker_transactions:
+            if sub_key['Type'] == rlzd_value:
                 is_realized = True
                 break
         if is_realized:
-            print(f'{key} has realized profit')
+            print(key)
+
+            for i in range(len(ticker_transactions)):
+                print(ticker_transactions[i])
         else:
             continue
         
