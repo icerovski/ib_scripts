@@ -1,11 +1,11 @@
 import csv
 from forex_python.converter import CurrencyRates
-import datetime
+from datetime import date
 
-def fx_converter(source, destination, date):
-    c = CurrencyRates(force_decimal=True)
-    trade_date = datetime.datetime(2022, 5, 25)
-    rate = c.get_rate('USD', 'BGN', trade_date)
+def fx_converter(source, destination, date_input):
+    cur = CurrencyRates()
+    fx_date = date.fromisoformat(date_input)
+    rate = cur.get_rate(source, destination, fx_date)
     return rate
 
 def comma_break(line):
@@ -50,17 +50,24 @@ def write_tax_statement_csv(data_set):
     with open("tax_statement.csv", "w") as destination_file:
         fieldnames = [
             "Ticker",
-            "FX",
+            "Base currency",
+            "Quantity",
             "Date entry",
-            "Quantity",
             "Price entry",
-            "Expense",
+            "Cost",
             "Date exit",
-            "Quantity",
             "Price exit",
-            "Income",
+            "Revenue",
             "Profit",
+            "FX at entry",
+            "Price entry BGN",
+            "Cost BGN",
+            "FX at exit",
+            "Price exit BGN",
+            "Revenue BGN",
+            "Profit BGN",
         ]
+
         writer = csv.writer(destination_file)
 
         writer.writerow(fieldnames)
@@ -71,11 +78,6 @@ def write_tax_statement_csv(data_set):
                 line.append(str(item))
 
             writer.writerow(line)
-
-def prepare_data_for_tax_statement():
-    data_line = []
-
-    pass
 
 def main():
     source_file_name = "ib_statement.csv"
@@ -125,60 +127,64 @@ def main():
 
     # Perform calculations
     tax_statement_array = []
-    entry_lot = 'ClosedLot'
-    for key in tickers_data:
-        if tickers_data[key]['Asset Category'] == 'Equity and Index Options':
+    for ticker, val in tickers_data.items():
+        if val['Asset Category'] == 'Equity and Index Options':
             factor = 100
         else:
             factor = 1
-        ticker_currency = tickers_data[key]['Currency']
-        ticker_transactions = tickers_data[key]['Transactions']
+        ticker_currency = val['Currency']
         remaining_quantity = 0
         is_closing_a_lot = False
 
-        for i in range(len(ticker_transactions)):
-            if ticker_transactions[i]['Type'] == entry_lot:
-                # !!!!!!!!!!!!!!!
-                # Consider adding each element to the data line on the go
-                # data_line_temp = []
-                # data_line_temp.append(key)
-                # data_line_temp.append(ticker_currency)
-                # data_line_temp.append(entry_trade['Date'])
-                # data_line_temp.append(factor * entry_trade['Quantity'])
-                # data_line_temp.append(entry_trade['Price'])
-                # data_line_temp.append(factor * entry_trade['Quantity'] * entry_trade['Price'])
-                # data_line_temp.append(fx_converter(ticker_currency, 'BGN', entry_date['Date']))
+        for line_dict in val['Transactions']:
+            # Check if 'ClosedLot' is in the values. If yes, then we have a transaction, incl. opening and closing.
+            if sub_criteria['DataDiscriminator'][1] in line_dict.values():
+            
+                if is_closing_a_lot is False:
+                    # Identify the previous line, which is the line for the exit transaction
+                    previous_line_dict_index = val['Transactions'].index(line_dict) - 1
+                    exit_line_dict = val['Transactions'][previous_line_dict_index]
 
-                if is_closing_a_lot == False:
-                    exit_trade = ticker_transactions[i-1]
-                    exit_date = exit_trade['Date']
-                    exit_price = exit_trade['Price']
-                    exit_quantity = factor * exit_trade['Quantity']
-                    fx_rate = fx_converter(ticker_currency, 'BGN', exit_date)
+                    # The same for each calculation until remaining quntity becomes zero
+                    exit_date = exit_line_dict['Date']
+                    exit_price = exit_line_dict['Price']
+                    exit_quantity = factor * exit_line_dict['Quantity']
+                    fx_rate_exit = fx_converter(val['Currency'], 'BGN', exit_line_dict['Date'])
 
                     remaining_quantity += exit_quantity
                     is_closing_a_lot = True
                 
-                entry_trade = ticker_transactions[i]
-                entry_date = entry_trade['Date']
-                entry_price = entry_trade['Price']
-                entry_quantity = factor * entry_trade['Quantity']
-                
-                # Convert FX
-                fx_rate = fx_converter()
-
                 # Fill up database
-                data_line = [key, ticker_currency, \
-                    entry_date, entry_quantity, entry_price, entry_quantity * entry_price, \
-                    exit_date, entry_quantity, exit_price, entry_quantity * exit_price, \
-                        (exit_price - entry_price) * entry_quantity]
+                entry_quantity = factor * line_dict['Quantity']
+                cost = entry_quantity * line_dict['Price']
+                fx_rate_entry = fx_converter(val['Currency'], 'BGN', line_dict['Date'])
+                revenue = entry_quantity * exit_line_dict['Price']
+                data_line = [
+                    ticker,
+                    ticker_currency,
+                    entry_quantity,
+                    line_dict['Date'],
+                    line_dict['Price'],
+                    cost,
+                    exit_date,
+                    exit_price,
+                    revenue,
+                    revenue - cost,
+                    fx_rate_entry,
+                    fx_rate_entry * line_dict['Price'],
+                    fx_rate_entry * cost,
+                    fx_rate_exit,
+                    fx_rate_exit * exit_price,
+                    fx_rate_exit * revenue,
+                    fx_rate_exit * revenue - fx_rate_entry * cost,
+                    ]
+
                 tax_statement_array.append(data_line)
-                
-                remaining_quantity += entry_trade['Quantity']
+
+                remaining_quantity += entry_quantity
                 if remaining_quantity == 0:
                     is_closing_a_lot = False
-    
+
     write_tax_statement_csv(tax_statement_array)
-        
 if __name__ == "__main__":
     main()
