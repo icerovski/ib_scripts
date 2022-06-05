@@ -38,15 +38,50 @@ def call_data(source_file, main_criterion, sub_criteria):
 
     return data
 
+def write_tax_statement_csv(data_set):
+    with open("tax_statement.csv", "w") as destination_file:
+        fieldnames = [
+            "Ticker",
+            "FX",
+            "Date entry",
+            "Quantity",
+            "Price entry",
+            "Expense",
+            "Date exit",
+            "Quantity",
+            "Price exit",
+            "Income",
+            "Profit",
+        ]
+        writer = csv.writer(destination_file)
+
+        writer.writerow(fieldnames)
+
+        for single_list in data_set:
+            line = []
+            for item in single_list:
+                line.append(str(item))
+
+            writer.writerow(line)
+
+def prepare_data_for_tax_statement():
+    data_line = []
+
+    pass
+
 def main():
     source_file_name = "ib_statement.csv"
-    trades_criteria = {
+    main_criterion = 'Trades'
+    sub_criteria = {
         'Header':'Data',
         'DataDiscriminator':('Trade', 'ClosedLot')
     }
-    trades_data = call_data(source_file_name, 'Trades', trades_criteria)
+
+    trades_data = call_data(source_file_name, main_criterion, sub_criteria)
     headers = trades_data.pop(0)
 
+    # Create a dictionary to have 'name of header':'index' as a key value pair
+    header_index = {}
     key_headers_list = (
         'Symbol',
         'Asset Category',
@@ -57,11 +92,11 @@ def main():
         'Quantity',
         'T. Price'
     )
-    header_index = {}
     for item in headers:
         if item in (key_headers_list):
             header_index[item] = headers.index(item)
 
+    # Create a dictionary database
     tickers_data = {}
     for row in trades_data:
         ticker_name = row[header_index['Symbol']]
@@ -80,49 +115,47 @@ def main():
         else:
             tickers_data[ticker_name]['Transactions'].append(ticker_current_transactions)
 
-    # for key, value in tickers_data.items():
-    #     print(key, value)
-    # for key in tickers_data:
-    #     current_ticker = tickers_data[key]
-    #     cat = current_ticker['Asset Category']
-    #     realized = current_ticker['Transactions']
-    #     rlzd_value = 'ClosedLot'
-    #     list_of_bool = [True for elem in realized if rlzd_value in elem.values()]
-    #     if any(list_of_bool):
-    #         print(f'{key} - {cat}')
-
+    # Perform calculations
+    tax_statement_array = []
     entry_lot = 'ClosedLot'
-    exit_lot = 'Trade'
-    for key in tickers_data:    
+    for key in tickers_data:
+        if tickers_data[key]['Asset Category'] == 'Equity and Index Options':
+            factor = 100
+        else:
+            factor = 1
+        ticker_fx = tickers_data[key]['Currency']
         ticker_transactions = tickers_data[key]['Transactions']
-        # exit_trade = []
         remaining_quantity = 0
+        is_closing_a_lot = False
 
         for i in range(len(ticker_transactions)):
             if ticker_transactions[i]['Type'] == entry_lot:
-                entry_trade = ticker_transactions[i]
-                if remaining_quantity == 0:
+                
+                if is_closing_a_lot == False:
                     exit_trade = ticker_transactions[i-1]
-                    remaining_quantity = exit_trade['Quantity'] + entry_trade['Quantity']
-                else:
-                    remaining_quantity += entry_trade['Quantity']
-                    print(remaining_quantity)
+                    exit_date = exit_trade['Date']
+                    exit_price = exit_trade['Price']
+                    exit_quantity = factor * exit_trade['Quantity']
 
-
-            # while remaining_quantity > 0:
-            #     entry_trade = ticker_transactions[i]
-            #     remaining_quantity += entry_trade['Quantity']
-            #     temp_sum = entry_trade['Quantity'] + exit_trade['Quantity']
-            #     print(temp_sum)
-            
-        # for sub_key in ticker_transactions:
-        #     # temp_sum = 0
-        #     if sub_key['Type'] == entry_lot:
-        #         temp_sum = 0
-        #         # transaction_start == True
-        #         temp_sum += sub_key['Quantity']
-        #     elif sub_key['Type'] == exit_lot:
-        #         temp_sum += sub_key['Quantity']
+                    remaining_quantity += exit_quantity
+                    is_closing_a_lot = True
+                
+                entry_trade = ticker_transactions[i]
+                entry_date = entry_trade['Date']
+                entry_price = entry_trade['Price']
+                entry_quantity = factor * entry_trade['Quantity']                
+                
+                data_line = [key, ticker_fx, \
+                    entry_date, entry_quantity, entry_price, entry_quantity * entry_price, \
+                    exit_date, entry_quantity, exit_price, entry_quantity * exit_price, \
+                        (exit_price - entry_price) * entry_quantity]
+                tax_statement_array.append(data_line)
+                
+                remaining_quantity += entry_trade['Quantity']
+                if remaining_quantity == 0:
+                    is_closing_a_lot = False
+    
+    write_tax_statement_csv(tax_statement_array)
         
 if __name__ == "__main__":
     main()
