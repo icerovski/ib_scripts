@@ -1,4 +1,12 @@
 import csv
+from forex_python.converter import CurrencyRates
+import datetime
+
+def fx_converter(source, destination, date):
+    c = CurrencyRates(force_decimal=True)
+    trade_date = datetime.datetime(2022, 5, 25)
+    rate = c.get_rate('USD', 'BGN', trade_date)
+    return rate
 
 def comma_break(line):
     digit = ""
@@ -123,19 +131,30 @@ def main():
             factor = 100
         else:
             factor = 1
-        ticker_fx = tickers_data[key]['Currency']
+        ticker_currency = tickers_data[key]['Currency']
         ticker_transactions = tickers_data[key]['Transactions']
         remaining_quantity = 0
         is_closing_a_lot = False
 
         for i in range(len(ticker_transactions)):
             if ticker_transactions[i]['Type'] == entry_lot:
-                
+                # !!!!!!!!!!!!!!!
+                # Consider adding each element to the data line on the go
+                # data_line_temp = []
+                # data_line_temp.append(key)
+                # data_line_temp.append(ticker_currency)
+                # data_line_temp.append(entry_trade['Date'])
+                # data_line_temp.append(factor * entry_trade['Quantity'])
+                # data_line_temp.append(entry_trade['Price'])
+                # data_line_temp.append(factor * entry_trade['Quantity'] * entry_trade['Price'])
+                # data_line_temp.append(fx_converter(ticker_currency, 'BGN', entry_date['Date']))
+
                 if is_closing_a_lot == False:
                     exit_trade = ticker_transactions[i-1]
                     exit_date = exit_trade['Date']
                     exit_price = exit_trade['Price']
                     exit_quantity = factor * exit_trade['Quantity']
+                    fx_rate = fx_converter(ticker_currency, 'BGN', exit_date)
 
                     remaining_quantity += exit_quantity
                     is_closing_a_lot = True
@@ -143,9 +162,13 @@ def main():
                 entry_trade = ticker_transactions[i]
                 entry_date = entry_trade['Date']
                 entry_price = entry_trade['Price']
-                entry_quantity = factor * entry_trade['Quantity']                
+                entry_quantity = factor * entry_trade['Quantity']
                 
-                data_line = [key, ticker_fx, \
+                # Convert FX
+                fx_rate = fx_converter()
+
+                # Fill up database
+                data_line = [key, ticker_currency, \
                     entry_date, entry_quantity, entry_price, entry_quantity * entry_price, \
                     exit_date, entry_quantity, exit_price, entry_quantity * exit_price, \
                         (exit_price - entry_price) * entry_quantity]
