@@ -98,6 +98,7 @@ def main():
             'Date':comma_break(row[header_index['Date/Time']]),
             'Quantity':int(comma_cleanup(row[header_index['Quantity']])),
             'Price':float(row[header_index['T. Price']]),
+            'Commission':float(comma_cleanup(row[header_index['Comm/Fee']])),
         }
 
         if ticker_name not in tickers_data:
@@ -170,8 +171,9 @@ def main():
                 exit_line_dict = line_dict
                 # The same for each calculation until remaining quntity becomes zero
                 exit_date = exit_line_dict['Date']
-                exit_price = exit_line_dict['Price']
                 exit_quantity = factor * exit_line_dict['Quantity']
+                exit_price = exit_line_dict['Price']
+                exit_commission_pos = -1 * exit_line_dict['Commission']
                 fx_rate_exit = fx_converter(val['Currency'], 'BGN', exit_line_dict['Date'])
 
                 remaining_quantity += exit_quantity
@@ -179,23 +181,29 @@ def main():
 
             # Check if 'ClosedLot' is in the values. If yes, then we have a transaction, incl. opening and closing.
             if sub_criteria['DataDiscriminator'][1] in line_dict.values():
+                entry_date = line_dict['Date']
                 entry_quantity = factor * line_dict['Quantity']
-                cost = entry_quantity * line_dict['Price']
+                # NB!!!
+                # Entry price from 'ClosedLot already includes the entry commission that you've paid at entry. So, the 'cost' is also net of commissions.
+                # Therefore, for consistency you include commission in the exit as well, i.e. revenue = exit_quantity * exit_price - exit_commission
+                entry_price = line_dict['Price']
+                cost = entry_quantity * entry_price
+                q_share = abs(entry_quantity / exit_quantity)
+                revenue = entry_quantity * exit_price - exit_commission_pos * q_share
                 fx_rate_entry = fx_converter(val['Currency'], 'BGN', line_dict['Date'])
-                revenue = entry_quantity * exit_line_dict['Price']
                 tax_statement_data_line = [
                     ticker,
                     ticker_currency,
                     entry_quantity,
-                    line_dict['Date'],
-                    line_dict['Price'],
+                    entry_date,
+                    entry_price,
                     cost,
                     exit_date,
                     exit_price,
                     revenue,
                     revenue - cost,
                     fx_rate_entry,
-                    fx_rate_entry * line_dict['Price'],
+                    fx_rate_entry * entry_price,
                     fx_rate_entry * cost,
                     fx_rate_exit,
                     fx_rate_exit * exit_price,
@@ -205,7 +213,8 @@ def main():
 
 
                 counter += 1
-                print(f'{counter}', end=' ')
+                # print(f'{counter}', end=' ')
+                print(f'{counter} {tax_statement_data_line}')
                 tax_statement_array.append(tax_statement_data_line)
 
                 # remaining_quantity += entry_quantity
