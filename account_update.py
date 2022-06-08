@@ -19,12 +19,15 @@ def comma_break(line):
     return digit
 
 def comma_cleanup(line):
-    digit = ""
-    for char in line:
-        if char != ",":
-            digit += char
-        else:
-            continue
+    if line:
+        digit = ""
+        for char in line:
+            if char != ",":
+                digit += char
+            else:
+                continue
+    else:
+        digit = 0
 
     return digit
 
@@ -46,31 +49,10 @@ def call_data(source_file, main_criterion, sub_criteria):
 
     return data
 
-def write_tax_statement_csv(data_set):
-    with open("tax_statement.csv", "w") as destination_file:
-        fieldnames = [
-            "Ticker",
-            "Base currency",
-            "Quantity",
-            "Date entry",
-            "Price entry",
-            "Cost",
-            "Date exit",
-            "Price exit",
-            "Revenue",
-            "Profit",
-            "FX at entry",
-            "Price entry BGN",
-            "Cost BGN",
-            "FX at exit",
-            "Price exit BGN",
-            "Revenue BGN",
-            "Profit BGN",
-        ]
+def write_tax_statement_csv(data_set, item):
+    with open("tax_statement.csv", item) as destination_file:
 
         writer = csv.writer(destination_file)
-
-        writer.writerow(fieldnames)
 
         for single_list in data_set:
             line = []
@@ -100,7 +82,8 @@ def main():
         'DataDiscriminator',
         'Date/Time',
         'Quantity',
-        'T. Price'
+        'T. Price',
+        'Comm/Fee'
     )
     for item in headers:
         if item in (key_headers_list):
@@ -114,52 +97,93 @@ def main():
             'Type':row[header_index['DataDiscriminator']],
             'Date':comma_break(row[header_index['Date/Time']]),
             'Quantity':int(comma_cleanup(row[header_index['Quantity']])),
-            'Price':float(row[header_index['T. Price']])
+            'Price':float(row[header_index['T. Price']]),
         }
+
         if ticker_name not in tickers_data:
             tickers_data[ticker_name] = {}
             tickers_data[ticker_name]['Asset Category'] = row[header_index['Asset Category']]
             tickers_data[ticker_name]['Currency'] = row[header_index['Currency']]
             tickers_data[ticker_name]['Exchange'] = row[header_index['Exchange']]
             tickers_data[ticker_name]['Transactions'] = [ticker_current_transactions]
+            tickers_data[ticker_name]['Realized'] = False
         else:
             tickers_data[ticker_name]['Transactions'].append(ticker_current_transactions)
+            if not tickers_data[ticker_name]['Realized']:
+                if sub_criteria['DataDiscriminator'][1] in ticker_current_transactions.values():
+                    tickers_data[ticker_name]['Realized'] = True
 
-    # Perform calculations
-    tax_statement_array = []
+    # Set up three main Statements
+    tax_statement_array = [
+        [
+            "Ticker",
+            "Base currency",
+            "Quantity",
+            "Date entry",
+            "Price entry",
+            "Cost",
+            "Date exit",
+            "Price exit",
+            "Revenue",
+            "Profit",
+            "FX at entry",
+            "Price entry BGN",
+            "Cost BGN",
+            "FX at exit",
+            "Price exit BGN",
+            "Revenue BGN",
+            "Profit BGN",
+        ]
+    ]
+
+    tax_statement_array_summary = [
+        [
+            'Ticker','Quantity','Cost BGN','Revenue BGN','Profit BGN'
+        ]
+    ]
+
+    counter = 0
+
+    # Loop through the dictionary and perform calculations
     for ticker, val in tickers_data.items():
+        if not val['Realized']:
+            continue
+        
+        # Ticker specific calculations
         if val['Asset Category'] == 'Equity and Index Options':
             factor = 100
         else:
             factor = 1
+
         ticker_currency = val['Currency']
         remaining_quantity = 0
-        is_closing_a_lot = False
+        # is_closing_a_lot = False
+
+        ticker_total_quantity = 0
+        ticker_total_cost = 0
+        ticker_total_revenue = 0
 
         for line_dict in val['Transactions']:
+
+            # TYPE OF LINE
+            if sub_criteria['DataDiscriminator'][0] in line_dict.values():
+                exit_line_dict = line_dict
+                # The same for each calculation until remaining quntity becomes zero
+                exit_date = exit_line_dict['Date']
+                exit_price = exit_line_dict['Price']
+                exit_quantity = factor * exit_line_dict['Quantity']
+                fx_rate_exit = fx_converter(val['Currency'], 'BGN', exit_line_dict['Date'])
+
+                remaining_quantity += exit_quantity
+                # is_closing_a_lot = True
+
             # Check if 'ClosedLot' is in the values. If yes, then we have a transaction, incl. opening and closing.
             if sub_criteria['DataDiscriminator'][1] in line_dict.values():
-            
-                if is_closing_a_lot is False:
-                    # Identify the previous line, which is the line for the exit transaction
-                    previous_line_dict_index = val['Transactions'].index(line_dict) - 1
-                    exit_line_dict = val['Transactions'][previous_line_dict_index]
-
-                    # The same for each calculation until remaining quntity becomes zero
-                    exit_date = exit_line_dict['Date']
-                    exit_price = exit_line_dict['Price']
-                    exit_quantity = factor * exit_line_dict['Quantity']
-                    fx_rate_exit = fx_converter(val['Currency'], 'BGN', exit_line_dict['Date'])
-
-                    remaining_quantity += exit_quantity
-                    is_closing_a_lot = True
-                
-                # Fill up database
                 entry_quantity = factor * line_dict['Quantity']
                 cost = entry_quantity * line_dict['Price']
                 fx_rate_entry = fx_converter(val['Currency'], 'BGN', line_dict['Date'])
                 revenue = entry_quantity * exit_line_dict['Price']
-                data_line = [
+                tax_statement_data_line = [
                     ticker,
                     ticker_currency,
                     entry_quantity,
@@ -179,12 +203,39 @@ def main():
                     fx_rate_exit * revenue - fx_rate_entry * cost,
                     ]
 
-                tax_statement_array.append(data_line)
 
-                remaining_quantity += entry_quantity
-                if remaining_quantity == 0:
-                    is_closing_a_lot = False
+                counter += 1
+                print(f'{counter}', end=' ')
+                tax_statement_array.append(tax_statement_data_line)
 
-    write_tax_statement_csv(tax_statement_array)
+                # remaining_quantity += entry_quantity
+                # if remaining_quantity == 0:
+                #     is_closing_a_lot = False
+                
+                ticker_total_quantity += entry_quantity
+                ticker_total_cost += fx_rate_entry * cost
+                ticker_total_revenue += fx_rate_exit * revenue
+                
+        tax_statement_array_summary.append([
+            ticker,
+            ticker_total_quantity,
+            ticker_total_cost,
+            ticker_total_revenue,
+            ticker_total_revenue - ticker_total_cost])
+
+    total_cost = 0
+    total_revenue = 0
+    total_profit = 0
+    for i in range(1, len(tax_statement_array_summary)):
+        total_cost += tax_statement_array_summary[i][2]
+        total_revenue += tax_statement_array_summary[i][3]
+        total_profit += tax_statement_array_summary[i][4]
+  
+    tax_statement_array_summary.append(['Total', '-', \
+        total_cost, total_revenue, total_profit])
+    
+    write_tax_statement_csv(tax_statement_array_summary, 'w')
+    write_tax_statement_csv(tax_statement_array, 'a')
+
 if __name__ == "__main__":
     main()
