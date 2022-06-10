@@ -1,13 +1,12 @@
 import csv
-from decimal import *
 from datetime import date, timedelta
 
 def fx_converter(currency, date_input, fx_data):
     if currency == 'USD':
         closest_date = find_closest_date(date_input, fx_data)
-        forex = Decimal(fx_data.get(closest_date))
+        forex = float(fx_data.get(closest_date))
     if currency == 'EUR':
-        forex = Decimal('1.95583')
+        forex = 1.95583
     return forex
 
 def find_closest_date(date_input, fx_data):
@@ -214,8 +213,8 @@ def main():
                 # The same for each calculation until remaining quntity becomes zero
                 exit_date = line_dict['Date']
                 exit_quantity = factor * line_dict['Quantity']
-                exit_price = Decimal(line_dict['Price'])
-                exit_commission_pos = -1 * Decimal(line_dict['Commission'])
+                exit_price = line_dict['Price']
+                exit_commission_pos = -1 * line_dict['Commission']
                 fx_rate_exit = fx_converter(val['Currency'], line_dict['Date'], usdbgn_dict)
 
                 remaining_quantity += exit_quantity
@@ -228,9 +227,9 @@ def main():
                 # NB!!!
                 # Entry price from 'ClosedLot already includes the entry commission that you've paid at entry. So, the 'cost' is also net of commissions.
                 # Therefore, for consistency you include commission in the exit as well, i.e. revenue = exit_quantity * exit_price - exit_commission
-                entry_price = Decimal(line_dict['Price'])
+                entry_price = line_dict['Price']
                 cost = entry_quantity * entry_price
-                q_share = Decimal(abs(entry_quantity / exit_quantity))
+                q_share = abs(entry_quantity / exit_quantity)
                 revenue = entry_quantity * exit_price - exit_commission_pos * q_share
                 fx_rate_entry = fx_converter(val['Currency'], line_dict['Date'], usdbgn_dict)
                 tax_statement_data_line = [
@@ -238,19 +237,19 @@ def main():
                     ticker_currency,
                     entry_quantity,
                     entry_date,
-                    entry_price.quantize(Decimal('0.00')),
-                    cost.quantize(Decimal('0.00')),
+                    entry_price,
+                    cost,
                     exit_date,
-                    exit_price.quantize(Decimal('0.00')),
-                    revenue.quantize(Decimal('0.00')),
-                    (revenue - cost).quantize(Decimal('0.00')),
-                    fx_rate_entry.quantize(Decimal('0.0000')),
-                    (fx_rate_entry * entry_price).quantize(Decimal('0.00')),
-                    (fx_rate_entry * cost).quantize(Decimal('0.00')),
-                    fx_rate_exit.quantize(Decimal('0.0000')),
-                    (fx_rate_exit * exit_price).quantize(Decimal('0.00')),
-                    (fx_rate_exit * revenue).quantize(Decimal('0.00')),
-                    (fx_rate_exit * revenue - fx_rate_entry * cost).quantize(Decimal('0.00')),
+                    exit_price,
+                    revenue,
+                    (revenue - cost),
+                    fx_rate_entry,
+                    (fx_rate_entry * entry_price),
+                    (fx_rate_entry * cost),
+                    fx_rate_exit,
+                    (fx_rate_exit * exit_price),
+                    (fx_rate_exit * revenue),
+                    (fx_rate_exit * revenue - fx_rate_entry * cost),
                     ]
 
                 counter += 1
@@ -261,16 +260,19 @@ def main():
                 ticker_total_cost += fx_rate_entry * cost
                 ticker_total_revenue += fx_rate_exit * revenue
 
-        tax_statement_array_summary.append([
+        tax_statement_array_summary.append(
+            [
             ticker,
             val['Description'],
             val['Asset Category'],
             val['Asset Type'],
             val['Exchange'],
             ticker_total_quantity,
-            ticker_total_cost.quantize(Decimal('0.00')),
-            ticker_total_revenue.quantize(Decimal('0.00')),
-            (ticker_total_revenue - ticker_total_cost).quantize(Decimal('0.00'))])
+            ticker_total_cost,
+            ticker_total_revenue,
+            (ticker_total_revenue - ticker_total_cost)
+            ]
+        )
 
     total_cost = 0
     total_revenue = 0

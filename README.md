@@ -1,7 +1,13 @@
 # ib_scripts
 Scripts for IB
 Hello GitHub! 
-FYI, I'm about to become the greatest quant trader on this half of the hemisphere.
+FYI, I'm going to become the greatest quant trader on this half of the hemisphere.
+
+# Forex
+BNB:
+- https://www.bnb.bg/Statistics/StExternalSector/StExchangeRates/StERForeignCurrencies/index.htm?search=true
+ECB:
+- https://www.datacareer.de/blog/accessing-ecb-exchange-rate-data-in-python/
 
 # Useful links
 Queues:
