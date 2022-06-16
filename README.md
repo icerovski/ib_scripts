@@ -50,3 +50,6 @@ Commands:
 TODO:
 - Problems with EFC
 - Problems with T
+
+# Average True Range (ATR)
+https://www.tradingview.com/support/solutions/43000501823-average-true-range-atr/
