@@ -1,5 +1,11 @@
 import csv
 from datetime import date, timedelta
+from dateutil.parser import *
+
+def date_converter(date_input):
+    date_time_obj = parse(date_input)
+    date_time_str = date_time_obj.strftime('%Y-%m-%d')
+    return date_time_str
 
 def fx_converter(currency, date_input, fx_data):
     if currency == 'USD':
@@ -106,6 +112,8 @@ def main():
 
     # TICKER INFO
     tickers_info = call_data(source_file_name, 'Financial Instrument Information')
+    tickers_info.append(['Forex', 'EUR.USD', 'EUR.USD', '', '', '', '', '', '', '', '', '', '', '', '' ])
+    # maybe add EUR.USD here?
     for ticker in tickers_info:
         if ticker[1] == 'Symbol':
             headers_info = ticker
@@ -144,7 +152,8 @@ def main():
         tickers_data[ticker_name]['Transactions'].append(
             {
             'DataDiscriminator':current_trade_dict['DataDiscriminator'],
-            'Date':comma_break(current_trade_dict['Date/Time']),
+            # 'Date':comma_break(current_trade_dict['Date/Time']),
+            'Date':date_converter(current_trade_dict['Date/Time']),
             'Quantity':int(comma_cleanup(current_trade_dict['Quantity'])),
             'Price':float(current_trade_dict['T. Price']),
             'Commission':float(comma_cleanup(current_trade_dict['Comm/Fee'])),
@@ -215,7 +224,7 @@ def main():
                 exit_quantity = factor * line_dict['Quantity']
                 exit_price = line_dict['Price']
                 exit_commission_pos = -1 * line_dict['Commission']
-                fx_rate_exit = fx_converter(val['Currency'], line_dict['Date'], usdbgn_dict)
+                fx_rate_exit = fx_converter(val['Currency'], exit_date, usdbgn_dict)
 
                 remaining_quantity += exit_quantity
                 # is_closing_a_lot = True
@@ -231,7 +240,7 @@ def main():
                 cost = entry_quantity * entry_price
                 q_share = abs(entry_quantity / exit_quantity)
                 revenue = entry_quantity * exit_price - exit_commission_pos * q_share
-                fx_rate_entry = fx_converter(val['Currency'], line_dict['Date'], usdbgn_dict)
+                fx_rate_entry = fx_converter(val['Currency'], entry_date, usdbgn_dict)
                 tax_statement_data_line = [
                     ticker,
                     ticker_currency,
@@ -287,6 +296,8 @@ def main():
     
     write_tax_statement_csv(tax_statement_array_summary, 'w')
     write_tax_statement_csv(tax_statement_array, 'a')
+    
+    print(*tax_statement_array_summary, sep='\n')
 
 if __name__ == "__main__":
     main()

@@ -12,3 +12,6 @@
 
 # # Ignore SASS config files
 # .sass-cache
+
+# Virtual Environment
+.venv
