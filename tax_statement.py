@@ -1,6 +1,45 @@
 import csv
 from datetime import date, timedelta
-from dateutil.parser import *
+# from dateutil.parser import *
+
+class Ticker:
+    def __init__(self, name, category, instrument, exchange, currency=None, realized=False, assigned=False, transactions=[]):
+        self.name = name
+        self.category = category
+        self.instrument = instrument
+        self.exchange = exchange
+        self.currency = currency
+        self.realized = realized
+        self.assigned = assigned
+        self.transactions = transactions
+    
+    def add_transaction(self, dict):
+        self.transactions.append(
+            {
+            'DataDiscriminator':dict['DataDiscriminator'],
+            # 'Date':comma_break(dict['Date/Time']),
+            'Date':date_converter(dict['Date/Time']),
+            'Quantity':int(comma_cleanup(dict['Quantity'])),
+            'Price':float(dict['T. Price']),
+            'Commission':float(comma_cleanup(dict['Comm/Fee'])),
+        }
+        )
+    
+    def assign_option(self, dict):
+        if dict['Transaction Type'] == 'Assignment':
+            self.assigned = True
+    
+    def chose_currency(self, dict):
+        if self.currency == None:
+            self.currency = dict['Currency'] 
+
+    def realize_transaction(self, dict, sub_criteria):
+        if not self.realized and not self.assigned:
+            if dict['DataDiscriminator'] == sub_criteria['DataDiscriminator'][1]:
+                self.realized = True
+
+        
+
 
 def date_converter(date_input):
     date_time_obj = parse(date_input)
@@ -101,7 +140,7 @@ def write_tax_statement_csv(data_set, item):
 def main():
     usdbgn_dict = call_FX('USDBGN.csv')
 
-    month_input = input('Provide YYYMM:')
+    month_input = input('Provide YYYYMM:')
     source_file_name = 'U8432685' + '_' + month_input + '_' + month_input + ".csv"
     main_criterion = 'Trades'
     sub_criteria = {
@@ -109,17 +148,31 @@ def main():
         'DataDiscriminator':('Trade', 'ClosedLot')
     }
 
-    tickers_data = {} # This is the main DATABASE
 
-    # TICKER INFO
+    # PULL DATA FROM ORIGIN FILE
+    # ticker info - of all instruments that were traded for the period
     tickers_info = call_data(source_file_name, 'Financial Instrument Information')
     tickers_info.append(['Forex', 'EUR.USD', 'EUR.USD', '', '', '', '', '', '', '', '', '', '', '', '' ])
-    # maybe add EUR.USD here?
+
+    # all trades
+    trades_data = call_data(source_file_name, main_criterion, sub_criteria)
+    headers_trades = trades_data.pop(0)
+
+    # which are assigned for the case of options
+    assigned_options = call_data(source_file_name, 'Option Exercises, Assignments and Expirations')
+    headers_assigned = assigned_options.pop(0)
+
+
+    # Fill up ticker DATABASE
+    tickers_data = {} # database in the form of dictionary where each unique ticker is a key and has a list of values to it
+    tickers_objects = {} # database is a list of Ticker objects and value is a list of transactions
+
+    # BASIC INFO
     for ticker in tickers_info:
         if ticker[1] == 'Symbol':
             headers_info = ticker
             continue
-
+        
         current_info_dict = list_to_dict(headers_info, ticker)
 
         # When analyzing Options, Symbol of the option in Trades table equals Description in Info talbes
@@ -140,16 +193,31 @@ def main():
             'Realized':False,
         }
 
-    # TICKER TRANSACTIONS
-    trades_data = call_data(source_file_name, main_criterion, sub_criteria)
-    headers_trades = trades_data.pop(0)
+        # create ticker object
+        tickers_objects[ticker_name] = Ticker(
+            ticker_name,
+            current_info_dict['Asset Category'],
+            current_info_dict['Type'],
+            current_info_dict['Listing Exch'],
+        )
+    
+    # ASSIGNED OPTIONS
+    for option in assigned_options:
+        current_option = list_to_dict(headers_assigned, option)
+        ticker_name = current_option['Symbol']
+        if ticker_name in tickers_objects:
+            tickers_objects[ticker_name].assign_option(current_option)
+            # if current_option['Transaction Type'] == 'Assignment':
+            #     tickers_objects[ticker_name].assigned = True
 
+    # TICKER TRANSACTIONS
     for line in trades_data:
         current_trade_dict = list_to_dict(headers_trades, line)
 
         # Below checks if we reached the Header before Options data and skips it
         ticker_name = current_trade_dict['Symbol']
 
+        # TRANSACTIONS
         tickers_data[ticker_name]['Transactions'].append(
             {
             'DataDiscriminator':current_trade_dict['DataDiscriminator'],
@@ -161,12 +229,20 @@ def main():
         }
         )
 
+        tickers_objects[ticker_name].add_transaction(current_trade_dict)
+
+        # CURRENCY
         if not tickers_data[ticker_name]['Currency']:
             tickers_data[ticker_name]['Currency'] = current_trade_dict['Currency']
+        
+        tickers_objects[ticker_name].chose_currency(current_trade_dict)
 
+        # REALIZED
         if not tickers_data[ticker_name]['Realized']:
             if current_trade_dict['DataDiscriminator'] == sub_criteria['DataDiscriminator'][1]:
                 tickers_data[ticker_name]['Realized'] = True
+        
+        tickers_objects[ticker_name].realize_transaction(current_trade_dict, sub_criteria)
 
     # Set up three main Statements
     tax_statement_array = [
