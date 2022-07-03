@@ -101,7 +101,8 @@ def write_tax_statement_csv(data_set, item):
 def main():
     usdbgn_dict = call_FX('USDBGN.csv')
 
-    source_file_name = "ib_statement.csv"
+    month_input = input('Provide YYYMM:')
+    source_file_name = 'U8432685' + '_' + month_input + '_' + month_input + ".csv"
     main_criterion = 'Trades'
     sub_criteria = {
         'Header':'Data',
