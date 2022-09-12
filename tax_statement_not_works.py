@@ -111,6 +111,41 @@ def pull_data(source_file, criterion):
                 data.append(row[1:])
     return data
 
+def fill_basic_info(data_base):
+    for line in data_base:
+        if line[0] == 'Header':
+            current_header = line[0]
+            continue
+
+        current_info_dict = list_to_dict(headers_info, ticker)
+
+        # When analyzing Options, Symbol of the option in Trades table equals Description in Info talbes
+        if current_info_dict['Asset Category'] == 'Equity and Index Options':
+            ticker_name = current_info_dict['Description']
+            ticker_description = ''
+        else:
+            ticker_name = current_info_dict['Symbol']
+            ticker_description = current_info_dict['Description']
+
+        tickers_data[ticker_name] = {
+            'Description':ticker_description,
+            'Asset Category':current_info_dict['Asset Category'],
+            'Asset Type':current_info_dict['Type'],
+            'Exchange':current_info_dict['Listing Exch'],
+            'Currency':'',
+            'Transactions':[],
+            'Realized':False,
+        }
+
+        # create ticker object
+        tickers_objects[ticker_name] = Ticker(
+            ticker_name,
+            current_info_dict['Asset Category'],
+            current_info_dict['Type'],
+            current_info_dict['Listing Exch'],
+        )
+    
+
 def call_data(source_file, main_criterion, sub_criteria=None):
     data = []
     with open(str(source_file), 'r') as source_file:
@@ -162,7 +197,7 @@ def main():
     # PULL DATA FROM ORIGIN FILE
     # 1. Pull up raw info data for each instrument
     info_raw = pull_data(source_file_name, 'Financial Instrument Information')
-    info_raw.append(['Data', 'Forex', 'EUR.USD', 'EUR.USD', '', '', '', '', '', '', '', '', '', '', '' ])
+    # info_raw.append(['Data', 'Forex', 'EUR.USD', 'EUR.USD', '', '', '', '', '', '', '', '', '', '', '' ])
     print('\n'.join(list(map(str, info_raw))))
     # info_data = []
     # tables_counter = 0
@@ -174,7 +209,7 @@ def main():
     #         tables_counter += 1
     #         continue
     #     info_data[tables_counter].append(info_raw[i])
-    # print('\n'.join(list(map(str, info_data))))
+    print('\n'.join(list(map(str, info_data))))
 
     # 2. Distribute data into a dictionary
     # data_dictionary = {}

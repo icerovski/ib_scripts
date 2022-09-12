@@ -151,69 +151,21 @@ def main():
 
     month_input = input('Provide YYYYMM:')
     source_file_name = 'U8432685' + '_' + month_input + '_' + month_input + ".csv"
-    # main_criterion = 'Trades'
+    main_criterion = 'Trades'
     sub_criteria = {
         'Header':'Data',
         'DataDiscriminator':('Trade', 'ClosedLot')
     }
 
 
-    ###################################################################################
     # PULL DATA FROM ORIGIN FILE
-    # 1. Pull up raw info data for each instrument
-    info_raw = pull_data(source_file_name, 'Financial Instrument Information')
-    info_raw.append(['Data', 'Forex', 'EUR.USD', 'EUR.USD', '', '', '', '', '', '', '', '', '', '', '' ])
-    print('\n'.join(list(map(str, info_raw))))
-    # info_data = []
-    # tables_counter = 0
-    # lines_counter = 0
-    # for i in range(len(info_raw)):
-    #     if info_raw[i][0] == 'Header':
-    #         info_data.append([])
-    #         info_data[tables_counter].append(info_raw.pop())
-    #         tables_counter += 1
-    #         continue
-    #     info_data[tables_counter].append(info_raw[i])
-    # print('\n'.join(list(map(str, info_data))))
-
-    # 2. Distribute data into a dictionary
-    # data_dictionary = {}
-    # fill_basic_info(data_base)
-    # 3. Check for assigned options and update data base accordingly
-    assigned_options = call_data(source_file_name, 'Option Exercises, Assignments and Expirations')
-    if assigned_options:
-        headers_assigned = assigned_options.pop(0)
-
-        # Fill up central database
-        for option in assigned_options:
-            current_option = list_to_dict(headers_assigned, option)
-            current_ticker = current_option['Symbol']
-            if current_ticker in tickers_objects:
-                tickers_objects[current_ticker].assign_option(current_option)
-
-    forex_raw = pull_data(source_file_name, 'Forex P/L Details')
-    print('\n'.join(list(map(str, forex_raw))))
-
-    trades_raw = pull_data(source_file_name, 'Trades')
-    print('\n'.join(list(map(str, trades_raw))))
-
-    data_raw = trades_raw + forex_raw
-    raw_dictionary = {}
-
-    for row in data_raw:
-        if row[0] == 'Header':
-            pass
-    
-    
-    #################################################################################
-
     # ticker info - of all instruments that were traded for the period
     tickers_info = call_data(source_file_name, 'Financial Instrument Information')
     tickers_info.append(['Forex', 'EUR.USD', 'EUR.USD', '', '', '', '', '', '', '', '', '', '', '', '' ])
-    # headers_info = tickers_info.pop(0)
+    headers_info = tickers_info.pop(0)
 
     # all trades
-    trades_data = call_data(source_file_name, 'Trades', sub_criteria)
+    trades_data = call_data(source_file_name, main_criterion, sub_criteria)
     headers_trades = trades_data.pop(0)
 
 
@@ -223,9 +175,9 @@ def main():
 
     # BASIC INFO
     for ticker in tickers_info:
-        if ticker[1] == 'Symbol':
-            headers_info = ticker
-            continue
+        # if ticker[1] == 'Symbol':
+        #     headers_info = ticker
+        #     continue
         
         current_info_dict = list_to_dict(headers_info, ticker)
 
@@ -269,21 +221,6 @@ def main():
                 tickers_objects[current_ticker].assign_option(current_option)
                 # if current_option['Transaction Type'] == 'Assignment':
                 #     tickers_objects[ticker_name].assigned = True
-
-    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    # FOREX P/L
-    forex_raw_data = call_data(source_file_name, 'Forex P/L Details')
-    if forex_raw_data:
-        headers_forex = forex_raw_data.pop(0)
-
-        # Fill up central database
-        for forex in forex_raw_data:
-            if not forex[2].startswith('Forex'):
-                continue
-
-            print(forex)
-            
-        print(headers_forex)
         
     # TICKER TRANSACTIONS
     for line in trades_data:
@@ -314,11 +251,72 @@ def main():
 
         # REALIZED
         if not tickers_data[ticker_name]['Realized']:
-            if current_trade_dict['DataDiscriminator'] == sub_criteria['DataDiscriminator'][1]:
+            # if current_trade_dict['DataDiscriminator'] == sub_criteria['DataDiscriminator'][1]:
+            if current_trade_dict['DataDiscriminator'].startswith(sub_criteria['DataDiscriminator'][1]):
                 tickers_data[ticker_name]['Realized'] = True
         
         tickers_objects[ticker_name].realize_transaction(current_trade_dict, sub_criteria)
 
+
+    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    # FOREX P/L
+    forex_raw = pull_data(source_file_name, 'Forex P/L Details')
+    
+    list_forex = []
+    is_open = False
+    for line in forex_raw:
+        if line[0] == 'Header':
+            header_forex = line[1:]
+            continue
+        if line[3].startswith('Forex'):
+            list_forex.append(line[1:])
+            is_open = True
+        elif line[3].startswith('Closed Lot'):
+            if is_open:
+                list_forex.append(line[1:])
+        else:
+            is_open = False
+    
+    # Rename header: Description -> DataDiscriminator
+    index_fix = header_forex.index('Description')
+    header_forex.pop(index_fix)
+    header_forex.insert(index_fix, 'DataDiscriminator')
+    # Fill up database
+    for line in list_forex:
+        current_trade_dict = list_to_dict(header_forex, line)
+
+        ticker_name = 'EUR.USD'
+        tickers_data[ticker_name]['Transactions'].append(
+            {
+            'DataDiscriminator':current_trade_dict['DataDiscriminator'],
+            # 'Date':comma_break(current_trade_dict['Date/Time']),
+            'Date':date_converter(current_trade_dict['Date/Time']),
+            'Quantity':int(comma_cleanup(current_trade_dict['Quantity'])),
+            'Price':float(current_trade_dict['T. Price']),
+            'Commission':float(comma_cleanup(current_trade_dict['Comm/Fee'])),
+        }
+        )
+
+        tickers_objects[ticker_name].add_transaction(current_trade_dict)
+
+        # CURRENCY
+        if not tickers_data[ticker_name]['Currency']:
+            tickers_data[ticker_name]['Currency'] = current_trade_dict['Currency']
+        
+        tickers_objects[ticker_name].chose_currency(current_trade_dict)
+
+        # REALIZED
+        if not tickers_data[ticker_name]['Realized']:
+            # if current_trade_dict['DataDiscriminator'] == sub_criteria['DataDiscriminator'][1]:
+            if current_trade_dict['DataDiscriminator'].startswith(sub_criteria['DataDiscriminator'][1]):
+                tickers_data[ticker_name]['Realized'] = True
+        
+        tickers_objects[ticker_name].realize_transaction(current_trade_dict, sub_criteria)
+
+    # for line in list_raw:
+    #     print('\n'.join(list(map(str, line))))
+
+    # FILL UP STATEMENTS
     # Set up three main Statements
     tax_statement_array = [
         [
@@ -451,5 +449,40 @@ def main():
     
     print(*tax_statement_array_summary, sep='\n')
 
+
+###################################################################################
+    # GENERAL INFORMATION
+    # 1. Pull up raw info data for each instrument
+    info_raw = pull_data(source_file_name, 'Financial Instrument Information')
+    info_raw.append(['Data', 'Forex', 'EUR.USD', 'EUR.USD', '', '', '', '', '', '', '', '', '', '', '' ])
+    print('\n'.join(list(map(str, info_raw))))
+    for row in info_raw:
+        if row[0] == 'Header':
+            print(row)
+
+    # 2. Distribute data into a dictionary
+    
+    # 3. Check for assigned options and update data base accordingly
+    
+    # TRADE DATA
+    # 1. Pull raw data
+    trades_raw = pull_data(source_file_name, 'Trades')
+    forex_raw = pull_data(source_file_name, 'Forex P/L Details')
+    
+    list_raw = []
+    counter = -1
+    for line in trades_raw:
+        if line[0] == 'Header':
+            counter += 1
+            list_raw.append([])
+            # list_raw[counter].append(line)
+            # continue
+        list_raw[counter].append(line[1:])
+    list_raw.pop(-1)
+
+    for line in list_raw:
+        print('\n'.join(list(map(str, line))))
+    
+    #################################################################################
 if __name__ == "__main__":
     main()
