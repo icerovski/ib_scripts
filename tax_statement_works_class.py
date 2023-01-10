@@ -208,7 +208,6 @@ def main():
             'Currency':'',
             'Transactions':[],
             'Realized':False,
-            'Taxable': True,
         }
 
         # create ticker object
@@ -270,12 +269,7 @@ def main():
             'Price':float(current_trade_dict['T. Price']),
             'Commission':float(comma_cleanup(current_trade_dict['Comm/Fee'])),
         }
-
         )
-        # if ticker_name == 'TLT 17JUN22 117.0 P':
-        #     print(ticker_name)
-        #     for row in tickers_data[ticker_name]['Transactions']:
-        #         print(row)
 
         tickers_objects[ticker_name].add_transaction(current_trade_dict)
 
@@ -291,12 +285,6 @@ def main():
                 tickers_data[ticker_name]['Realized'] = True
         
         tickers_objects[ticker_name].realize_transaction(current_trade_dict, sub_criteria)
-
-        # TAXABLE
-        if tickers_data[ticker_name]['Taxable']:
-            if tickers_data[ticker_name]['Currency'] == 'EUR' or tickers_data[ticker_name]['Asset Type'] == 'COMMON':
-                tickers_data[ticker_name]['Taxable'] = False
-        
 
     # Set up three main Statements
     tax_statement_array = [
@@ -332,10 +320,6 @@ def main():
     # Loop through the dictionary and perform calculations
     for ticker, val in tickers_data.items():
 
-        if ticker == 'TLT 17JUN22 117.0 P':
-            print(ticker)
-            continue
-
         if not val['Realized']:
             continue
         
@@ -350,8 +334,6 @@ def main():
         ticker_total_quantity = 0
         ticker_total_cost = 0
         ticker_total_revenue = 0
-        ticker_total_cost_USD = 0
-        ticker_total_revenue_USD = 0
 
         for line_dict in val['Transactions']:
 
@@ -405,22 +387,10 @@ def main():
                
                 ticker_total_quantity += entry_quantity
                 # UNCOMMENT if you want to get results in BGN
-                ticker_total_cost += fx_rate_entry * cost
-                ticker_total_revenue += fx_rate_exit * revenue
-                # ticker_total_cost += cost
-                # ticker_total_revenue += revenue
-                
-                ticker_total_cost_USD += cost
-                ticker_total_revenue_USD += revenue
-
-        taxable_profit = 0
-        ticker_profit = ticker_total_revenue - ticker_total_cost
-        ticker_profit_USD = ticker_total_revenue_USD - ticker_total_cost_USD
-
-        if val['Taxable']:
-            taxable_profit = ticker_profit
-        else:
-            taxable_profit = min(0, ticker_profit)
+                # ticker_total_cost += fx_rate_entry * cost
+                # ticker_total_revenue += fx_rate_exit * revenue
+                ticker_total_cost += cost
+                ticker_total_revenue += revenue
 
         tax_statement_array_summary.append(
             [
@@ -432,26 +402,20 @@ def main():
             ticker_total_quantity,
             ticker_total_cost,
             ticker_total_revenue,
-            ticker_profit,
-            taxable_profit,
-            ticker_profit_USD
+            (ticker_total_revenue - ticker_total_cost)
             ]
         )
 
     total_cost = 0
     total_revenue = 0
     total_profit = 0
-    total_taxable_profit = 0
-    total_profit_USD = 0
     for i in range(1, len(tax_statement_array_summary)):
-        total_cost += tax_statement_array_summary[i][-5]
-        total_revenue += tax_statement_array_summary[i][-4]
-        total_profit += tax_statement_array_summary[i][-3]
-        total_taxable_profit += tax_statement_array[i][-2]
-        total_profit_USD += tax_statement_array[i][-1]
+        total_cost += tax_statement_array_summary[i][-3]
+        total_revenue += tax_statement_array_summary[i][-2]
+        total_profit += tax_statement_array_summary[i][-1]
 
     tax_statement_array_summary.append(['Total', '', '', '', '', '', \
-        total_cost, total_revenue, total_profit, total_taxable_profit, total_profit_USD])
+        total_cost, total_revenue, total_profit])
     
     write_tax_statement_csv(destination_file_name, tax_statement_array_summary, 'w')
     write_tax_statement_csv(destination_file_name, tax_statement_array, 'a')
